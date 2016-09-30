@@ -52,6 +52,10 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['newer:copy:styles', 'postcss']
       },
+      less: {
+        files: ['<%= yeoman.app %>/less/{,*/}*.less'],
+        tasks: ['less']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -220,7 +224,7 @@ module.exports = function (grunt) {
             }
           }
       }
-    }, 
+    },
 
     // Renames files for browser caching purposes
     filerev: {
@@ -423,6 +427,13 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+    less: {
+      server: {
+        files: {
+          "<%= yeoman.app %>/styles/main.css": "<%= yeoman.app %>/less/*.less"
+        }
+      }
     }
   });
 
@@ -434,6 +445,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'less',
       'wiredep',
       'concurrent:server',
       'postcss:server',
@@ -449,6 +461,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'less',
     'wiredep',
     'concurrent:test',
     'postcss',
@@ -458,6 +471,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'less',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
