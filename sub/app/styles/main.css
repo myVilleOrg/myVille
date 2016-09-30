@@ -4,6 +4,7 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 #container {
   width: 100%;
@@ -17,6 +18,7 @@ body {
   min-width: 10%;
   height: 100%;
   color: #C9D3DB;
+  border-right: 1px #e8ecef solid;
 }
 .sidebar > .sidebar-wrapper {
   width: 100%;
@@ -44,16 +46,23 @@ body {
   text-align: center;
   align-items: center;
   justify-content: center;
+  color: #C9D3DB;
+  transition: color 0.75s ease;
+}
+.sidebar > .sidebar-wrapper > ul > li > a.active {
+  color: #6d889e;
 }
 .sidebar > .sidebar-wrapper > ul > li > a:hover {
-  color: #93918e !important;
+  color: #6d889e !important;
 }
 .sidebar > .sidebar-wrapper > ul > li > a > i {
   font-size: 2em;
 }
-.map {
-  position: relative;
-  height: 100%;
-  width: auto;
+.side-sidebar {
+  min-width: 20%;
+  border-right: 1px #e8ecef solid;
+}
+#map {
+  flex: 1;
 }
 
