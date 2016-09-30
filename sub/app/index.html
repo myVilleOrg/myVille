@@ -24,37 +24,21 @@
     <div id="container" ng-controller="MainCtrl">
       <div class="sidebar">
           <div class="sidebar-wrapper">
+            <div class="brand">
+              <i class="fa fa-building"></i>
+            </div>
             <ul>
-              <li>
+              <li class="map-center">
                 <a href="/#" ng-class="{ active: isActive('/') }">
                   <i class="fa fa-map-o" aria-hidden="true"></i>
                   <span class="text-icon">MAPS</span>
                 </a>
               </li>
-              <li>
+              <li class="login-bottom">
                 <a href="">
-                  <i class="fa fa-map-o" aria-hidden="true"></i>
-                  <span class="text-icon">MAPS</span>
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <span class="text-icon">Login</span>
                 </a>
-              </li>
-              <li>
-                <a href="">
-                  <i class="fa fa-map-o" aria-hidden="true"></i>
-                  <span class="text-icon">MAPS</span>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <i class="fa fa-map-o" aria-hidden="true"></i>
-                  <span class="text-icon">MAPS</span>
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  <i class="fa fa-map-o" aria-hidden="true"></i>
-                  <span class="text-icon">MAPS</span>
-                </a>
-              </li>
             </ul>
           </div>
       </div>
@@ -80,6 +64,7 @@
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
+     <script src="scripts/services/myvilleapi.js"></script>
      <!-- endbuild -->
 </body>
 </html>
