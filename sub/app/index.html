@@ -16,11 +16,15 @@
     <!-- endbuild -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   </head>
   <body ng-app="appApp">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    <div ng-loading>
+      Issou
+    </div>
     <div id="container" ng-controller="MainCtrl">
       <div class="sidebar">
           <div class="sidebar-wrapper">
@@ -28,18 +32,23 @@
               <i class="fa fa-building"></i>
             </div>
             <ul>
-              <li class="map-center">
-                <a href="/#" ng-class="{ active: isActive('/') }">
+              <li ng-class="{'map-center': !token}">
+                <a href="/#/" ng-class="{ active: isActive('/') }">
                   <i class="fa fa-map-o" aria-hidden="true"></i>
                   <span class="text-icon">MAPS</span>
                 </a>
               </li>
-              <li class="login-bottom">
-                <a href="">
+            </ul>
+            <div class="user-sidebar">
+                <a ng-if="!token" href="/#/login" ng-class="{ active: isActive('/login') }">
                   <i class="fa fa-user" aria-hidden="true"></i>
                   <span class="text-icon">Login</span>
                 </a>
-            </ul>
+                <div ng-if="token" class="user-profile">
+                  <img ng-src="{{user.avatar ? user.avatar : 'http://lol.Fr'}}" />
+                  {{user.nickname}}
+                </div>
+            </div>
           </div>
       </div>
       <div class="side-sidebar" ng-view="">
@@ -57,6 +66,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
@@ -64,7 +74,9 @@
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
-     <script src="scripts/services/myvilleapi.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/services/myvilleapi.js"></script>
+     <script src="scripts/directives/ngloading.js"></script>
      <!-- endbuild -->
 </body>
 </html>

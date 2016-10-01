@@ -1,3 +1,6 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
 html,
 body {
   margin: 0;
@@ -5,6 +8,22 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+::placeholder {
+  font-weight: normal;
+}
+input {
+  border: 1px #C9D3DB solid;
+  border-radius: 0.3em;
+  padding: 0.1em 0.3em 0.1em 0.3em;
+}
+button.btn-blue {
+  background-color: #15c9e9;
+  border-radius: 0.6em;
+  color: white;
+  border: none;
+  outline: none;
+  margin-top: 1em;
 }
 #container {
   width: 100%;
@@ -15,7 +34,7 @@ body {
 }
 .sidebar {
   display: block;
-  max-width: 10%;
+  flex: 0.05;
   height: 100%;
   color: #C9D3DB;
   border-right: 1px #e8ecef solid;
@@ -23,14 +42,44 @@ body {
 .sidebar > .sidebar-wrapper {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .sidebar > .sidebar-wrapper > .brand {
   font-size: 2em;
   text-align: center;
-  height: 5%;
+  flex: 0.05;
+}
+.sidebar > .sidebar-wrapper > .user-sidebar {
+  flex: 0.1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar > .sidebar-wrapper > .user-sidebar > a {
+  text-decoration: none;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #C9D3DB;
+  transition: color 0.75s ease;
+}
+.sidebar > .sidebar-wrapper > .user-sidebar > a.active {
+  color: #5a5d82;
+}
+.sidebar > .sidebar-wrapper > .user-sidebar > a:hover {
+  color: #5a5d82 !important;
+}
+.sidebar > .sidebar-wrapper > .user-sidebar > a > i {
+  font-size: 2em;
 }
 .sidebar > .sidebar-wrapper > ul {
-  height: 95%;
+  flex: 0.9;
   text-decoration: none;
   list-style: none;
   padding: 1em;
@@ -64,23 +113,61 @@ body {
   text-align: center;
   align-items: center;
   justify-content: center;
+  text-transform: uppercase;
   color: #C9D3DB;
   transition: color 0.75s ease;
 }
 .sidebar > .sidebar-wrapper > ul > li > a.active {
-  color: #6d889e;
+  color: #5a5d82;
 }
 .sidebar > .sidebar-wrapper > ul > li > a:hover {
-  color: #6d889e !important;
+  color: #5a5d82 !important;
 }
 .sidebar > .sidebar-wrapper > ul > li > a > i {
   font-size: 2em;
 }
 .side-sidebar {
-  max-width: 30%;
+  transition: all 1s ease;
+  flex: 0.4;
   border-right: 1px #e8ecef solid;
 }
+.side-sidebar > .wrapper-side-sidebar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.side-sidebar > .wrapper-side-sidebar > .heading-side {
+  flex: 0.1;
+  text-align: center;
+  width: 100%;
+  background: linear-gradient(to right, #189bff, #40c8e8);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.1em;
+}
+.side-sidebar > .wrapper-side-sidebar > .heading-side > .back {
+  flex: 0.1;
+}
+.side-sidebar > .wrapper-side-sidebar > .heading-side > .heading-title {
+  flex: 0.9;
+}
+.side-sidebar > .wrapper-side-sidebar > .content-side {
+  flex: 0.9;
+  padding: 1.5em;
+  display: flex;
+  flex-direction: column;
+}
+.side-sidebar > .wrapper-side-sidebar > .content-side > h1 {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: #5a5d82;
+}
 #map {
+  transition: all 0.5s ease;
   flex: 1;
 }
 

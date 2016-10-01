@@ -1,11 +1,31 @@
 @import 'variable';
-
+* {
+  font-family: 'Montserrat', sans-serif;
+}
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+::placeholder {
+  font-weight: normal;
+}
+input {
+  border: 1px @gray solid;
+  border-radius: 0.3em;
+  padding: 0.1em 0.3em 0.1em 0.3em;
+}
+button {
+  &.btn-blue {
+    background-color: #15c9e9;
+    border-radius: 0.6em;
+    color: white;
+    border: none;
+    outline: none;
+    margin-top: 1em;
+  }
 }
 #container {
   width: 100%;
@@ -16,20 +36,50 @@ html, body {
 }
 .sidebar {
   display: block;
-  max-width: 10%;
+  flex: 0.05;
   height: 100%;
   color: @gray;
   border-right: 1px @light-gray solid;
   &>.sidebar-wrapper {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     &>.brand {
       font-size: 2em;
       text-align: center;
-      height:5%;
+      flex: 0.05;
+    }
+    &>.user-sidebar{
+      flex: 0.1;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      &>a {
+          text-decoration: none;
+          text-transform: uppercase;
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+          color: @gray;
+          transition: color 0.75s ease;
+          &.active {
+            color: @dark-gray;
+          }
+          &:hover{
+            color: @dark-gray !important;
+          }
+          &>i {
+            font-size: 2em;
+          }
+      }
     }
     &>ul {
-      height: 95%;
+      flex: 0.9;
       text-decoration: none;
       list-style: none;
       padding: 1em;
@@ -61,6 +111,7 @@ html, body {
           text-align: center;
           align-items: center;
           justify-content: center;
+          text-transform: uppercase;
           color: @gray;
           transition: color 0.75s ease;
           &.active {
@@ -78,10 +129,47 @@ html, body {
   }
 }
 .side-sidebar {
-  max-width: 30%;
+  transition: all 1s ease;
+  flex: 0.4;
   border-right: 1px @light-gray solid;
+  &>.wrapper-side-sidebar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    &>.heading-side {
+      flex: 0.1;
+      text-align: center;
+      width: 100%;
+      background: linear-gradient(to right, #189bff, #40c8e8);
+      color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0.1em;
+      &>.back {
+        flex: 0.1;
+      }
+      &>.heading-title {
+        flex: 0.9;
+      }
+    }
+    &>.content-side {
+      flex: 0.9;
+      padding: 1.5em;
+      display: flex;
+      flex-direction: column;
+      &>h1 {
+        text-transform: uppercase;
+        font-size: 0.8em;
+        color: @dark-gray;
+      }
+    }
+  }
 }
-#map {
-  flex: 1;
 
+#map {
+  transition: all 0.5s ease;
+  flex: 1;
 }
