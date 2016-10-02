@@ -26,6 +26,7 @@ button.btn-blue {
   margin-top: 1em;
 }
 a {
+  text-decoration: none !important;
   color: #C9D3DB;
   transition: color 0.75s ease;
 }
@@ -80,7 +81,6 @@ a.active {
   justify-content: center;
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > a {
-  text-decoration: none;
   text-transform: uppercase;
   display: flex;
   flex-direction: column;
@@ -88,8 +88,11 @@ a.active {
   align-items: center;
   justify-content: center;
 }
+.sidebar > .sidebar-wrapper > .user-sidebar > a > .text-icon {
+  font-size: 0.8em;
+}
 .sidebar > .sidebar-wrapper > .user-sidebar > a > i {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > .disconnect-user {
   position: absolute;
@@ -99,7 +102,6 @@ a.active {
   cursor: pointer;
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > a {
-  text-decoration: none;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -130,30 +132,13 @@ a.active {
   align-items: center;
   justify-content: center;
 }
-.sidebar > .sidebar-wrapper > ul > li.map-center {
-  flex: 1;
-  justify-content: flex-end;
-}
-.sidebar > .sidebar-wrapper > ul > li.login-bottom {
-  flex: 1;
-  justify-content: flex-end;
-}
 .sidebar > .sidebar-wrapper > ul > li > a {
-  text-decoration: none;
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  color: #C9D3DB;
-  transition: color 0.75s ease;
-}
-.sidebar > .sidebar-wrapper > ul > li > a.active {
-  color: #5a5d82;
-}
-.sidebar > .sidebar-wrapper > ul > li > a:hover {
-  color: #5a5d82 !important;
 }
 .sidebar > .sidebar-wrapper > ul > li > a > i {
   font-size: 1.5em;

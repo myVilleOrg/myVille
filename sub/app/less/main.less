@@ -28,6 +28,7 @@ button {
   }
 }
 a {
+  text-decoration: none !important;
   color: @gray;
   transition: color 0.75s ease;
   &:hover {
@@ -80,15 +81,17 @@ a {
       align-items: center;
       justify-content: center;
       &>a {
-          text-decoration: none;
           text-transform: uppercase;
           display: flex;
           flex-direction: column;
           text-align: center;
           align-items: center;
           justify-content: center;
+          &>.text-icon {
+            font-size: 0.8em;
+          }
           &>i {
-            font-size: 2em;
+            font-size: 1.5em;
           }
       }
       &>.user-profile {
@@ -100,7 +103,6 @@ a {
           cursor: pointer;
         }
         &>a {
-          text-decoration: none;
           display: flex;
           flex-direction: column;
           text-align: center;
@@ -131,30 +133,13 @@ a {
         text-align: center;
         align-items: center;
         justify-content: center;
-        &.map-center {
-          flex: 1;
-          justify-content: flex-end;
-        }
-        &.login-bottom {
-          flex: 1;
-          justify-content: flex-end;
-        }
         &>a {
-          text-decoration: none;
           display: flex;
           flex-direction: column;
           text-align: center;
           align-items: center;
           justify-content: center;
           text-transform: uppercase;
-          color: @gray;
-          transition: color 0.75s ease;
-          &.active {
-            color: @dark-gray;
-          }
-          &:hover{
-            color: @dark-gray !important;
-          }
           &>i {
             font-size: 1.5em;
           }
