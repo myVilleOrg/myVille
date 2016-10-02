@@ -9,6 +9,8 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.css" />
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -22,8 +24,8 @@
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div ng-loading>
-      Issou
+    <div class="loading" ng-loading>
+      <i class="fa fa-spinner fa-spin"></i>
     </div>
     <div id="container" ng-controller="MainCtrl">
       <div class="sidebar">
@@ -38,6 +40,18 @@
                   <span class="text-icon">MAPS</span>
                 </a>
               </li>
+              <li ng-if="token" ng-class="{'map-center': !token}">
+                <a href="/#/" ng-class="{ active: isActive('/add') }">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                  <span class="text-icon">Add mine</span>
+                </a>
+              </li>
+              <li ng-if="token" ng-class="{'map-center': !token}">
+                <a href="/#/" ng-class="{ active: isActive('/mine') }">
+                  <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                  <span class="text-icon">Mine</span>
+                </a>
+              </li>
             </ul>
             <div class="user-sidebar">
                 <a ng-if="!token" href="/#/login" ng-class="{ active: isActive('/login') }">
@@ -45,8 +59,11 @@
                   <span class="text-icon">Login</span>
                 </a>
                 <div ng-if="token" class="user-profile">
-                  <img ng-src="{{user.avatar ? user.avatar : 'http://lol.Fr'}}" />
-                  {{user.nickname}}
+                  <div class="disconnect-user" ng-click="disconnect()"><i class="fa fa-times-circle"></i></div>
+                  <a href="/#/profile/update">
+                    <img ng-src="{{user.avatar ? user.avatar : 'images/profile-default.png'}}" />
+                    {{user.nickname}}
+                  </a>
                 </div>
             </div>
           </div>
@@ -67,6 +84,7 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/ng-dialog/js/ngDialog.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>

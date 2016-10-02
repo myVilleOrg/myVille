@@ -25,12 +25,33 @@ button.btn-blue {
   outline: none;
   margin-top: 1em;
 }
+a {
+  color: #C9D3DB;
+  transition: color 0.75s ease;
+}
+a:hover {
+  color: #5a5d82;
+}
+a.active {
+  color: #5a5d82;
+}
 #container {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
   flex-flow: row wrap;
+}
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 10000;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+.loading i {
+  font-size: 3em;
 }
 .sidebar {
   display: block;
@@ -66,17 +87,28 @@ button.btn-blue {
   text-align: center;
   align-items: center;
   justify-content: center;
-  color: #C9D3DB;
-  transition: color 0.75s ease;
-}
-.sidebar > .sidebar-wrapper > .user-sidebar > a.active {
-  color: #5a5d82;
-}
-.sidebar > .sidebar-wrapper > .user-sidebar > a:hover {
-  color: #5a5d82 !important;
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > a > i {
   font-size: 2em;
+}
+.sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > .disconnect-user {
+  position: absolute;
+  z-index: 10000;
+  color: red;
+  left: 2.8em;
+  cursor: pointer;
+}
+.sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > a {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > a > img {
+  width: 2em;
+  height: 2em;
+  border-radius: 2em;
 }
 .sidebar > .sidebar-wrapper > ul {
   flex: 0.9;
@@ -124,7 +156,10 @@ button.btn-blue {
   color: #5a5d82 !important;
 }
 .sidebar > .sidebar-wrapper > ul > li > a > i {
-  font-size: 2em;
+  font-size: 1.5em;
+}
+.sidebar > .sidebar-wrapper > ul > li > a > .text-icon {
+  font-size: 0.8em;
 }
 .side-sidebar {
   transition: all 1s ease;
@@ -148,6 +183,12 @@ button.btn-blue {
   justify-content: center;
   align-items: center;
   padding: 0.1em;
+}
+.side-sidebar > .wrapper-side-sidebar > .heading-side a {
+  color: white;
+}
+.side-sidebar > .wrapper-side-sidebar > .heading-side a:hover {
+  color: white;
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side > .back {
   flex: 0.1;

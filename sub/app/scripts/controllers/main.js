@@ -17,9 +17,16 @@ angular.module('appApp')
           center: {
               lat: 51.505,
               lng: -0.09,
-              zoom: 8
+              zoom: 14,
+              autoDiscover: true
           }
       });
+      $scope.disconnect = function(){
+        delete $rootScope.token;
+        delete $rootScope.user;
+        localStorageService.remove('token');
+        localStorageService.remove('user');
+      }
       var token = localStorageService.get('token');
       if(token) {
         $rootScope.token = token;

@@ -16,7 +16,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'leaflet-directive',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'ngDialog'
   ])
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('myVille');
@@ -31,6 +32,11 @@ angular
         controller: 'LoginCtrl',
         controllerAs: 'login',
         templateUrl: 'views/login.html',
+      })
+      .when('/profile/update', {
+        controller: 'ProfileCtrl',
+        controllerAs: 'profile',
+        templateUrl: 'views/profile_update.html',
       })
       .otherwise({
         redirectTo: '/'

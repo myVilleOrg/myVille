@@ -19,8 +19,10 @@ angular.module('appApp')
           $rootScope.user = user.data.user;
           localStorageService.set('token', user.data.token);
           localStorageService.set('user', user.data.user);
+          $scope.message = '';
           $window.location.href = '#/';
         }, function(error){
+          $scope.message = error.data.message;
           console.log(error.data);
         });
     } else {
