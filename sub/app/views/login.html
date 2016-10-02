@@ -1,18 +1,10 @@
-<div class="wrapper-side-sidebar">
-  <div class="heading-side">
-    <a href="/#/"><i class="fa fa-chevron-left back"></i></a>
-    <div class="heading-title">
-    Login
-    </div>
-  </div>
-  <div class="content-side">
+<collapse-sidebar heading-title="Login">
     <div ng-if="message">
-    {{message}}
+      {{message}}
     </div>
     <h1>Username</h1>
     <input type="text" ng-model="user.username" placeholder="Username" />
     <h1>Password</h1>
     <input type="password" ng-model="user.password" placeholder="Password" />
     <button class='btn-blue' ng-click="loginClick()">Login</button>
-  </div>
-</div>
+</collapse-sidebar>
