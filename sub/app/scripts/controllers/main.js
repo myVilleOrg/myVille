@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$rootScope', function ($scope, $location, localStorageService, $rootScope) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', function ($scope, $location, localStorageService, $window, $rootScope) {
       $scope.isActive = function (viewLocation) {
         var active = (viewLocation === $location.path());
         return active;
@@ -26,6 +26,7 @@ angular.module('appApp')
         delete $rootScope.user;
         localStorageService.remove('token');
         localStorageService.remove('user');
+        $window.location.href = '#/';
       }
       var token = localStorageService.get('token');
       if(token) {

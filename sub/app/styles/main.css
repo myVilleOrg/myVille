@@ -1,6 +1,10 @@
 * {
   font-family: 'Montserrat', sans-serif;
 }
+img {
+  max-width: 100%;
+  height: auto;
+}
 html,
 body {
   margin: 0;
@@ -94,11 +98,15 @@ a.active {
 .sidebar > .sidebar-wrapper > .user-sidebar > a > i {
   font-size: 1.5em;
 }
+.sidebar > .sidebar-wrapper > .user-sidebar > .user-profile {
+  position: relative;
+}
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > .disconnect-user {
   position: absolute;
   z-index: 10000;
   color: red;
-  left: 2.8em;
+  right: 0;
+  top: 0;
   cursor: pointer;
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > a {
@@ -183,11 +191,61 @@ a.active {
 }
 .side-sidebar > .wrapper-side-sidebar > .content-side {
   flex: 0.9;
-  padding: 1.5em;
   display: flex;
   flex-direction: column;
 }
 .side-sidebar > .wrapper-side-sidebar > .content-side > h1 {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: #5a5d82;
+}
+.profile-picture {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
+.profile-picture img {
+  max-width: 10em;
+  max-height: 10em;
+  border-radius: 100%;
+}
+.profile-picture > .profile-nickname {
+  color: black;
+}
+.profile-picture > .profile-description {
+  margin-top: 0.5em;
+  color: #C9D3DB;
+  font-size: 0.9em;
+}
+.profile-picture > .profile-detailled {
+  position: relative;
+  flex: 1;
+  margin-top: 1em;
+  display: block;
+  background-color: #f4f5f7;
+  width: 100%;
+  padding: 1em;
+}
+.profile-picture > .profile-detailled > .edit-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5em;
+  cursor: pointer;
+}
+.profile-picture > .profile-detailled > h1 {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: #5a5d82;
+}
+.login-side {
+  padding: 1.5em;
+  display: flex;
+  flex-direction: column;
+}
+.login-side > h1 {
   text-transform: uppercase;
   font-size: 0.8em;
   color: #5a5d82;

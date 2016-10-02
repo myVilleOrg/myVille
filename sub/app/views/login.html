@@ -1,4 +1,5 @@
-<collapse-sidebar heading-title="Login">
+<collapse-sidebar heading-title="Login" >
+  <div class="login-side">
     <div ng-if="message">
       {{message}}
     </div>
@@ -7,4 +8,5 @@
     <h1>Password</h1>
     <input type="password" ng-model="user.password" placeholder="Password" />
     <button class='btn-blue' ng-click="loginClick()">Login</button>
+  </div>
 </collapse-sidebar>
