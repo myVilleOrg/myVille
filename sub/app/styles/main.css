@@ -107,7 +107,7 @@ a.active {
   position: absolute;
   z-index: 10000;
   color: red;
-  right: 1em;
+  right: 0;
   top: -0.5em;
   cursor: pointer;
 }
@@ -294,11 +294,13 @@ a.active {
 .login-side > .social-group > .social-list > .social-circle {
   text-align: center;
   line-height: 2.5em;
+  color: #5a5d82;
   border: 1.5px #C9D3DB solid;
   margin-right: 5px;
   width: 36px;
   height: 36px;
   border-radius: 100%;
+  cursor: pointer;
 }
 .ngdialog {
   overflow: hidden;

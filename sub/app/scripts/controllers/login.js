@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('LoginCtrl', ['$rootScope', '$scope', '$window', 'myVilleAPI', 'localStorageService', function ($rootScope, $scope, $window, myVilleAPI, localStorageService) {
+.controller('LoginCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, hello) {
   $scope.user = {};
 
   $scope.loginClick = function() {
@@ -30,4 +30,22 @@ angular.module('appApp')
       $scope.message = 'Error, fiels needed.';
     }
   };
-}]);
+  $scope.loginFB = function(){
+    hello('facebook').login();
+  };
+  $scope.loginTwitter = function(){
+    hello('twitter').login();
+  };
+  hello.on("auth.login", function (auth) {
+    console.log(auth);
+    if(auth.network === 'facebook') {
+      myVilleAPI.User.loginFacebook({accessToken: auth.authResponse.access_token}).then(function(user){
+        $rootScope.token = user.data.token;
+        $rootScope.user = user.data.user;
+        localStorageService.set('token', user.data.token);
+        localStorageService.set('user', user.data.user);
+        $scope.closeThisDialog();
+      });
+    }
+  });
+});

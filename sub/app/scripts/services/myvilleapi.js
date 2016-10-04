@@ -16,6 +16,9 @@ angular.module('appApp')
           login: function(data){
             return $http.post(baseUrl + '/user/login', data);
           },
+          loginFacebook: function(data) {
+            return $http.post(baseUrl + '/user/login/facebook', data);
+          },
           create: function(data){
             return $http.post(baseUrl + '/user/create', data);
           }

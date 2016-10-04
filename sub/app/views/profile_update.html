@@ -1,6 +1,6 @@
 <collapse-sidebar id="profile" heading-title="Mon profil">
   <div class="profile-picture">
-    <img ng-src="{{user.avatar ? user.avatar : 'images/profile-default.png'}}" />
+    <img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
     <div class="profile-nickname">{{user.nickname}}</div>
     <div class="profile-description">{{user.description}} Lorem ipsum</div>
     <div class="profile-detailled">

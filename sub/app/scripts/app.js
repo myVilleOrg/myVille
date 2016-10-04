@@ -17,8 +17,14 @@ angular
     'ngTouch',
     'leaflet-directive',
     'LocalStorageModule',
-    'ngDialog'
+    'ngDialog',
+    'ngHello'
   ])
+  .config(function(helloProvider) {
+    helloProvider.init({
+      facebook: '269509866781876'
+    }, {redirect_uri: '/#/'});
+  })
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('myVille');
   })

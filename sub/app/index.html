@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>myVille</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -61,8 +61,7 @@
                 <div ng-if="token" class="user-profile">
                   <div class="disconnect-user" ng-click="disconnect()"><i class="fa fa-times-circle"></i></div>
                   <a href="/#/profile/update">
-                    <img ng-src="{{user.avatar ? user.avatar : 'images/profile-default.png'}}" />
-                    {{user.nickname}}
+                    <img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
                   </a>
                 </div>
             </div>
@@ -85,6 +84,8 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="bower_components/ng-dialog/js/ngDialog.js"></script>
+    <script src="bower_components/hello/dist/hello.all.min.js"></script>
+    <script src="bower_components/ng-hello/dist/ng-hello.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
@@ -94,9 +95,10 @@
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/services/myvilleapi.js"></script>
-     <script src="scripts/directives/ngloading.js"></script>
-     <script src="scripts/directives/collapse-sidebar.js"></script>
-     <script src="scripts/controllers/profile.js"></script>
-     <!-- endbuild -->
+    <script src="scripts/directives/ngloading.js"></script>
+    <script src="scripts/directives/collapse-sidebar.js"></script>
+    <script src="scripts/controllers/profile.js"></script>
+    <script src="scripts/services/hello.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
