@@ -22,8 +22,8 @@ angular
   ])
   .config(function(helloProvider) {
     helloProvider.init({
-      facebook: '269509866781876'
-    }, {redirect_uri: '/#/'});
+      facebook: '269509866781876',
+    });
   })
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('myVille');

@@ -31,21 +31,20 @@ angular.module('appApp')
     }
   };
   $scope.loginFB = function(){
-    hello('facebook').login({scope: 'email', force: true});
+    hello('facebook').login({scope: 'basic,email'}).then(function(auth){
+    	if(auth.network === 'facebook') {
+	      myVilleAPI.User.loginFacebook({accessToken: auth.authResponse.access_token}).then(function(user){
+	        $rootScope.token = user.data.token;
+	        $rootScope.user = user.data.user;
+	        localStorageService.set('token', user.data.token);
+	        localStorageService.set('user', user.data.user);
+	        $scope.closeThisDialog();
+	      });
+    	}
+    });
   };
   $scope.loginTwitter = function(){
     hello('twitter').login();
   };
-  hello.on("auth.login", function (auth) {
-    console.log(auth);
-    if(auth.network === 'facebook') {
-      myVilleAPI.User.loginFacebook({accessToken: auth.authResponse.access_token}).then(function(user){
-        $rootScope.token = user.data.token;
-        $rootScope.user = user.data.user;
-        localStorageService.set('token', user.data.token);
-        localStorageService.set('user', user.data.user);
-        $scope.closeThisDialog();
-      });
-    }
-  });
+
 });

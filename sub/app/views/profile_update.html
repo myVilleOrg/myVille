@@ -1,20 +1,20 @@
 <collapse-sidebar id="profile" heading-title="Mon profil">
-  <div class="profile-picture">
-    <img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
-    <div class="profile-nickname">{{user.nickname}}</div>
-    <div class="profile-description">{{user.description}} Lorem ipsum</div>
-    <div class="profile-detailled">
-      <div class="edit-icon" ng-click="editBox()"><i class="fa fa-pencil"></i></div>
-      <h1>Pseudonyme</h1>
-      <span class="edit-field">{{user.nickname}}</span>
+	<div class="profile-picture">
+		<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
+		<div class="profile-nickname">{{user.nickname}}</div>
+		<div class="profile-description" ng-if="user.description">{{user.description}} Lorem ipsum</div>
+		<div class="profile-detailled">
+			<div class="edit-icon" ng-click="editBox()"><i class="fa fa-pencil"></i></div>
+			<h1>Pseudonyme</h1>
+			<span class="edit-field">{{user.nickname}}</span>
 
-      <h1>Email</h1>
-      <span class="edit-field">{{user.email}}</span>
+			<h1>Email</h1>
+			<span class="edit-field">{{user.email}}</span>
 
-      <h1>Numéro</h1>
-      <span class="edit-field">{{user.phonenumber}}</span>
+			<h1 ng-if="user.phonenumber">Numéro</h1>
+			<span ng-if="user.phonenumber" class="edit-field">{{user.phonenumber}}</span>
 
-    </div>
-  </div>
+		</div>
+	</div>
 
 </collapse-sidebar>
