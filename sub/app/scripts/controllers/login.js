@@ -31,7 +31,7 @@ angular.module('appApp')
     }
   };
   $scope.loginFB = function(){
-    hello('facebook').login();
+    hello('facebook').login({scope: 'email', force: true});
   };
   $scope.loginTwitter = function(){
     hello('twitter').login();
