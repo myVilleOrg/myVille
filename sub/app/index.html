@@ -54,7 +54,7 @@
               </li>
             </ul>
             <div class="user-sidebar">
-                <a ng-if="!token" href="/#/login" ng-class="{ active: isActive('/login') }">
+                <a ng-if="!token" ng-click="login()" ng-class="{ active: isActive('/login') }">
                   <i class="fa fa-user" aria-hidden="true"></i>
                   <span class="text-icon">Login</span>
                 </a>

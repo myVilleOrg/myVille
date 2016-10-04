@@ -22,12 +22,13 @@ input {
   padding: 0.1em 0.3em 0.1em 0.3em;
 }
 button.btn-blue {
-  background-color: #15c9e9;
+  background-color: #55A3F6;
   border-radius: 0.6em;
   color: white;
   border: none;
   outline: none;
-  margin-top: 1em;
+  margin-top: 15px;
+  height: 50px;
 }
 a {
   text-decoration: none !important;
@@ -83,6 +84,7 @@ a.active {
   text-align: center;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > a {
   text-transform: uppercase;
@@ -105,8 +107,8 @@ a.active {
   position: absolute;
   z-index: 10000;
   color: red;
-  right: 0;
-  top: 0;
+  right: 1em;
+  top: -0.5em;
   cursor: pointer;
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > a {
@@ -241,17 +243,103 @@ a.active {
   color: #5a5d82;
 }
 .login-side {
-  padding: 1.5em;
+  padding: 1em;
   display: flex;
   flex-direction: column;
+  font-size: 0.95em;
 }
 .login-side > h1 {
   text-transform: uppercase;
   font-size: 0.8em;
   color: #5a5d82;
 }
+.login-side > .action-group {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  color: #C9D3DB;
+  font-size: 0.9em;
+}
+.login-side > .action-group > .remember-action {
+  flex: 0.5;
+}
+.login-side > .action-group > .remember-action > input:after {
+  content: " ";
+  background-color: #55A3F6 !important;
+  display: inline-block;
+  visibility: visible;
+}
+.login-side > .action-group > .create-account {
+  flex: 0.5;
+}
+.login-side > .action-group > .create-account > a {
+  color: #55A3F6 !important;
+  font-size: 0.8em;
+}
+.login-side > .social-group {
+  display: flex;
+  flex-direction: row;
+  color: #C9D3DB;
+  font-size: 0.9em;
+  margin-top: 30px;
+}
+.login-side > .social-group > .social-txt {
+  flex: 0.5;
+}
+.login-side > .social-group > .social-list {
+  display: flex;
+  flex: 0.5;
+  flex-direction: row;
+}
+.login-side > .social-group > .social-list > .social-circle {
+  text-align: center;
+  line-height: 2.5em;
+  border: 1.5px #C9D3DB solid;
+  margin-right: 5px;
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+}
+.ngdialog {
+  overflow: hidden;
+}
+.ngdialog-content {
+  background-color: white !important;
+  border-radius: 2px !important;
+  width: 600px !important;
+}
+.form-group > .input-group {
+  position: relative;
+  border-bottom: 1px solid #e8ecef;
+}
+.form-group > .input-group > .top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.form-group > .input-group > .top-right > a {
+  color: #55A3F6 !important;
+  font-size: 0.8em;
+}
+.form-group > .input-group > .input-group-addon {
+  background-color: white !important;
+  border: none;
+  color: #e8ecef;
+}
+.form-group > .input-group > input {
+  width: 100%;
+  border: none !important;
+  color: #e8ecef !important;
+}
 #map {
   transition: all 0.5s ease;
   flex: 1;
+}
+input:focus {
+  border: none !important;
+  outline: 0;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px white inset;
 }
 

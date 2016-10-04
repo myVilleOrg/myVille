@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', function ($scope, $location, localStorageService, $window, $rootScope) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog) {
       $scope.isActive = function (viewLocation) {
         var active = (viewLocation === $location.path());
         return active;
@@ -27,6 +27,9 @@ angular.module('appApp')
         localStorageService.remove('token');
         localStorageService.remove('user');
         $window.location.href = '#/';
+      }
+      $scope.login = function(){
+        ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html'});
       }
       var token = localStorageService.get('token');
       if(token) {

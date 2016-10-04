@@ -8,6 +8,8 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-  .controller('ProfileCtrl', function () {
-
-  });
+.controller('ProfileCtrl',['$scope', 'ngDialog', function ($scope, ngDialog) {
+  $scope.editBox = function(){
+    ngDialog.open({ template: 'views/login.html', className: 'ngdialog-theme-default' });
+  };
+}]);

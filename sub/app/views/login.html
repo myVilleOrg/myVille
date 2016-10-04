@@ -1,12 +1,40 @@
-<collapse-sidebar heading-title="Login" >
-  <div class="login-side">
-    <div ng-if="message">
-      {{message}}
-    </div>
-    <h1>Username</h1>
-    <input type="text" ng-model="user.username" placeholder="Username" />
-    <h1>Password</h1>
-    <input type="password" ng-model="user.password" placeholder="Password" />
-    <button class='btn-blue' ng-click="loginClick()">Login</button>
+<div class="login-side">
+  <div ng-if="message">
+    {{message}}
   </div>
-</collapse-sidebar>
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-addon"><i class="fa fa-user"></i></div>
+      <input type="text" ng-model="user.username" placeholder="Username" />
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <div class="top-right"><a href="">Mot de passe oublié ?</a></div>
+      <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+      <input type="password" ng-model="user.password" placeholder="Password" />
+    </div>
+  </div>
+  <button class='btn-blue' ng-click="loginClick()">Login</button>
+  <div class="action-group">
+    <div class="remember-action">
+    <input type="checkbox" value="true" class="checkbox-input" /> Se souvenir de moi
+    </div>
+    <div class="create-account">
+      Vous n'avez pas de compte ? <a>S'inscrire</a>
+    </div>
+  </div>
+  <div class="social-group">
+    <div class="social-txt">
+    Ou connectez vous avec
+    </div>
+    <div class="social-list">
+      <div class="social-circle">
+        <i class="fa fa-facebook"></i>
+      </div>
+      <div class="social-circle">
+        <i class="fa fa-twitter"></i>
+      </div>
+    </div>
+  </div>
+</div>
