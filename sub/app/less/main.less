@@ -37,10 +37,10 @@ a {
   color: @gray;
   transition: color 0.75s ease;
   &:hover {
-    color: @dark-gray;
+    color: @blue-btn;
   }
   &.active {
-    color: @dark-gray;
+    color: @blue-btn;
   }
 }
 
@@ -52,12 +52,19 @@ a {
   flex-flow: row wrap;
 }
 .loading {
+	display: flex;
   position: fixed;
-  top: 50%;
-  left: 50%;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+	text-align: center;
+	align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  height: 100%;
   z-index: 10000;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
+  background-color: white;
   i {
     font-size: 3em;
   }
