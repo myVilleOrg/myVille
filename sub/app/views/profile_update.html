@@ -2,17 +2,30 @@
 	<div class="profile-picture">
 		<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
 		<div class="profile-nickname">{{user.nickname}}</div>
-		<div class="profile-description" ng-if="user.description">{{user.description}} Lorem ipsum</div>
+
+		<div ng-if="!editMode" class="profile-description" ng-if="user.description">{{user.description}}</div>
+		<div ng-if="editMode && user.description" class="profile-description"><textarea>{{user.description}}</textarea></div>
+
 		<div class="profile-detailled">
-			<div class="edit-icon" ng-click="editBox()"><i class="fa fa-pencil"></i></div>
+			<h1 ng-if="message">{{message}}</h1>
+			<div class="edit-icon" ng-click="editBox()"><i ng-class="editMode ? 'fa fa-user' : 'fa fa-pencil'"></i></div>
 			<h1>Pseudonyme</h1>
-			<span class="edit-field">{{user.nickname}}</span>
+			<span ng-if="!editMode" class="edit-field">{{user.nickname}}</span>
+			<span ng-if="editMode" class="edit-field"><input type="text" ng-model="editUser.nickname" /></span>
 
 			<h1>Email</h1>
 			<span class="edit-field">{{user.email}}</span>
 
 			<h1 ng-if="user.phonenumber">Numéro</h1>
 			<span ng-if="user.phonenumber" class="edit-field">{{user.phonenumber}}</span>
+
+			<h1 ng-if="editMode">Ancien mot de passe</h1>
+			<span ng-if="editMode" class="edit-field"><input type="password" ng-model="editUser.Opassword" /></span>
+
+			<h1 ng-if="editMode">Nouveau mot de passe</h1>
+			<span ng-if="editMode" class="edit-field"><input type="password" ng-model="editUser.Npassword" /></span>
+
+			<button ng-if="editMode" class='btn-blue' ng-click="editClick()">Editer</button>
 
 		</div>
 	</div>

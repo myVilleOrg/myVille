@@ -21,6 +21,9 @@ angular.module('appApp')
           },
           create: function(data){
             return $http.post(baseUrl + '/user/create', data);
+          },
+          update: function(data) {
+          	return $http.put(baseUrl + '/user/update', data, {headers: {'x-access-token': $rootScope.token}});
           }
         }
       };
