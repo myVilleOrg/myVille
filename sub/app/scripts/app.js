@@ -46,6 +46,16 @@ angular
         controller: 'ProfileCtrl',
         controllerAs: 'profile',
         templateUrl: 'views/profile_update.html',
+        resolve: {
+			    app: function($q, $rootScope, $location) {
+			        var defer = $q.defer();
+			        if ($rootScope.user == undefined) {
+			            $location.path('/');
+			        };
+			        defer.resolve();
+			        return defer.promise;
+			    }
+        }
       })
       .otherwise({
         redirectTo: '/'
