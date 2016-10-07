@@ -51,7 +51,7 @@ angular
 			        var defer = $q.defer();
 			        if ($rootScope.user == undefined) {
 			            $location.path('/');
-			        };
+			        }
 			        defer.resolve();
 			        return defer.promise;
 			    }
