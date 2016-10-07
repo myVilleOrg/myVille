@@ -57,6 +57,12 @@ angular
 			    }
         }
       })
+      .when('/account', {
+        coontroller: 'AccountCtrl',
+        controllerAs: 'account',
+        templateUrl: 'views/create_account.html',
+        
+      })
       .otherwise({
         redirectTo: '/'
       });
