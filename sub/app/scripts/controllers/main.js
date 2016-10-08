@@ -28,16 +28,17 @@ angular.module('appApp')
 			var showUas = function(){
 				leafletData.getMap().then(function(map){
 					$rootScope.map = map;
-					myVilleAPI.UAS.get({map: JSON.stringify([[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getNorthEast().lng, map.getBounds().getNorthEast().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat], [map.getBounds().getSouthWest().lng, map.getBounds().getSouthWest().lat]])}).then(function(geocodes){
+					var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
+					myVilleAPI.UAS.get({map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						angular.extend($scope, {
 							geojson: {
 								data: geocodes.data,
 								style: {
 										weight: 1,
 										opacity: 1,
-										fillColor: 'white',
-										color: 'white',
-										dashArray: '3',
+										fillColor: 'black',
+										color: 'black',
+										dashArray: '1',
 										fillOpacity: 0.7
                  },
 								resetStyleOnMouseout: true
@@ -71,6 +72,9 @@ angular.module('appApp')
 					showUas();
 			});
 
+			$scope.$on('leafletDirectiveGeoJson.map.click', function(event, leafletPayload){
+				console.log(leafletPayload.leafletObject);
+			});
 			var token = localStorageService.get('token');
 			if(token) {
 				$rootScope.token = token;
