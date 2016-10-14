@@ -10,16 +10,19 @@
 angular.module('appApp')
 .controller('LoginCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, hello) {
 	$scope.user = {};
-
+	function authUser(user){
+		$rootScope.token = user.token;
+		$rootScope.user = user.user;
+		localStorageService.set('token', user.token);
+		var expiryToken = Date.now();
+		localStorageService.set('expiryToken', expiryToken + 86400000);
+		localStorageService.set('user', user.user);
+	}
 	$scope.loginClick = function() {
 		if($scope.user.username || $scope.user.password){
 				myVilleAPI.User.login($scope.user).then(function(user){
 					if(!user.data.user) return $scope.message = 'Mauvaise combinaison';
-					$rootScope.token = user.data.token;
-					$rootScope.user = user.data.user;
-					localStorageService.set('token', user.data.token);
-					localStorageService.set('expiryToken', new Date() + 86400000);
-					localStorageService.set('user', user.data.user);
+					authUser(user.data);
 					$scope.message = '';
 					$scope.closeThisDialog();
 				}, function(error){
@@ -34,11 +37,7 @@ angular.module('appApp')
 		hello('facebook').login({scope: 'basic,email'}).then(function(auth){
 			if(auth.network === 'facebook') {
 				myVilleAPI.User.loginFacebook({accessToken: auth.authResponse.access_token}).then(function(user){
-					$rootScope.token = user.data.token;
-					$rootScope.user = user.data.user;
-					localStorageService.set('token', user.data.token);
-					localStorageService.set('expiryToken', new Date() + 86400000);
-					localStorageService.set('user', user.data.user);
+					authUser(user.data);
 					$scope.closeThisDialog();
 				});
 			}

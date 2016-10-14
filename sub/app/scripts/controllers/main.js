@@ -51,6 +51,7 @@ angular.module('appApp')
 				delete $rootScope.user;
 				localStorageService.remove('token');
 				localStorageService.remove('user');
+				localStorageService.remove('expiryToken');
 				$window.location.href = '#/';
 			};
 
@@ -73,10 +74,16 @@ angular.module('appApp')
 			$scope.$on('leafletDirectiveGeoJson.map.click', function(event, leafletPayload){
 				console.log(leafletPayload.leafletObject);
 			});
-			var token = localStorageService.get('token');
-			if(token) {
-				$rootScope.token = token;
-				var user = localStorageService.get('user');
-				if(user) $rootScope.user = user;
+			var expiryTokenTime = localStorageService.get('expiryToken');
+
+			if(expiryTokenTime && Date.now() < expiryTokenTime) {
+				var token = localStorageService.get('token');
+				if(token) {
+					$rootScope.token = token;
+					var user = localStorageService.get('user');
+					if(user) $rootScope.user = user;
+				}
+			} else {
+				$scope.disconnect();
 			}
 }]);
