@@ -24,7 +24,7 @@ angular.module('appApp')
   		oldPassword: $scope.editUser.Opassword
   	};
   	myVilleAPI.User.update(data).then(function(user){
-  		console.log(data);
+  		$rootScope.user.username = $scope.editUser.username;
   	});
   };
   $scope.editMode = false;

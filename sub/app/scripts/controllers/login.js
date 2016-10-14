@@ -7,7 +7,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('LoginCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, hello, ngDialog,$location) {
+.controller('LoginCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, hello, ngDialog) {
   $scope.user = {};
   $scope.user1 = {};
 
@@ -34,7 +34,6 @@ angular.module('appApp')
     }
   };
   $scope.create = function (){
-    /*ngDialog.open({controller: 'AccountCtrl', template: 'views/create_account.html'});*/
     $scope.log=false;
   }
 
@@ -46,17 +45,24 @@ angular.module('appApp')
     } else {
       var data = {
       username: $scope.user1.nickname,
-      password: $scope.user1.password,
       email: $scope.user1.email,
+      password: $scope.user1.password,
       phonenumber: $scope.user1.phonenumber
       };
 
       myVilleAPI.User.create(data).then(function(user){
-          console.log(data);
+          $rootScope.token = user.data.token;
+          $rootScope.user = user.data.user;
+          localStorageService.set('token', user.data.token);
+          localStorageService.set('user', user.data.user);
+
+        }, function(error){
+          $scope.message = error.data.message;
+          console.log(error.data);
         });
+    
     } 
-    ngDialog.close(); 
-    $location.path('/');
+    $scope.log=true;
   };
 
   $scope.loginFB = function(){
