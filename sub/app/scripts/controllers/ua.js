@@ -2,16 +2,20 @@
 
 /**
  * @ngdoc function
- * @name appApp.controller:MainCtrl
+ * @name appApp.controller:UACtrl
  * @description
- * # MainCtrl
+ * # UACtrl
  * Controller of the appApp
  */
 angular.module('appApp')
-  .controller('UACtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('UACtrl', function ($scope, myVilleAPI, ngDialog) {
+    $scope.user = {};
+    
+    $scope.uas = myVilleAPI.Ua.get_ua($scope.user);
+
+    $scope.createClick = function() {
+    	ngDialog.open({controller: 'CreateUACtrl', template: 'views/create_ua.html'});
+    }
+
+
   });

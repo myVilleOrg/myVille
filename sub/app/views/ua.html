@@ -1,34 +1,23 @@
-<!DOCTYPE html>
+<collapse-sidebar id="my_ua" heading-title="Mes UAs">
+	<div class="profile-picture">
+		<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
+		<div class="profile-nickname">{{user.nickname}}</div>
 
-<html>
+		<div ng-if="existUA">
+			<ul>
+				<li ng-repeat="us in uas">
+					
 
-    <head>
 
-        <meta charset="utf-8" />
+				</li>
 
-    </head>
 
-    <body>
-    	<h1>Mes UAs</h1>
-	        <h2>Ville :</h2>
-	        	<li>
-		        	<p>UA 1 :</p>
-		        	<input type="button" value="Voir fiche">
-		        	<input type="button" value="Editer" onclick="alert('Voulez vous editer votre UA ?')"> 
-		        	<input type="button" value="Publier" onclick="alert('Voulez vous publier votre UA ?')"> 
-		        	<input type="button" value="Supprimer" onclick="alert('Voulez vous supprimer votre UA ?')">
-		        	  
+			</ul>
+		</div>
 
-		        	<p>UA 2 :</p>
-		        	<input type="button" value="Voir fiche">
-		        	<input type="button" value="Editer" onclick="alert('Voulez vous editer votre UA ?')"> 
-		        	<input type="button" value="Publier" onclick="alert('Voulez vous publier votre UA ?')"> 
-		        	<input type="button" value="Supprimer" onclick="alert('Voulez vous supprimer votre UA ?')">
+		<div>
+			<button  class='btn-blue' ng-click="createClick()">Créer une UA</button>
+		</div>
 
-	        	</li>
-	        	
-	        <h2>Ville :</h2>
-
-    </body>
-
-</html>
+	</div>
+</collapse-sidebar>

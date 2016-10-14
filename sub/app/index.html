@@ -41,15 +41,15 @@
                 </a>
               </li>
               <li ng-if="token">
-                <a href="/#/" ng-class="{ active: isActive('/add') }">
+                <a href="/#/ua" ng-class="{ active: isActive('/add') }">
                   <i class="fa fa-plus" aria-hidden="true"></i>
-                  <span class="text-icon">Add mine</span>
+                  <span class="text-icon">Mes UAs</span>
                 </a>
               </li>
               <li ng-if="token">
                 <a href="/#/" ng-class="{ active: isActive('/mine') }">
                   <i class="fa fa-thumb-tack" aria-hidden="true"></i>
-                  <span class="text-icon">Mine</span>
+                  <span class="text-icon">UAs favorites</span>
                 </a>
               </li>
             </ul>
@@ -98,6 +98,8 @@
     <script src="scripts/directives/ngloading.js"></script>
     <script src="scripts/directives/collapse-sidebar.js"></script>
     <script src="scripts/controllers/profile.js"></script>
+    <script src="scripts/controllers/ua.js"></script>
+    <script src="scripts/controllers/create_ua.js"></script>
     <script src="scripts/services/hello.js"></script>
     <!-- endbuild -->
 </body>

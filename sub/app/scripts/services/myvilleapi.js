@@ -25,7 +25,18 @@ angular.module('appApp')
           update: function(data) {
           	return $http.put(baseUrl + '/user/update', data, {headers: {'x-access-token': $rootScope.token}});
           }
+          
+        },
+
+        Ua: {
+          get_ua: function(data){
+            return $http.get(baseUrl + '/ua/get/mine', data, {headers: {'x-access-token': $rootScope.token}});
+          },
+          create: function(data){
+            return $http.post(baseUrl + '/ua/create', data, {headers: {'x-access-token': $rootScope.token}});
+          }
         }
+
       };
       return dataFactory;
     }]);
