@@ -28,6 +28,20 @@ angular
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('myVille');
   })
+  .config(function($httpProvider) {
+  	$httpProvider.interceptors.push(['localStorageService', function(localStorageService){
+  		return {
+  			response: function(response){
+  				var currentToken = localStorageService.get('token');
+  				var receivedToken = response.headers('x-access-token');
+  				if(currentToken != receivedToken) {
+  					localStorageService.set('token', receivedToken);
+  				}
+  				return response;
+  			}
+  		};
+  	}]);
+  })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
