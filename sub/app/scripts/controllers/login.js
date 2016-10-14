@@ -44,9 +44,7 @@ angular.module('appApp')
     });
   };
   $scope.loginGoogle = function(){
-    console.log(1);
     hello('google').login({scope: 'basic,email'}).then(function(auth){
-      console.log(11);
       if(auth.network === 'google'){
         myVilleAPI.User.loginGoogle({accessToken: auth.authResponse.access_token}).then(function(user){
           $rootScope.token = user.data.token;
