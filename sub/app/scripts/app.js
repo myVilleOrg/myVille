@@ -23,6 +23,7 @@ angular
   .config(function(helloProvider) {
     helloProvider.init({
       facebook: '269509866781876',
+      google: '49433176261-hjeueecpafioh56r67fik9nqkum5np0g.apps.googleusercontent.com',
     });
   })
   .config(function (localStorageServiceProvider) {

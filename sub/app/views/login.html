@@ -1,40 +1,40 @@
 <div class="login-side">
-  <div ng-if="message">
-    {{message}}
-  </div>
-  <div class="form-group">
-    <div class="input-group">
-      <div class="input-group-addon"><i class="fa fa-user"></i></div>
-      <input type="text" ng-model="user.email" placeholder="Email" />
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="input-group">
-      <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-      <input type="password" ng-model="user.password" placeholder="Password" />
-      <div class="top-right"><a href="">Mot de passe oublié ?</a></div>
-    </div>
-  </div>
-  <button class='btn-blue' ng-click="loginClick()">Login</button>
-  <div class="action-group">
-    <div class="remember-action">
-    	<input type="checkbox" checked="true" class="checkbox-input" /> Se souvenir de moi
-    </div>
-    <div class="create-account">
-      Vous n'avez pas de compte ? <a>S'inscrire</a>
-    </div>
-  </div>
-  <div class="social-group">
-    <div class="social-txt">
-    Ou connectez vous avec
-    </div>
-    <div class="social-list">
-      <div ng-click="loginFB()" class="social-circle">
-        <i class="fa fa-facebook"></i>
-      </div>
-      <div ng-click="loginTwitter()" class="social-circle">
-        <i class="fa fa-twitter"></i>
-      </div>
-    </div>
-  </div>
+	<div ng-if="message">
+		{{message}}
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-addon"><i class="fa fa-user"></i></div>
+			<input type="text" ng-model="user.email" placeholder="Email" />
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-addon"><i class="fa fa-lock"></i></div>
+			<input type="password" ng-model="user.password" placeholder="Password" />
+			<div class="top-right"><a href="">Mot de passe oublié ?</a></div>
+		</div>
+	</div>
+	<button class='btn-blue' ng-click="loginClick()">Login</button>
+	<div class="action-group">
+		<div class="remember-action">
+			<input type="checkbox" checked="true" class="checkbox-input" /> Se souvenir de moi
+		</div>
+		<div class="create-account">
+			Vous n'avez pas de compte ? <a>S'inscrire</a>
+		</div>
+	</div>
+	<div class="social-group">
+		<div class="social-txt">
+		Ou connectez vous avec
+		</div>
+		<div class="social-list">
+			<div ng-click="loginFB()" class="social-circle">
+				<i class="fa fa-facebook"></i>
+			</div>
+			<div ng-click="loginGoogle()" class="social-circle">
+				<i class="fa fa-google"></i>
+			</div>
+		</div>
+	</div>
 </div>

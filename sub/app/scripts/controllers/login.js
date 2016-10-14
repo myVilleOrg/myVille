@@ -43,6 +43,19 @@ angular.module('appApp')
     	}
     });
   };
+  $scope.loginGoogle = function(){
+    hello('google').login({scope: 'basic,email'}).then(function(auth){
+      if(auth.network === 'google'){
+        myVilleAPI.User.loginGoogle({accessToken: auth.authResponse.access_token}).then(function(user){
+          $rootScope.token = user.data.token;
+          $rootScope.user = user.data.user;
+          localStorageService.set('token', user.data.token);
+          localStorageService.set('user', user.data.user);
+          $scope.closeThisDialog();
+        });
+      }
+    });
+  };
   $scope.loginTwitter = function(){
     hello('twitter').login();
   };
