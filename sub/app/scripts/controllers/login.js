@@ -49,7 +49,6 @@ angular.module('appApp')
       console.log(11);
       if(auth.network === 'google'){
         myVilleAPI.User.loginGoogle({accessToken: auth.authResponse.access_token}).then(function(user){
-          console.log(13);
           $rootScope.token = user.data.token;
           $rootScope.user = user.data.user;
           localStorageService.set('token', user.data.token);
