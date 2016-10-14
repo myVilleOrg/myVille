@@ -28,23 +28,21 @@ angular.module('appApp')
 			var showUas = function(){
 				leafletData.getMap().then(function(map){
 					$rootScope.map = map;
+
 					var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
 					myVilleAPI.UAS.get({map: JSON.stringify(mapBounds)}).then(function(geocodes){
-						angular.extend($scope, {
-							geojson: {
-								data: geocodes.data,
-								style: {
-										weight: 1,
-										opacity: 1,
-										fillColor: 'black',
-										color: 'black',
-										dashArray: '1',
-										fillOpacity: 0.7
-                 },
-								resetStyleOnMouseout: true
-							},
+
+						var markers = L.markerClusterGroup();
+						var geoJsonLayer = L.geoJson(geocodes.data, {
+							onEachFeature: function (feature, layer) {
+								layer.bindPopup(feature.properties._doc.description);
+							}
 						});
-					});
+						markers.addLayer(geoJsonLayer);
+						leafletData.getMap().then(function(map) {
+							map.addLayer(markers);
+							});
+						});
 				});
 			};
 

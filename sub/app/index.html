@@ -8,9 +8,9 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.css" />
-    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.css" />
+    <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='bower_components/ng-dialog/css/ngDialog.css' />
+    <link rel='stylesheet' href='bower_components/ng-dialog/css/ngDialog-theme-default.css' />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -20,13 +20,13 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   </head>
-  <body ng-app="appApp">
+  <body ng-app="appApp" ng-cloak="">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div class="loading" ng-loading>
+    <!--<div class="loading">
       <i class="fa fa-spinner fa-spin"></i>
-    </div>
+    </div>-->
     <div id="container" ng-controller="MainCtrl">
       <div class="sidebar">
           <div class="sidebar-wrapper">
@@ -69,7 +69,7 @@
       </div>
       <div class="side-sidebar" ng-view="">
       </div>
-      <leaflet id="map" width="auto" height="100%" geojson="geojson" lf-center="center"></leaflet>
+      <leaflet id="map" width="auto" height="100%" lf-center="center"></leaflet>
     </div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -89,6 +89,9 @@
     <!-- endbower -->
     <!-- endbuild -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+      <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
     <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
