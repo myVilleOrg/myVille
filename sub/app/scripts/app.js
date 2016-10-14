@@ -23,13 +23,11 @@ angular
   .config(function(helloProvider) {
     helloProvider.init({
       facebook: '269509866781876',
+      google: '49433176261-hjeueecpafioh56r67fik9nqkum5np0g.apps.googleusercontent.com',
     });
   })
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('myVille');
-  })
-  .config(function ($httpProvider) {
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
   })
   .config(function ($routeProvider) {
     $routeProvider
@@ -51,7 +49,7 @@ angular
 			        var defer = $q.defer();
 			        if ($rootScope.user == undefined) {
 			            $location.path('/');
-			        };
+			        }
 			        defer.resolve();
 			        return defer.promise;
 			    }

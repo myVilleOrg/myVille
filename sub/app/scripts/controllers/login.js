@@ -34,28 +34,29 @@ angular.module('appApp')
     }
   };
   $scope.create = function (){
-    /*ngDialog.open({controller: 'AccountCtrl', template: 'views/create_account.html'});*/
-    $scope.log=false;
+    $scope.log = false;
   }
 
   $scope.createClick = function(){
-    console.log($scope.user1);
     if(!$scope.user1.nickname || !$scope.user1.password || !$scope.user1.email || !$scope.user1.phonenumber){
       return $scope.message1 = 'Un ou des champs sont manquant.';
 
     } else {
       var data = {
-      username: $scope.user1.nickname,
-      password: $scope.user1.password,
-      email: $scope.user1.email,
-      phonenumber: $scope.user1.phonenumber
+	      username: $scope.user1.nickname,
+	      password: $scope.user1.password,
+	      email: $scope.user1.email,
+	      phonenumber: $scope.user1.phonenumber
       };
 
       myVilleAPI.User.create(data).then(function(user){
-          console.log(data);
-        });
-    } 
-    ngDialog.close(); 
+    	    $rootScope.token = user.data.token;
+	        $rootScope.user = user.data.user;
+	        localStorageService.set('token', user.data.token);
+	        localStorageService.set('user', user.data.user);
+      });
+    }
+    ngDialog.close();
     $location.path('/');
   };
 
@@ -70,6 +71,19 @@ angular.module('appApp')
 	        $scope.closeThisDialog();
 	      });
     	}
+    });
+  };
+  $scope.loginGoogle = function(){
+    hello('google').login({scope: 'basic,email'}).then(function(auth){
+      if(auth.network === 'google'){
+        myVilleAPI.User.loginGoogle({accessToken: auth.authResponse.access_token}).then(function(user){
+          $rootScope.token = user.data.token;
+          $rootScope.user = user.data.user;
+          localStorageService.set('token', user.data.token);
+          localStorageService.set('user', user.data.user);
+          $scope.closeThisDialog();
+        });
+      }
     });
   };
   $scope.loginTwitter = function(){
