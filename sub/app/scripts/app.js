@@ -23,6 +23,7 @@ angular
 	.config(function(helloProvider) {
 		helloProvider.init({
 			facebook: '269509866781876',
+			google: '49433176261-hjeueecpafioh56r67fik9nqkum5np0g.apps.googleusercontent.com'
 		});
 	})
 	.config(function (localStorageServiceProvider) {
@@ -72,13 +73,8 @@ angular
 				controllerAs: 'profile',
 				templateUrl: 'views/profile_update.html',
 				resolve: {
-					app: function($q, $rootScope, $location) {
-							var defer = $q.defer();
-							if ($rootScope.user == undefined) {
-									$location.path('/');
-							}
-							defer.resolve();
-							return defer.promise;
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
 					}
 				}
 			})
