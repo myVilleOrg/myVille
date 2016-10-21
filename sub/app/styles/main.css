@@ -262,6 +262,7 @@ a.active {
   display: flex;
   flex-direction: column;
   font-size: 0.95em;
+  text-align: center;
 }
 .login-side > h1 {
   text-transform: uppercase;
@@ -315,6 +316,12 @@ a.active {
   width: 36px;
   height: 36px;
   border-radius: 100%;
+  cursor: pointer;
+}
+.top-left-dialog {
+  position: absolute;
+  top: 5px;
+  left: 5px;
   cursor: pointer;
 }
 .ngdialog {
