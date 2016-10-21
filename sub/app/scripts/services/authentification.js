@@ -23,6 +23,13 @@ angular.module('appApp')
 					localStorageService.set('expiryToken', Date.now());
           localStorageService.set('token', token);
           localStorageService.set('user', user);
+  			},
+  			logout: function(){
+					delete $rootScope.token;
+					delete $rootScope.user;
+					localStorageService.remove('token');
+					localStorageService.remove('user');
+					localStorageService.remove('expiryToken');
   			}
   		};
 }]);
