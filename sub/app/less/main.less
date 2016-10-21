@@ -189,19 +189,18 @@ a {
       padding: 0.1em;
       a {
         color: white;
+       	flex: 0.2;
         &:hover {
           color: white;
         }
       }
-      &>.back {
-        flex: 0.1;
-      }
       &>.heading-title {
-        flex: 0.9;
+        flex: 0.8;
       }
     }
     &>.content-side {
       flex: 0.9;
+
       display: flex;
       flex-direction: column;
       &>h1 {
@@ -268,6 +267,7 @@ a {
   display: flex;
   flex-direction: column;
   font-size: 0.95em;
+  text-align: center;
   &>h1 {
     text-transform: uppercase;
     font-size: 0.8em;
@@ -322,6 +322,12 @@ a {
       }
     }
   }
+}
+.top-left-dialog {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	cursor: pointer;
 }
 .ngdialog {
     overflow: hidden;

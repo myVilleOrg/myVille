@@ -24,6 +24,10 @@ angular.module('appApp')
   	};
   	myVilleAPI.User.update(data).then(function(user){
   		$rootScope.user.username = $scope.editUser.username;
+  		$scope.editMode = false;
+  		$scope.message = '';
+  	}, function(err){
+  		$scope.message = err.data.message;
   	});
   };
   $scope.editMode = false;

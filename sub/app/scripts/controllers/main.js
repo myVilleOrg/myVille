@@ -74,6 +74,7 @@ angular.module('appApp')
 			$scope.$on('leafletDirectiveGeoJson.map.click', function(event, leafletPayload){
 				console.log(leafletPayload.leafletObject);
 			});
+
 			var expiryTokenTime = localStorageService.get('expiryToken');
 
 			if(expiryTokenTime && Date.now() < expiryTokenTime) {
