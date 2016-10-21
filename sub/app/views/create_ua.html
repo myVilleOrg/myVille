@@ -18,6 +18,13 @@
           <textarea rows="5" cols="48" ng-model="ua.desc" placeholder="Description" />
         </form>  
       </div>
+      <div class="input-group">
+      <button ng-click="getLocal()"> Localisation </button>
+        <ul>
+          <li>Coord X <input max-width="70px" ng-model="ua.geox" /></li>
+          <li>Coord Y <input max-width="70px" ng-model="ua.geoy" /></li>
+        </ul>  
+      </div>
       <input type="checkbox" checked="false" class="checkbox-input" ng-model="ua.mode" /> Rendre l'UA privé
     </div>
 

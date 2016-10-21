@@ -33,9 +33,15 @@ angular.module('appApp')
       $scope.message = 'Error, fiels needed.';
     }
   };
+
   $scope.create = function (){
     $scope.log=false;
-  }
+  };
+
+  $scope.backClick = function(){
+    $scope.log = true;
+  };
+
 
   $scope.createClick = function(){
     console.log($scope.user1);

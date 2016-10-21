@@ -67,6 +67,11 @@ angular
         controllerAs: 'create_ua',
         templateUrl: 'views/create_ua.html',
       })
+      .when('/fav_ua', {
+        controller: 'FavCtrl',
+        controllerAs: 'fav_ua',
+        templateUrl: 'views/fav_ua.html',
+      })
       .otherwise({
         redirectTo: '/'
       });
