@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService) {
 			$scope.isActive = function (viewLocation) {
 				var active = (viewLocation === $location.path());
 				return active;
@@ -47,11 +47,7 @@ angular.module('appApp')
 			};
 
 			$scope.disconnect = function(){
-				delete $rootScope.token;
-				delete $rootScope.user;
-				localStorageService.remove('token');
-				localStorageService.remove('user');
-				localStorageService.remove('expiryToken');
+				AuthentificationService.logout();
 				$window.location.href = '#/';
 			};
 
