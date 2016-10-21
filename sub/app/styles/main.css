@@ -364,4 +364,17 @@ input:focus {
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 50px white inset;
 }
+.leaflet-popup-content-wrapper {
+  border-radius: 0 !important;
+  padding: 2px !important;
+}
+.popup-map {
+  display: block;
+}
+.popup-map > .heading-popup {
+  border-bottom: 1px solid #e8ecef;
+}
+.popup-map > .owner-popup {
+  color: #5a5d82;
+}
 
