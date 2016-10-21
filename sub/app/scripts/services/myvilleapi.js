@@ -26,7 +26,7 @@ angular.module('appApp')
             return $http.post(baseUrl + '/user/create', data);
           },
           update: function(data) {
-          	return $http.put(baseUrl + '/user/update', data, {headers: {'x-access-token': $rootScope.token}});
+          	return $http.put(baseUrl + '/user/update', data);
           }
         },
         UAS: {

@@ -6,8 +6,7 @@
  * # MainCtrl
  * Controller of the appApp
  */
-angular.module('appApp')
-.controller('LoginCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, hello, ngDialog, $location) {
+angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, hello, ngDialog, $location) {
   $scope.user = {};
   $scope.signupUser = {};
   $scope.log = true;

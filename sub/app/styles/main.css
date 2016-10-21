@@ -188,15 +188,13 @@ a.active {
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side a {
   color: white;
+  flex: 0.2;
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side a:hover {
   color: white;
 }
-.side-sidebar > .wrapper-side-sidebar > .heading-side > .back {
-  flex: 0.1;
-}
 .side-sidebar > .wrapper-side-sidebar > .heading-side > .heading-title {
-  flex: 0.9;
+  flex: 0.8;
 }
 .side-sidebar > .wrapper-side-sidebar > .content-side {
   flex: 0.9;
