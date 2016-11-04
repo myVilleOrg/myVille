@@ -45,6 +45,7 @@ a {
   }
 }
 
+
 #container {
   width: 100%;
   height: 100%;
@@ -218,10 +219,25 @@ a {
   flex-direction: column;
   align-items: center;
   margin-top: 1em;
-  img {
-    max-width: 10em;
-    max-height: 10em;
-    border-radius: 100%;
+  &>.profile-avatar {
+    position: relative;
+    &>#new_avatar_file {
+      position: absolute;
+      border-radius: 100%;
+      top: 0px;
+      min-height: 10em;  
+      min-width: 10em;
+      max-height: 10em;  
+      max-width: 10em;
+      opacity: 0;
+    }
+    img {
+      min-width: 10em;
+      min-height: 10em;
+      max-width: 10em;
+      max-height: 10em;
+      border-radius: 100%;
+    }
   }
   &>.profile-nickname {
     color: black;
@@ -352,7 +368,7 @@ a {
     &>input {
       width: 100%;
       border: none !important;
-      color: @light-gray !important;
+      color: @right-gray !important;
     }
   }
 }

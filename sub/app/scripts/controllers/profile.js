@@ -26,6 +26,32 @@ angular.module('appApp')
   		$rootScope.user.username = $scope.editUser.username;
   	});
   };
+  $scope.editAvatarClick = function(element){
+
+
+    var files = element.files;
+
+
+    var reader = new FileReader();
+    $rootScope.user.avatar = reader.readAsDataURL(files[0]);
+
+    reader.onload = function (e) {
+      $scope.fileContent = reader.result;
+      $rootScope.user.avatar = e.target.result;
+      $scope.$apply();
+      $rootScope.$apply();
+      //console.log(e.target.result);
+
+      var data = {
+        avatar: e.target.result
+      };
+      myVilleAPI.User.updateAvatar(data).then(function(user){
+      });
+      
+    }
+
+    console.log(files[0]);
+  };
   $scope.editMode = false;
 
 }]);
