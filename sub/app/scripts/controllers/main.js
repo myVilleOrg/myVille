@@ -14,24 +14,35 @@ angular.module('appApp')
 				return active;
 			};
 
-			angular.extend($scope, {
-					center: {
-							lat: 51.505,
-							lng: -0.09,
-							zoom: 14,
-							autoDiscover: true
-					},
-					bounds: {},
-					geojson : {}
-			});
+			$scope.disconnect = function(){
+				AuthentificationService.logout();
+				$window.location.href = '#/';
+			};
+
+			$scope.login = function(){
+				ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html'});
+			};
+
+			$scope.$watch('filters', function(newv, old){ //on filter change
+				if(JSON.stringify(newv) !== JSON.stringify(old)){
+					showUas();
+				}
+				if(newv.mine){
+					$window.location.href = '#/profile/mine';
+				} else {
+					$window.location.href = '#/';
+				}
+			}, true);
 
 			var showUas = function(){
 				leafletData.getMap().then(function(map){
 					$rootScope.map = map;
+					if($rootScope.markerLayer) map.removeLayer($rootScope.markerLayer);
 
 					var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
-					myVilleAPI.UAS.get({map: JSON.stringify(mapBounds)}).then(function(geocodes){
-
+					var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.get;
+					filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
+						$rootScope.cachedMarkers = geocodes.data;
 						var markers = L.markerClusterGroup();
 						var geoJsonLayer = L.geoJson(geocodes.data, {
 							onEachFeature: function (feature, layer) {
@@ -42,7 +53,7 @@ angular.module('appApp')
 																		'</a>' +
 																	'</div>' +
 																	'<div class="owner-popup">' +
-																	'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).lang('fr').fromNow() +
+																	'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
 																	'</div>' +
 																'</div>';
 
@@ -50,26 +61,16 @@ angular.module('appApp')
 							}
 						});
 						markers.addLayer(geoJsonLayer);
-						leafletData.getMap().then(function(map) {
-							map.addLayer(markers);
-							});
-						});
+						$rootScope.markerLayer = markers;
+						map.addLayer(markers);
+					});
 				});
 			};
 
-			$scope.disconnect = function(){
-				AuthentificationService.logout();
-				$window.location.href = '#/';
-			};
 
-			$scope.login = function(){
-				ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html'});
-			};
-
-
-			$scope.$on('leafletDirectiveMap.map.load', function(event){
+			/*$scope.$on('leafletDirectiveMap.map.load', function(event){
 					showUas();
-			});
+			});*/
 
 			$scope.$on('leafletDirectiveMap.map.dragend', function(event){
 					showUas();
@@ -80,6 +81,21 @@ angular.module('appApp')
 
 			$scope.$on('leafletDirectiveGeoJson.map.click', function(event, leafletPayload){
 				console.log(leafletPayload.leafletObject);
+			});
+
+			angular.extend($scope, {
+					center: {
+							lat: 51.505,
+							lng: -0.09,
+							zoom: 14,
+							autoDiscover: true
+					},
+					bounds: {},
+					geojson : {},
+					filters: {
+						mine: false,
+						popular: false
+					}
 			});
 
 			var expiryTokenTime = localStorageService.get('expiryToken');
