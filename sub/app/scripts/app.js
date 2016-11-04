@@ -68,6 +68,11 @@ angular
 				controllerAs: 'login',
 				templateUrl: 'views/login.html',
 			})
+			.when('/user/:userId', {
+				controller: 'ProfileCtrl',
+				controllerAs: 'profile',
+				templateUrl: 'views/profile.html',
+			})
 			.when('/profile/update', {
 				controller: 'ProfileCtrl',
 				controllerAs: 'profile',

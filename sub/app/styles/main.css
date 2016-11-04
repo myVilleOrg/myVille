@@ -377,4 +377,7 @@ input:-webkit-autofill {
 .popup-map > .owner-popup {
   color: #5a5d82;
 }
+.fa {
+  line-height: inherit;
+}
 
