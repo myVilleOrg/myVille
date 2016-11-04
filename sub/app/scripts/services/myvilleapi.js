@@ -27,6 +27,9 @@ angular.module('appApp')
           },
           update: function(data) {
           	return $http.put(baseUrl + '/user/update', data);
+          },
+          get: function(data){
+          	return $http.get(baseUrl + '/user/' + data);
           }
         },
         UAS: {

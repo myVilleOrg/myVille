@@ -35,7 +35,18 @@ angular.module('appApp')
 						var markers = L.markerClusterGroup();
 						var geoJsonLayer = L.geoJson(geocodes.data, {
 							onEachFeature: function (feature, layer) {
-								layer.bindPopup(feature.properties._doc.description);
+								var htmlPopup = '<div class="popup-map">' +
+																	'<div class="heading-popup">' +
+																		'<a href="">' +
+																		feature.properties._doc.title +
+																		'</a>' +
+																	'</div>' +
+																	'<div class="owner-popup">' +
+																	'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).lang('fr').fromNow() +
+																	'</div>' +
+																'</div>';
+
+								layer.bindPopup(htmlPopup);
 							}
 						});
 						markers.addLayer(geoJsonLayer);

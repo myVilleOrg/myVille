@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('ProfileCtrl',['$scope', '$rootScope', 'myVilleAPI', function ($scope, $rootScope, myVilleAPI) {
+.controller('ProfileCtrl',['$scope', '$rootScope', 'myVilleAPI', '$routeParams', function ($scope, $rootScope, myVilleAPI, $routeParams) {
 	$scope.editUser = Object.assign({}, $scope.user);
   $scope.editBox = function(){
     if($scope.editMode) $scope.editMode = false;
@@ -31,5 +31,12 @@ angular.module('appApp')
   	});
   };
   $scope.editMode = false;
-
+  if($routeParams.userId){
+  	myVilleAPI.User.get($routeParams.userId).then(function(data){
+  		$scope.userWanted = {
+  			avatar: data.data.avatar,
+  			username: data.data.username
+  		};
+  	});
+  }
 }]);
