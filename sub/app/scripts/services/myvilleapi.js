@@ -19,22 +19,32 @@ angular.module('appApp')
           loginFacebook: function(data) {
             return $http.post(baseUrl + '/user/login/facebook', data);
           },
+          loginGoogle: function(data) {
+            return $http.post(baseUrl + '/user/login/google', data);
+          },
           create: function(data){
             return $http.post(baseUrl + '/user/create', data);
           },
           update: function(data) {
-          	return $http.put(baseUrl + '/user/update', data, {headers: {'x-access-token': $rootScope.token}});
+          	return $http.put(baseUrl + '/user/update', data);
+          },
+          get: function(data){
+          	return $http.get(baseUrl + '/user/' + data);
           }
-          
+
         },
 
-        Ua: {
+        UAS: {
+        	get: function(data){
+						return $http.get(baseUrl + '/ua/get/geo', {params: data});
+        	},
           get_ua: function(data){
-            return $http.get(baseUrl + '/ua/get/mine', data, {headers: {'x-access-token': $rootScope.token}});
+            return $http.get(baseUrl + '/ua/get/mine', data);
           },
           create: function(data){
-            return $http.post(baseUrl + '/ua/create', data, {headers: {'x-access-token': $rootScope.token}});
+            return $http.post(baseUrl + '/ua/create', data);
           }
+
         }
 
       };
