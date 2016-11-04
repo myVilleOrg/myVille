@@ -12,6 +12,7 @@ angular.module('appApp')
 			restrict: 'AE',
 			replace: true,
 			transclude: true,
+			require: '?headingTitle',
 			template: '<div class="wrapper-side-sidebar">' +
 									'<div class="heading-side">' +
 										'<a href="/#/"><i class="fa fa-chevron-left back"></i></a>' +
@@ -22,9 +23,9 @@ angular.module('appApp')
 									'<div class="content-side" ng-transclude>' +
 									'</div>' +
 								'</div>',
-			link: function postLink(scope, element, attrs) {
-				$timeout(function(){
-					scope.headingtitle = attrs.headingTitle;
+			link: function (scope, element, attrs) {
+				attrs.$observe('headingTitle', function(val){
+					scope.headingtitle = val;
 				});
 			}
 		};
