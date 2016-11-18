@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService) {
 			$scope.isActive = function (viewLocation) {
 				var active = (viewLocation === $location.path());
 				return active;
@@ -35,7 +35,18 @@ angular.module('appApp')
 						var markers = L.markerClusterGroup();
 						var geoJsonLayer = L.geoJson(geocodes.data, {
 							onEachFeature: function (feature, layer) {
-								layer.bindPopup(feature.properties._doc.description);
+								var htmlPopup = '<div class="popup-map">' +
+																	'<div class="heading-popup">' +
+																		'<a href="">' +
+																		feature.properties._doc.title +
+																		'</a>' +
+																	'</div>' +
+																	'<div class="owner-popup">' +
+																	'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).lang('fr').fromNow() +
+																	'</div>' +
+																'</div>';
+
+								layer.bindPopup(htmlPopup);
 							}
 						});
 						markers.addLayer(geoJsonLayer);
@@ -47,10 +58,7 @@ angular.module('appApp')
 			};
 
 			$scope.disconnect = function(){
-				delete $rootScope.token;
-				delete $rootScope.user;
-				localStorageService.remove('token');
-				localStorageService.remove('user');
+				AuthentificationService.logout();
 				$window.location.href = '#/';
 			};
 
@@ -73,10 +81,17 @@ angular.module('appApp')
 			$scope.$on('leafletDirectiveGeoJson.map.click', function(event, leafletPayload){
 				console.log(leafletPayload.leafletObject);
 			});
-			var token = localStorageService.get('token');
-			if(token) {
-				$rootScope.token = token;
-				var user = localStorageService.get('user');
-				if(user) $rootScope.user = user;
+
+			var expiryTokenTime = localStorageService.get('expiryToken');
+
+			if(expiryTokenTime && Date.now() < expiryTokenTime) {
+				var token = localStorageService.get('token');
+				if(token) {
+					$rootScope.token = token;
+					var user = localStorageService.get('user');
+					if(user) $rootScope.user = user;
+				}
+			} else {
+				$scope.disconnect();
 			}
 }]);

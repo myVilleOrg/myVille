@@ -188,15 +188,13 @@ a.active {
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side a {
   color: white;
+  flex: 0.2;
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side a:hover {
   color: white;
 }
-.side-sidebar > .wrapper-side-sidebar > .heading-side > .back {
-  flex: 0.1;
-}
 .side-sidebar > .wrapper-side-sidebar > .heading-side > .heading-title {
-  flex: 0.9;
+  flex: 0.8;
 }
 .side-sidebar > .wrapper-side-sidebar > .content-side {
   flex: 0.9;
@@ -277,6 +275,7 @@ a.active {
   display: flex;
   flex-direction: column;
   font-size: 0.95em;
+  text-align: center;
 }
 .login-side > h1 {
   text-transform: uppercase;
@@ -332,6 +331,12 @@ a.active {
   border-radius: 100%;
   cursor: pointer;
 }
+.top-left-dialog {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  cursor: pointer;
+}
 .ngdialog {
   overflow: hidden;
 }
@@ -373,5 +378,21 @@ input:focus {
 }
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 50px white inset;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 0 !important;
+  padding: 2px !important;
+}
+.popup-map {
+  display: block;
+}
+.popup-map > .heading-popup {
+  border-bottom: 1px solid #e8ecef;
+}
+.popup-map > .owner-popup {
+  color: #5a5d82;
+}
+.fa {
+  line-height: inherit;
 }
 
