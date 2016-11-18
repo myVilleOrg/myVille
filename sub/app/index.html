@@ -82,7 +82,7 @@
 								Les plus populaires
 							</label>
 						</li>
-						<li>
+						<li ng-if="token">
 							<label>
 								<input class="checkbox" ng-model="filters.mine" type="checkbox" />
 								<span class="fakeCheckbox"></span>
@@ -119,6 +119,7 @@
 		<script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
 		<!-- build:js({.tmp,app}) scripts/scripts.js -->
 		<script src="scripts/app.js"></script>
+		<script src="scripts/services/filterDate.js"></script>
 		<script src="scripts/services/hello.js"></script>
 		<script src="scripts/controllers/main.js"></script>
 		<script src="scripts/controllers/login.js"></script>
@@ -128,7 +129,7 @@
 		<script src="scripts/directives/ngloading.js"></script>
 		<script src="scripts/directives/collapse-sidebar.js"></script>
 		<script src="scripts/controllers/profile.js"></script>
-<script src="scripts/controllers/mine.js"></script>
+		<script src="scripts/controllers/mine.js"></script>
 		<!-- endbuild -->
 </body>
 </html>

@@ -1,18 +1,15 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name appApp.controller:MineCtrl
- * @description
- * # MineCtrl
- * Controller of the appApp
- */
+* @ngdoc function
+* @name appApp.controller:MineCtrl
+* @description
+* # MineCtrl
+* Controller of the appApp
+*/
 angular.module('appApp')
-  .controller('MineCtrl', function ($rootScope) {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-    console.log($rootScope.cachedMarkers.features[0])
-  });
+.controller('MineCtrl', function ($scope) {
+	$scope.centerOnMap = function(coordinates){
+		$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
+	}
+});

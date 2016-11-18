@@ -93,6 +93,9 @@ angular
 					}
 				}
 			})
+			.when('/ua/:uaId',{
+				controller: 'UaCtrl'
+			})
 			.otherwise({
 				redirectTo: '/'
 			});

@@ -13,6 +13,9 @@ body {
   width: 100%;
   overflow: hidden;
 }
+a {
+  cursor: pointer;
+}
 ::placeholder {
   font-weight: normal;
 }
@@ -356,6 +359,7 @@ a.active {
 #myUA > .content-side > .list-ua {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 #myUA > .content-side > .list-ua > .ua-row {
   display: flex;
@@ -364,6 +368,15 @@ a.active {
   height: 10%;
   padding: 1em;
   border-bottom: 1px #e8ecef solid;
+}
+#myUA > .content-side > .list-ua > .ua-row > .row-title {
+  flex: 0.5;
+}
+#myUA > .content-side > .list-ua > .ua-row > .row-date {
+  flex: 0.4;
+}
+#myUA > .content-side > .list-ua > .ua-row > .row-edit {
+  flex: 0.1;
 }
 #map {
   transition: all 0.5s ease;

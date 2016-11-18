@@ -83,6 +83,11 @@ angular.module('appApp')
 				console.log(leafletPayload.leafletObject);
 			});
 
+			$scope.$on('centerOnMap', function(event, coordinates){
+				$scope.center.lat = coordinates[1];
+				$scope.center.lng = coordinates[0];
+			});
+
 			angular.extend($scope, {
 					center: {
 							lat: 51.505,

@@ -13,6 +13,9 @@ html, body {
 	width: 100%;
 	overflow: hidden;
 }
+a {
+	cursor: pointer;
+}
 ::placeholder {
 	font-weight: normal;
 }
@@ -367,6 +370,7 @@ a {
 		&>.list-ua {
 			display: flex;
 			flex-direction: column;
+			overflow-y: auto;
 			&>.ua-row {
 				display: flex;
 				flex-direction: row;
@@ -374,6 +378,16 @@ a {
 				height: 10%;
 				padding: 1em;
 				border-bottom: 1px @light-gray solid;
+				&>.row-title{
+					flex: 0.5;
+				}
+				&>.row-date{
+					flex: 0.4;
+				}
+				&>.row-edit{
+					flex: 0.1;
+
+				}
 			}
 		}
 	}
