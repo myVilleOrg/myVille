@@ -69,29 +69,38 @@ angular.module('appApp')
 
 			$scope.$on('leafletDirectiveMap.map.load', function(event){
 					showUas();
+					
 			});
 
 			$scope.$on('leafletDirectiveMap.map.dragend', function(event){
 					showUas();
+					
 			});
 			$scope.$on('leafletDirectiveMap.map.zoomend', function(event){
 					showUas();
+
 			});
 
 			$scope.$on('leafletDirectiveGeoJson.map.click', function(event, leafletPayload){
 				console.log(leafletPayload.leafletObject);
-			});
-			
-			/*$scope.$on('leafletDirectiveMap.map.click', function(event){
-				var coords = L.mouseEventToLatLng(event);
-				console.log(coords);	
-			});*/
+				
 
-			var popup = L.popup();
-    		function onMapClick(event) {
-        		console.log(event);
+			});
+
+    		function onMapClick() {
+    			leafletData.getMap().then(function(map){
+    				map.on('click', function(e) {
+                		var location = e.latlng;
+                		localStorageService.set('ua.location', location);
+                		console.log(location);
+       				});
+                });
     		};
-    		$scope.$on('leafletDirectiveGeoJson.map.click', onMapClick);
+
+    		$scope.$on('leafletDirectiveMap.map.click', function(event){
+    			onMapClick();
+
+			});
 
 			var expiryTokenTime = localStorageService.get('expiryToken');
 

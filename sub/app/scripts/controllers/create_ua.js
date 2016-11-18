@@ -10,30 +10,26 @@ angular.module('appApp')
 .controller('CreateUACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
 	$scope.ua = {};
 	
-	if(localStorageService.get('ua.title')!=null || localStorageService.get('ua.author')!=null || localStorageService.get('ua.desc')!=null){
+	if(localStorageService.get('ua.title')!=null || localStorageService.get('ua.desc')!=null || localStorageService.get('ua.location')!=null){
 		$scope.ua.title=localStorageService.get('ua.title'),
-		$scope.ua.author=localStorageService.get('ua.author'),
-		$scope.ua.desc=localStorageService.get('ua.desc')
+		$scope.ua.desc=localStorageService.get('ua.desc'),
+		$scope.ua.location=[localStorageService.get('ua.location').lng,localStorageService.get('ua.location').lat]
 	};
 
 	$scope.getGeo = function(){
 		localStorageService.set('ua.title', $scope.ua.title);
-		localStorageService.set('ua.author', $scope.ua.author);
 		localStorageService.set('ua.desc', $scope.ua.desc);
-		$location.path( '/index.html' );
 		$scope.closeThisDialog();
-	}
+	};
 
 	$scope.submit = function(){
-		console.log($scope.ua);
-    	if(!$scope.ua.author || !$scope.ua.desc){
+    	if(!$scope.ua.desc || !$scope.ua.title || !$scope.ua.location){
       		return $scope.message = 'Un ou des champs sont manquant.';
     	} else {
     		var data = {
-		    owner: $scope.ua.author,
-		    private: $scope.ua.mode,
+		    title: $scope.ua.title,
 		    description: $scope.ua.desc,
-		    location: localStorageService.get('location')
+		    geojson: JSON.stringify({"type": "Point", "coordinates": $scope.ua.location})
 		    };
 
 		    myVilleAPI.UAS.create(data).then(function(user){
@@ -44,13 +40,9 @@ angular.module('appApp')
           		console.log(error.data);
         	});
 		    localStorageService.set('ua.title', null);
-			localStorageService.set('ua.author', null);
 			localStorageService.set('ua.desc', null);
-			localStorageService.set('location', null);
+			localStorageService.set('ua.location', null);
           	$scope.closeThisDialog();
     	}
-
 	};
-
-
 });

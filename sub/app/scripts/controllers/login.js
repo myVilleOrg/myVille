@@ -31,11 +31,13 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
   };
 
   $scope.switchMode = function (){
+    $scope.message = '';
   	if($scope.log) $scope.log = false
   	else $scope.log = true;
   }
 
   $scope.createClick = function(){
+
     if(!$scope.signupUser.nickname || !$scope.signupUser.password || !$scope.signupUser.email || !$scope.signupUser.phonenumber){
       return $scope.message = 'Un ou des champs sont manquant.';
     }

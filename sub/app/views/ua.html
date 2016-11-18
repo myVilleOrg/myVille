@@ -3,21 +3,31 @@
 		<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
 		<div class="profile-nickname">{{user.nickname}}</div>
 
-		<div ng-if="existUA">
-			<ul>
-				<li ng-repeat="us in uas">
-					
+		
+    <div ng-if="message">
+      {{message}}
+    </div>
+  
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-user"></i></div>
+        <input type="text" ng-model="ua.title" placeholder="Title" />
+      </div>
+    </div>
 
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+        <form> 
+          <textarea rows="5" cols="48" ng-model="ua.desc" placeholder="Description" />
+        </form>  
+      </div>
+      <div class="input-group">
+         <span> UA localise a {{ua.location}}</span> 
+      </div>
+    </div>
 
-				</li>
-
-
-			</ul>
-		</div>
-
-		<div>
-			<button  class='btn-blue' ng-click="createClick()">Create UA</button>
-		</div>
+    <button class='btn-blue' ng-click="submit()">Create UA</button>
 
 	</div>
 </collapse-sidebar>

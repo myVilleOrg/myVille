@@ -13,22 +13,14 @@
 
     <div class="form-group">
       <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-user"></i></div>
-        <input type="text" ng-model="ua.author" placeholder="Author" />{{author}}
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="input-group">
         <div class="input-group-addon"><i class="fa fa-lock"></i></div>
         <form> 
           <textarea rows="5" cols="48" ng-model="ua.desc" placeholder="Description" />{{description}}
         </form>  
       </div>
       <div class="input-group">
-        <button ng-click="getGeo()"> Localisation </button><span> UA localise a <b id="localisation"></b></span>
+        <button ng-click="getGeo()"> Localisation </button><span> UA localise a <input type="text" ng-model="ua.location" placeholder="location"></input></span> 
       </div>
-      <input type="checkbox" checked="false" class="checkbox-input" ng-model="ua.mode" /> Rendre l'UA privé
     </div>
 
     <button class='btn-blue' ng-click="submit()">Create</button>
