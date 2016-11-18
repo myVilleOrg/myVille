@@ -47,7 +47,7 @@
 								</a>
 							</li>
 							<li ng-if="token">
-								<a href="/#/" ng-class="{ active: isActive('/mine') }">
+								<a href="/#/profile/mine" ng-class="{ active: isActive('/mine') }">
 									<i class="fa fa-thumb-tack" aria-hidden="true"></i>
 									<span class="text-icon">Mine</span>
 								</a>
@@ -69,7 +69,29 @@
 			</div>
 			<div class="side-sidebar" ng-view="">
 			</div>
-			<leaflet id="map" width="auto" height="100%" lf-center="center"></leaflet>
+			<leaflet id="map" width="auto" height="100%" lf-center="center">
+				<div class="map-filter-box">
+					<div class="heading">
+							Affichage
+					</div>
+					<ul class="filter-list">
+						<li>
+							<label>
+								<input class="checkbox" ng-model="filters.popular" type="checkbox" />
+								<span class="fakeCheckbox"></span>
+								Les plus populaires
+							</label>
+						</li>
+						<li ng-if="token">
+							<label>
+								<input class="checkbox" ng-model="filters.mine" type="checkbox" />
+								<span class="fakeCheckbox"></span>
+								Mes propositions
+							</label>
+						</li>
+					</ul>
+				</div>
+			</leaflet>
 		</div>
 		<!-- build:js(.) scripts/vendor.js -->
 		<!-- bower:js -->
@@ -97,6 +119,7 @@
 		<script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
 		<!-- build:js({.tmp,app}) scripts/scripts.js -->
 		<script src="scripts/app.js"></script>
+		<script src="scripts/services/filterDate.js"></script>
 		<script src="scripts/services/hello.js"></script>
 		<script src="scripts/controllers/main.js"></script>
 		<script src="scripts/controllers/login.js"></script>
@@ -106,6 +129,7 @@
 		<script src="scripts/directives/ngloading.js"></script>
 		<script src="scripts/directives/collapse-sidebar.js"></script>
 		<script src="scripts/controllers/profile.js"></script>
+		<script src="scripts/controllers/mine.js"></script>
 		<!-- endbuild -->
 </body>
 </html>
