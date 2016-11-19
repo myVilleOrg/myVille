@@ -94,7 +94,9 @@ angular
 				}
 			})
 			.when('/ua/:uaId',{
-				controller: 'UaCtrl'
+				controller: 'MainCtrl',
+				controllerAs: 'main',
+				template: ''
 			})
 			.otherwise({
 				redirectTo: '/'

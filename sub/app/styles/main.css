@@ -356,6 +356,17 @@ a.active {
   border: none !important;
   color: #e8ecef !important;
 }
+#singleUA {
+  display: flex;
+  flex-direction: column;
+}
+#singleUA > .ua-title {
+  text-align: center;
+  border-bottom: 1px #e8ecef solid;
+}
+#singleUA > .ua-description {
+  padding: 0.1em;
+}
 #myUA > .content-side > .list-ua {
   display: flex;
   flex-direction: column;

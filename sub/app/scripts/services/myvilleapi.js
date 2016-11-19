@@ -38,6 +38,9 @@ angular.module('appApp')
         	},
         	getMine: function(){
         		return $http.get(baseUrl + '/ua/get/mine');
+        	},
+        	getOne: function(id){
+        		return $http.get(baseUrl + '/ua/' + id);
         	}
         }
       };

@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams) {
 			$scope.isActive = function (viewLocation) {
 				var active = (viewLocation === $location.path());
 				return active;
@@ -48,7 +48,7 @@ angular.module('appApp')
 							onEachFeature: function (feature, layer) {
 								var htmlPopup = '<div class="popup-map">' +
 																	'<div class="heading-popup">' +
-																		'<a href="">' +
+																		'<a href="#/ua/'+ feature.properties._doc._id +'">' +
 																		feature.properties._doc.title +
 																		'</a>' +
 																	'</div>' +
@@ -86,6 +86,7 @@ angular.module('appApp')
 			$scope.$on('centerOnMap', function(event, coordinates){
 				$scope.center.lat = coordinates[1];
 				$scope.center.lng = coordinates[0];
+				$scope.center.zoom = 18;
 			});
 
 			angular.extend($scope, {
@@ -114,5 +115,14 @@ angular.module('appApp')
 				}
 			} else {
 				$scope.disconnect();
+			}
+
+			if($routeParams.uaId){
+		   	myVilleAPI.UAS.getOne($routeParams.uaId).then(function(data){
+  				$scope.center.lat = data.data.location.coordinates[1];
+					$scope.center.lng = data.data.location.coordinates[0];
+					$scope.center.zoom = 18;
+					ngDialog.open({data: data.data, template: 'views/single_ua.html'});
+  			});
 			}
 }]);
