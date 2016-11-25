@@ -34,16 +34,15 @@ angular.module('appApp')
 				}
 			}, true);
 
+			var markers = L.markerClusterGroup();
 			var showUas = function(){
-				leafletData.getMap().then(function(map){
-					$rootScope.map = map;
-					if($rootScope.markerLayer) map.removeLayer($rootScope.markerLayer);
 
+				leafletData.getMap().then(function(map){
+				 	markers.clearLayers();
 					var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
 					var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.get;
 					filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						$rootScope.cachedMarkers = geocodes.data;
-						var markers = L.markerClusterGroup();
 						var geoJsonLayer = L.geoJson(geocodes.data, {
 							onEachFeature: function (feature, layer) {
 								var htmlPopup = '<div class="popup-map">' +
@@ -61,7 +60,6 @@ angular.module('appApp')
 							}
 						});
 						markers.addLayer(geoJsonLayer);
-						$rootScope.markerLayer = markers;
 						map.addLayer(markers);
 					});
 				});
@@ -135,7 +133,7 @@ angular.module('appApp')
   				$scope.center.lat = data.data.location.coordinates[1];
 					$scope.center.lng = data.data.location.coordinates[0];
 					$scope.center.zoom = 18;
-					ngDialog.open({data: data.data, template: 'views/single_ua.html'});
+					ngDialog.open({data: data.data, template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
   			});
 			}
 }]);
