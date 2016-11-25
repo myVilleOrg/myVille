@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams) {
 			$scope.isActive = function (viewLocation) {
 				var active = (viewLocation === $location.path());
 				return active;
@@ -34,21 +34,20 @@ angular.module('appApp')
 				}
 			}, true);
 
+			var markers = L.markerClusterGroup();
 			var showUas = function(){
-				leafletData.getMap().then(function(map){
-					$rootScope.map = map;
-					if($rootScope.markerLayer) map.removeLayer($rootScope.markerLayer);
 
+				leafletData.getMap().then(function(map){
+				 	markers.clearLayers();
 					var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
 					var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.get;
 					filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						$rootScope.cachedMarkers = geocodes.data;
-						var markers = L.markerClusterGroup();
 						var geoJsonLayer = L.geoJson(geocodes.data, {
 							onEachFeature: function (feature, layer) {
 								var htmlPopup = '<div class="popup-map">' +
 																	'<div class="heading-popup">' +
-																		'<a href="">' +
+																		'<a href="#/ua/'+ feature.properties._doc._id +'">' +
 																		feature.properties._doc.title +
 																		'</a>' +
 																	'</div>' +
@@ -61,7 +60,6 @@ angular.module('appApp')
 							}
 						});
 						markers.addLayer(geoJsonLayer);
-						$rootScope.markerLayer = markers;
 						map.addLayer(markers);
 					});
 				});
@@ -86,6 +84,7 @@ angular.module('appApp')
 			$scope.$on('centerOnMap', function(event, coordinates){
 				$scope.center.lat = coordinates[1];
 				$scope.center.lng = coordinates[0];
+				$scope.center.zoom = 18;
 			});
 
 
@@ -127,5 +126,14 @@ angular.module('appApp')
 				}
 			} else {
 				$scope.disconnect();
+			}
+
+			if($routeParams.uaId){
+		   	myVilleAPI.UAS.getOne($routeParams.uaId).then(function(data){
+  				$scope.center.lat = data.data.location.coordinates[1];
+					$scope.center.lng = data.data.location.coordinates[0];
+					$scope.center.zoom = 18;
+					ngDialog.open({data: data.data, template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
+  			});
 			}
 }]);
