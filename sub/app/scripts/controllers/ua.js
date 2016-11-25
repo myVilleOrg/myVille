@@ -10,11 +10,11 @@
 angular.module('appApp')
   .controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
 	$scope.ua = {};
-	
-	if(localStorageService.get('ua.location')!=null){
-		$scope.ua.location = [localStorageService.get('ua.location').lng,localStorageService.get('ua.location').lat];
-	}	
-	
+
+	$scope.$on('UAlocationClic', function(event, data) {
+		$scope.ua.location = data;
+	});
+
 	$scope.submit = function(){
 
     	if(!$scope.ua.desc || !$scope.ua.title || !$scope.ua.location){
@@ -27,17 +27,15 @@ angular.module('appApp')
 		    };
 
 		    myVilleAPI.UAS.create(data).then(function(user){
-          		console.log(data);
+          		ngDialog.open({controller: 'CreateUACtrl', template: 'views/create_ua.html'});
+          		$scope.ua.title = null;
+          		$scope.ua.desc = null;
+          		$scope.ua.location = null;
 
         	}, function(error){
           		$scope.message = error.data.message;
           		console.log(error.data);
         	});
     	}
-
-    	localStorageService.set('ua.location', null);
-
 	};
-
-
   });

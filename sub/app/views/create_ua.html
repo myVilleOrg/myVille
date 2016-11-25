@@ -1,27 +1,9 @@
-<div class="login-side" heading-title="Création d'une UA" >
-
-    <div ng-if="message">
-      {{message}}
-    </div>
+<div class="login-side" >
   
-    <div class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-user"></i></div>
-        <input type="text" ng-model="ua.title" placeholder="Title" />{{title}}
-      </div>
-    </div>
+  <div>
+    <h4>L'UA a été créée avec succès !</h4>
 
-    <div class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-        <form> 
-          <textarea rows="5" cols="48" ng-model="ua.desc" placeholder="Description" />{{description}}
-        </form>  
-      </div>
-      <div class="input-group">
-        <button ng-click="getGeo()"> Localisation </button><span> UA localise a <input type="text" ng-model="ua.location" placeholder="location"></input></span> 
-      </div>
-    </div>
-
-    <button class='btn-blue' ng-click="submit()">Create</button>
   </div>
+
+  <button class='btn-blue' ng-click="okClick()">OK</button>
+</div>

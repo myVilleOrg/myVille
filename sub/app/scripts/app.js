@@ -88,11 +88,6 @@ angular
         controllerAs: 'ua',
         templateUrl: 'views/ua.html',
       })
-      .when('/ua/create', {
-        controller: 'CreateUACtrl',
-        controllerAs: 'create_ua',
-        templateUrl: 'views/create_ua.html',
-      })
       .when('/fav_ua', {
         controller: 'FavCtrl',
         controllerAs: 'fav_ua',

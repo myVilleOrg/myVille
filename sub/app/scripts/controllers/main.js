@@ -90,9 +90,8 @@ angular.module('appApp')
     		function onMapClick() {
     			leafletData.getMap().then(function(map){
     				map.on('click', function(e) {
-                		var location = e.latlng;
-                		localStorageService.set('ua.location', location);
-                		console.log(location);
+                		var location = [e.latlng.lng,e.latlng.lat];
+                		$rootScope.$broadcast('UAlocationClic', location);
        				});
                 });
     		};
