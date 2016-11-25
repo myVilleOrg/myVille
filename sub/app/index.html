@@ -84,7 +84,7 @@
 						</li>
 						<li ng-if="token">
 							<label>
-								<input class="checkbox" ng-model="filters.mine" type="checkbox" />
+								<input class="checkbox" ng-model="filters.mine" ng-checked="isActive('/profile/mine')" type="checkbox" />
 								<span class="fakeCheckbox"></span>
 								Mes propositions
 							</label>
