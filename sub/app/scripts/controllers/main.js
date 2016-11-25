@@ -89,6 +89,19 @@ angular.module('appApp')
 				$scope.center.zoom = 18;
 			});
 
+
+			$scope.$on('$locationChangeStart', function (event, next, current) {
+				if(next === 'http://localhost:9000/#/profile/mine' && current != next){
+					$scope.filters.mine = true;
+				}
+			});
+			$scope.$on('filtersReset', function(evt, data){
+				if(data){
+					$scope.filters = {mine: false, popular: false};
+					console.log($scope.filters)
+				}
+			});
+
 			angular.extend($scope, {
 					center: {
 							lat: 51.505,
