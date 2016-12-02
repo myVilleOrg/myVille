@@ -78,14 +78,14 @@
 					<ul class="filter-list">
 						<li>
 							<label>
-								<input class="checkbox" ng-model="filters.popular" type="checkbox" />
+								<input class="checkbox" ng-model="filters.popular" ng-checked="filters.popular" ng-click="selectFilter(0)" type="checkbox" />
 								<span class="fakeCheckbox"></span>
 								Les plus populaires
 							</label>
 						</li>
 						<li ng-if="token">
 							<label>
-								<input class="checkbox" ng-model="filters.mine" ng-checked="isActive('/profile/mine')" type="checkbox" />
+								<input class="checkbox" ng-model="filters.mine" ng-click="selectFilter(1)" ng-checked="isActive('/profile/mine')" type="checkbox" />
 								<span class="fakeCheckbox"></span>
 								Mes propositions
 							</label>

@@ -23,6 +23,11 @@ angular.module('appApp')
 				ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html'});
 			};
 
+			$scope.selectFilter = function(index){
+				if(index === 0) $scope.filters.mine = false;
+				if(index === 1) $scope.filters.popular = false
+			};
+
 			$scope.$watch('filters', function(newv, old){ //on filter change
 				if(JSON.stringify(newv) !== JSON.stringify(old)){
 					showUas();
@@ -95,8 +100,7 @@ angular.module('appApp')
 			});
 			$scope.$on('filtersReset', function(evt, data){
 				if(data){
-					$scope.filters = {mine: false, popular: false};
-					console.log($scope.filters)
+					$scope.filters = {mine: false, popular: true};
 				}
 			});
 
@@ -111,7 +115,7 @@ angular.module('appApp')
 					geojson : {},
 					filters: {
 						mine: false,
-						popular: false
+						popular: true
 					}
 			});
 

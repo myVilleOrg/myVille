@@ -36,6 +36,9 @@ angular.module('appApp')
         	get: function(data){
 						return $http.get(baseUrl + '/ua/get/geo', {params: data});
         	},
+        	getPopular: function(data){
+						return $http.get(baseUrl + '/ua/get/geo', {params: data});
+        	},
         	getMine: function(){
         		return $http.get(baseUrl + '/ua/get/mine');
         	},
