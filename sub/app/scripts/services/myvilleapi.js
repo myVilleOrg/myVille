@@ -38,12 +38,20 @@ angular.module('appApp')
         	get: function(data){
 						return $http.get(baseUrl + '/ua/get/geo', {params: data});
         	},
-          get_ua: function(data){
-            return $http.get(baseUrl + '/ua/get/mine', data);
-          },
+
           create: function(data){
             return $http.post(baseUrl + '/ua/create', data);
-          }
+          },
+
+        	getPopular: function(data){
+						return $http.get(baseUrl + '/ua/get/geo', {params: data});
+        	},
+        	getMine: function(){
+        		return $http.get(baseUrl + '/ua/get/mine');
+        	},
+        	getOne: function(id){
+        		return $http.get(baseUrl + '/ua/' + id);
+        	}
 
         }
 

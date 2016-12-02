@@ -83,16 +83,26 @@ angular
 					}
 				}
 			})
-      .when('/ua', {
-        controller: 'UACtrl',
-        controllerAs: 'ua',
-        templateUrl: 'views/ua.html',
-      })
-      .when('/fav_ua', {
-        controller: 'FavCtrl',
-        controllerAs: 'fav_ua',
-        templateUrl: 'views/fav_ua.html',
-      })
+		    .when('/ua', {
+		       controller: 'UACtrl',
+		       controllerAs: 'ua',
+		       templateUrl: 'views/ua.html',
+		    })
+			.when('/profile/mine', {
+				controller: 'MineCtrl',
+				controllerAs: 'mine',
+				templateUrl: 'views/mine.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
+			.when('/ua/:uaId',{
+				controller: 'MainCtrl',
+				controllerAs: 'main',
+				template: ''
+			})
 			.otherwise({
 				redirectTo: '/'
 			});
