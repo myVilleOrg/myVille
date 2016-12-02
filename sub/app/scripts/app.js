@@ -83,6 +83,21 @@ angular
 					}
 				}
 			})
+			.when('/profile/mine', {
+				controller: 'MineCtrl',
+				controllerAs: 'mine',
+				templateUrl: 'views/mine.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
+			.when('/ua/:uaId',{
+				controller: 'MainCtrl',
+				controllerAs: 'main',
+				template: ''
+			})
 			.otherwise({
 				redirectTo: '/'
 			});
