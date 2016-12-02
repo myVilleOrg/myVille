@@ -26,7 +26,10 @@ angular.module('appApp')
             return $http.post(baseUrl + '/user/create', data);
           },
           update: function(data) {
-          	return $http.put(baseUrl + '/user/update', data);
+            return $http.put(baseUrl + '/user/update', data);
+          },
+          updateAvatar: function(data) {
+            return $http.post(baseUrl + '/user/update/avatar', data, {transformRequest: angular.identify, headers: {'Content-Type': undefined, enctype:'multipart/form-data'}});
           },
           get: function(data){
           	return $http.get(baseUrl + '/user/' + data);
