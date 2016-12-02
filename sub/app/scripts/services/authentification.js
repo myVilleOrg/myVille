@@ -32,9 +32,9 @@ angular.module('appApp')
 					localStorageService.remove('expiryToken');
   			},
         updateAvatar: function(user){
-          $rootScope.user = user;
-          localStorageService.set('user', user);
-          $rootScope.$apply();
+          $rootScope.user = user.data;
+          console.log($rootScope.user);
+          localStorageService.set('user', user.data);
         }
   		};
 }]);
