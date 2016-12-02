@@ -7,7 +7,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('CreateUACtrl', function ($rootScope, $scope, $window, ngDialog) {
+.controller('CreateUACtrl', function ($scope, ngDialog) {
 	
 	$scope.okClick = function() {
 		$scope.closeThisDialog();

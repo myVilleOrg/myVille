@@ -89,9 +89,12 @@ angular.module('appApp')
 
     		function onMapClick() {
     			leafletData.getMap().then(function(map){
+    				var geocoder = new L.Control.Geocoder.Nominatim();
     				map.on('click', function(e) {
-                		var location = [e.latlng.lng,e.latlng.lat];
-                		$rootScope.$broadcast('UAlocationClic', location);
+                		geocoder.reverse(e.latlng, 1,function(result){
+                			var location = [result[0].name,[result[0].center.lng, result[0].center.lat]];
+                			$rootScope.$broadcast('UAlocationClic', location);
+                		});
        				});
                 });
     		};
