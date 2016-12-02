@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('ProfileCtrl',['$scope', '$rootScope', 'myVilleAPI', '$routeParams', function ($scope, $rootScope, myVilleAPI, $routeParams) {
+.controller('ProfileCtrl',['$scope', '$rootScope', 'myVilleAPI','AuthentificationService', '$routeParams', function ($scope, $rootScope, myVilleAPI, AuthentificationService, $routeParams) {
 	$scope.editUser = Object.assign({}, $scope.user);
   $scope.editBox = function(){
     if($scope.editMode) $scope.editMode = false;
@@ -40,16 +40,12 @@ angular.module('appApp')
     $rootScope.user.avatar = reader.readAsDataURL(files[0]);
 
     reader.onload = function (e) {
-      $scope.fileContent = reader.result;
-      $rootScope.user.avatar = e.target.result;
-      $scope.$apply();
-      $rootScope.$apply();
-      //console.log(e.target.result);
+      var formData = new FormData();
+      formData.append('avatar',files[0]);
 
-      var data = {
-        avatar: e.target.result
-      };
-      myVilleAPI.User.updateAvatar(data).then(function(user){
+      myVilleAPI.User.updateAvatar(formData).then(function(user){
+        console.log(user);
+        AuthentificationService.updateAvatar(user);
       });
       
     }
