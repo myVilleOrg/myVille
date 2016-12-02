@@ -84,7 +84,7 @@ angular
 					}
 				}
 			})
-	    .when('/ua', {
+	    .when('/createUA', {
 	       controller: 'UACtrl',
 	       controllerAs: 'ua',
 	       templateUrl: 'views/ua.html',

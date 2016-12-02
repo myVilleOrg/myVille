@@ -16,7 +16,7 @@ angular.module('appApp')
       // put logic here for keypress and cut/paste changes
     },
     inline: false,
-    plugins : 'advlist autolink link image lists charmap preview',
+    plugins : 'advlist autolink link image lists charmap preview textcolor',
     skin: 'lightgray',
     theme : 'modern'
 	};
