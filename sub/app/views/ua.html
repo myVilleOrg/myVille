@@ -1,33 +1,26 @@
 <collapse-sidebar id="my_ua" heading-title="Mes UAs">
 	<div class="profile-picture">
 		<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
-		<div class="profile-nickname">{{user.nickname}}</div>
+		<div class="profile-nickname">{{user.username}}</div>
 
-		
-    <div ng-if="message">
-      {{message}}
-    </div>
-  
-    <div class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-user"></i></div>
-        <input type="text" ng-model="ua.title" placeholder="Title" />
-      </div>
-    </div>
+		<div class="profile-detailled">
 
-    <div class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-        <form> 
-          <textarea rows="5" cols="48" ng-model="ua.desc" placeholder="Description" />
-        </form>  
-      </div>
-      <div class="input-group">
-         <span> Localisation de l'UA : {{ua.location}} </span>
-      </div>
-    </div>
+		    <div ng-if="message">
+		      {{message}}
+		    </div>
 
-    <button class='btn-blue' ng-click="submit()">Create UA</button>
+		    <h1>Titre</h1>
+			<span class="edit-field"><input type="text" ng-model="ua.title" /></span>
 
+			<h1>Description</h1>
+		    <form> 
+		       <textarea rows="5" cols="48" ng-model="ua.desc" placeholder="Entrez votre texte ici" />
+		    </form> 
+
+		    <h1>Localisation de l'UA : </h1>
+		    <span> {{ua.location}} </span>
+
+		    <button class='btn-blue' ng-click="submit()">Create UA</button>
+		</div>
 	</div>
 </collapse-sidebar>
