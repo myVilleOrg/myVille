@@ -32,12 +32,9 @@ angular.module('appApp')
   };
   $scope.editAvatarClick = function(element){
 
-
     var files = element.files;
-
-
     var reader = new FileReader();
-    $rootScope.user.avatar = reader.readAsDataURL(files[0]);
+    reader.readAsDataURL(files[0]);
 
     reader.onload = function (e) {
       var formData = new FormData();
@@ -47,12 +44,10 @@ angular.module('appApp')
         console.log(user);
         AuthentificationService.updateAvatar(user);
       });
-      
     }
-
-    console.log(files[0]);
   };
-  $scope.editMode = false;
+
+s  $scope.editMode = false;
   if($routeParams.userId){
   	myVilleAPI.User.get($routeParams.userId).then(function(data){
   		$scope.userWanted = {
