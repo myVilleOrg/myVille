@@ -9,11 +9,13 @@
  */
 angular.module('appApp')
 .controller('ProfileCtrl',['$scope', '$rootScope', 'myVilleAPI','AuthentificationService', '$routeParams', function ($scope, $rootScope, myVilleAPI, AuthentificationService, $routeParams) {
+
 	$scope.editUser = Object.assign({}, $scope.user);
   $scope.editBox = function(){
     if($scope.editMode) $scope.editMode = false;
     else $scope.editMode = true;
   };
+
   $scope.editClick = function(){
   	if(!$scope.editUser.username) return $scope.message = 'Le champ pseudonyme ne peut pas être vide.';
   	if(!$scope.editUser.Opassword && $scope.editUser.Npassword) return $scope.message = 'Nous avons besoin de votre ancien mot de passe.';
@@ -30,6 +32,7 @@ angular.module('appApp')
   		$scope.message = err.data.message;
   	});
   };
+
   $scope.editAvatarClick = function(element){
 
     var files = element.files;
