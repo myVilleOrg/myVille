@@ -66,7 +66,7 @@
 								<div ng-if="token" class="user-profile">
 									<div class="disconnect-user" ng-click="disconnect()"><i class="fa fa-times-circle"></i></div>
 									<a href="/#/profile/update">
-										<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
+										<img ng-src="{{user.avatar ? 'http://localhost:3000/static/' + user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
 									</a>
 								</div>
 						</div>
