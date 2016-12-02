@@ -18,7 +18,8 @@ angular
 		'leaflet-directive',
 		'LocalStorageModule',
 		'ngDialog',
-		'ngHello'
+		'ngHello',
+		'ui.tinymce'
 	])
 	.config(function(helloProvider) {
 		helloProvider.init({
@@ -83,11 +84,11 @@ angular
 					}
 				}
 			})
-		    .when('/ua', {
-		       controller: 'UACtrl',
-		       controllerAs: 'ua',
-		       templateUrl: 'views/ua.html',
-		    })
+	    .when('/ua', {
+	       controller: 'UACtrl',
+	       controllerAs: 'ua',
+	       templateUrl: 'views/ua.html',
+	    })
 			.when('/profile/mine', {
 				controller: 'MineCtrl',
 				controllerAs: 'mine',

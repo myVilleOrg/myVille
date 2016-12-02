@@ -54,6 +54,9 @@ angular.module('appApp')
         	},
         	getOne: function(id){
         		return $http.get(baseUrl + '/ua/' + id);
+        	},
+        	update: function(id, data){
+							return $http.put(baseUrl + '/ua/' + id, data);
         	}
 
         }

@@ -47,7 +47,7 @@ angular.module('appApp')
     }
   };
 
-s  $scope.editMode = false;
+	$scope.editMode = false;
   if($routeParams.userId){
   	myVilleAPI.User.get($routeParams.userId).then(function(data){
   		$scope.userWanted = {

@@ -201,6 +201,7 @@ a.active {
 }
 .side-sidebar > .wrapper-side-sidebar > .content-side {
   flex: 0.9;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 }
@@ -347,6 +348,8 @@ a.active {
   background-color: white !important;
   border-radius: 2px !important;
   width: 600px !important;
+  height: 100%;
+  overflow: auto;
 }
 .form-group > .input-group {
   position: relative;
@@ -371,25 +374,46 @@ a.active {
   border: none !important;
   color: #9baebc !important;
 }
-.modal-single-ua > .ngdialog-content {
-  width: 80% !important;
+#createUA > .content-side > .form-dable {
+  padding: 1em;
 }
-.modal-single-ua > .ngdialog-content > #singleUA {
+.form-label {
   display: flex;
   flex-direction: column;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA {
+.form-label > h1 {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: #5a5d82;
+}
+.form-label > input {
+  border-bottom: 1px solid #e8ecef;
+}
+.modal-single-ua > .ngdialog-content,
+.modal-edit-ua > .ngdialog-content {
+  width: 80% !important;
+}
+.modal-single-ua > .ngdialog-content > #singleUA,
+.modal-edit-ua > .ngdialog-content > #singleUA {
+  display: flex;
+  flex-direction: column;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA {
   display: flex;
   flex-direction: row;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > iframe {
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > iframe,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > iframe {
   padding: 1px;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .ua-title {
+.modal-single-ua > .ngdialog-content > #singleUA > .ua-title,
+.modal-edit-ua > .ngdialog-content > #singleUA > .ua-title {
   text-align: center;
   border-bottom: 1px #e8ecef solid;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .ua-description {
+.modal-single-ua > .ngdialog-content > #singleUA > .ua-description,
+.modal-edit-ua > .ngdialog-content > #singleUA > .ua-description {
   padding: 0.1em;
 }
 #myUA > .content-side > .list-ua {
@@ -440,23 +464,23 @@ a.active {
   padding: 1em;
   list-style: none;
 }
-#map > div > .map-filter-box > .filter-list > li > label {
+label {
   display: inherit;
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: inherit;
 }
-#map > div > .map-filter-box > .filter-list > li > label > .checkbox {
+label > .checkbox {
   display: none;
 }
-#map > div > .map-filter-box > .filter-list > li > label > .fakeCheckbox {
+label > .fakeCheckbox {
   height: 10px;
   width: 10px;
   border: 1px solid grey;
   display: inline-block;
   position: relative;
 }
-#map > div > .map-filter-box > .filter-list > li > label > [type=checkbox]:checked + span:before {
+label > [type=checkbox]:checked + span:before {
   content: '\2714';
   position: absolute;
   top: -5px;
