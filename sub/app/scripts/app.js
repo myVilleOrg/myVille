@@ -18,7 +18,8 @@ angular
 		'leaflet-directive',
 		'LocalStorageModule',
 		'ngDialog',
-		'ngHello'
+		'ngHello',
+		'ui.tinymce'
 	])
 	.config(function(helloProvider) {
 		helloProvider.init({
