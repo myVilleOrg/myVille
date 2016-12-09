@@ -1,34 +1,20 @@
-<!DOCTYPE html>
-
-<html>
-
-    <head>
-
-        <meta charset="utf-8" />
-
-    </head>
-
-    <body>
-    	<h1>Mes UAs</h1>
-	        <h2>Ville :</h2>
-	        	<li>
-		        	<p>UA 1 :</p>
-		        	<input type="button" value="Voir fiche">
-		        	<input type="button" value="Editer" onclick="alert('Voulez vous editer votre UA ?')"> 
-		        	<input type="button" value="Publier" onclick="alert('Voulez vous publier votre UA ?')"> 
-		        	<input type="button" value="Supprimer" onclick="alert('Voulez vous supprimer votre UA ?')">
-		        	  
-
-		        	<p>UA 2 :</p>
-		        	<input type="button" value="Voir fiche">
-		        	<input type="button" value="Editer" onclick="alert('Voulez vous editer votre UA ?')"> 
-		        	<input type="button" value="Publier" onclick="alert('Voulez vous publier votre UA ?')"> 
-		        	<input type="button" value="Supprimer" onclick="alert('Voulez vous supprimer votre UA ?')">
-
-	        	</li>
-	        	
-	        <h2>Ville :</h2>
-
-    </body>
-
-</html>
+<collapse-sidebar id="createUA" heading-title="Créer un aménagement">
+	<div class="form-dable">
+		<div ng-if="message">
+		{{message}}
+		</div>
+		<div class="form-label">
+			<h1>Titre</h1>
+			<span class="edit-field"><input type="text" ng-model="ua.title" /></span>
+		</div>
+		<div class="form-label">
+			<h1>Description</h1>
+			<textarea ui-tinymce="tinymceOptions" ng-model="ua.desc" placeholder="Entrez votre texte ici" />
+		</div>
+		<div class="form-label">
+			<h1>Localisation de l'UA : </h1>
+			<span> {{ua.location_name}} </span>
+		</div>
+		<button class='btn-blue' ng-click="submit()">Créer aménagement</button>
+	</div>
+</collapse-sidebar>

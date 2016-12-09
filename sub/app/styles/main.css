@@ -13,6 +13,9 @@ body {
   width: 100%;
   overflow: hidden;
 }
+a {
+  cursor: pointer;
+}
 ::placeholder {
   font-weight: normal;
 }
@@ -188,18 +191,17 @@ a.active {
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side a {
   color: white;
+  flex: 0.2;
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side a:hover {
   color: white;
 }
-.side-sidebar > .wrapper-side-sidebar > .heading-side > .back {
-  flex: 0.1;
-}
 .side-sidebar > .wrapper-side-sidebar > .heading-side > .heading-title {
-  flex: 0.9;
+  flex: 0.8;
 }
 .side-sidebar > .wrapper-side-sidebar > .content-side {
   flex: 0.9;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 }
@@ -215,7 +217,22 @@ a.active {
   align-items: center;
   margin-top: 1em;
 }
-.profile-picture img {
+.profile-picture > .profile-avatar {
+  position: relative;
+}
+.profile-picture > .profile-avatar > #new_avatar_file {
+  position: absolute;
+  border-radius: 100%;
+  top: 0px;
+  min-height: 10em;
+  min-width: 10em;
+  max-height: 10em;
+  max-width: 10em;
+  opacity: 0;
+}
+.profile-picture > .profile-avatar img {
+  min-width: 10em;
+  min-height: 10em;
   max-width: 10em;
   max-height: 10em;
   border-radius: 100%;
@@ -262,6 +279,7 @@ a.active {
   display: flex;
   flex-direction: column;
   font-size: 0.95em;
+  text-align: center;
 }
 .login-side > h1 {
   text-transform: uppercase;
@@ -317,6 +335,12 @@ a.active {
   border-radius: 100%;
   cursor: pointer;
 }
+.top-left-dialog {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  cursor: pointer;
+}
 .ngdialog {
   overflow: hidden;
 }
@@ -324,6 +348,8 @@ a.active {
   background-color: white !important;
   border-radius: 2px !important;
   width: 600px !important;
+  height: 100%;
+  overflow: auto;
 }
 .form-group > .input-group {
   position: relative;
@@ -346,11 +372,119 @@ a.active {
 .form-group > .input-group > input {
   width: 100%;
   border: none !important;
-  color: #e8ecef !important;
+  color: #9baebc !important;
+}
+#createUA > .content-side > .form-dable {
+  padding: 1em;
+}
+.form-label {
+  display: flex;
+  flex-direction: column;
+}
+.form-label > h1 {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: #5a5d82;
+}
+.form-label > input {
+  border-bottom: 1px solid #e8ecef;
+}
+.modal-single-ua > .ngdialog-content,
+.modal-edit-ua > .ngdialog-content {
+  width: 80% !important;
+}
+.modal-single-ua > .ngdialog-content > #singleUA,
+.modal-edit-ua > .ngdialog-content > #singleUA {
+  display: flex;
+  flex-direction: column;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA {
+  display: flex;
+  flex-direction: row;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > iframe,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > iframe {
+  padding: 1px;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .ua-title,
+.modal-edit-ua > .ngdialog-content > #singleUA > .ua-title {
+  text-align: center;
+  border-bottom: 1px #e8ecef solid;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .ua-description,
+.modal-edit-ua > .ngdialog-content > #singleUA > .ua-description {
+  padding: 0.1em;
+}
+#myUA > .content-side > .list-ua {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+#myUA > .content-side > .list-ua > .ua-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 10%;
+  padding: 1em;
+  border-bottom: 1px #e8ecef solid;
+}
+#myUA > .content-side > .list-ua > .ua-row > .row-title {
+  flex: 0.5;
+}
+#myUA > .content-side > .list-ua > .ua-row > .row-date {
+  flex: 0.4;
+}
+#myUA > .content-side > .list-ua > .ua-row > .row-edit {
+  flex: 0.1;
 }
 #map {
   transition: all 0.5s ease;
   flex: 1;
+}
+#map > div > .map-filter-box {
+  position: absolute;
+  cursor: initial;
+  top: 10px;
+  right: 10px;
+  max-width: 200px;
+  min-width: 200px;
+  background: white;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+  padding: 13px 19px;
+  line-height: 1.4;
+  text-align: center;
+  z-index: 10000;
+}
+#map > div > .map-filter-box > .heading {
+  text-transform: uppercase;
+  border-bottom: 1px #e8ecef solid;
+}
+#map > div > .map-filter-box > .filter-list {
+  padding: 1em;
+  list-style: none;
+}
+label {
+  display: inherit;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: inherit;
+}
+label > .checkbox {
+  display: none;
+}
+label > .fakeCheckbox {
+  height: 10px;
+  width: 10px;
+  border: 1px solid grey;
+  display: inline-block;
+  position: relative;
+}
+label > [type=checkbox]:checked + span:before {
+  content: '\2714';
+  position: absolute;
+  top: -5px;
+  left: 0;
 }
 input:focus {
   border: none !important;
@@ -359,8 +493,6 @@ input:focus {
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 50px white inset;
 }
-<<<<<<< Updated upstream
-=======
 .leaflet-popup-content-wrapper {
   border-radius: 0 !important;
   padding: 2px !important;
@@ -378,8 +510,4 @@ input:-webkit-autofill {
 .popup-map > .owner-popup {
   color: #5a5d82;
 }
-.fa {
-  line-height: inherit;
-}
->>>>>>> Stashed changes
 

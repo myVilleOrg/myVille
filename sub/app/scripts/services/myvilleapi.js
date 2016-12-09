@@ -34,11 +34,16 @@ angular.module('appApp')
           get: function(data){
           	return $http.get(baseUrl + '/user/' + data);
           }
+
         },
+
         UAS: {
         	get: function(data){
 						return $http.get(baseUrl + '/ua/get/geo', {params: data});
         	},
+          create: function(data){
+            return $http.post(baseUrl + '/ua/create', data);
+          },
         	getPopular: function(data){
 						return $http.get(baseUrl + '/ua/get/geo', {params: data});
         	},
@@ -50,7 +55,10 @@ angular.module('appApp')
         	},
           favor: function(data){
             return $http.post(baseUrl + '/ua/favor', data); 
-          }
+          },
+        	update: function(id, data){
+							return $http.put(baseUrl + '/ua/' + id, data);
+        	}
         }
       };
       return dataFactory;

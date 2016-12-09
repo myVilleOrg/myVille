@@ -9,22 +9,22 @@
  */
 angular.module('appApp')
 .factory('AuthentificationService', ['$rootScope', 'localStorageService', function($rootScope, localStorageService) {
-  		return {
-  			routeGuardian: function(){
-  				if($rootScope.user) {
-  					return true;
-  				} else {
-  					Promise.reject('Authentification needed.')
-  				}
-  			},
-  			login: function(token, user){
+			return {
+				routeGuardian: function(){
+					if($rootScope.user) {
+						return true;
+					} else {
+						Promise.reject('Authentification needed.')
+					}
+				},
+				login: function(token, user){
 					$rootScope.token = token;
-          $rootScope.user = user;
+					$rootScope.user = user;
 					localStorageService.set('expiryToken', Date.now() + 24*60*60*1000);
-          localStorageService.set('token', token);
-          localStorageService.set('user', user);
-  			},
-  			logout: function(){
+					localStorageService.set('token', token);
+					localStorageService.set('user', user);
+				},
+				logout: function(){
 					delete $rootScope.token;
 					delete $rootScope.user;
 					localStorageService.remove('token');
@@ -35,5 +35,5 @@ angular.module('appApp')
           $rootScope.user = user.data;
           localStorageService.set('user', user.data);
         }
-  		};
+			};
 }]);
