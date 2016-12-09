@@ -1,0 +1,20 @@
+<collapse-sidebar id="createUA" heading-title="Créer un aménagement">
+	<div class="form-dable">
+		<div ng-if="message">
+		{{message}}
+		</div>
+		<div class="form-label">
+			<h1>Titre</h1>
+			<span class="edit-field"><input type="text" ng-model="ua.title" /></span>
+		</div>
+		<div class="form-label">
+			<h1>Description</h1>
+			<textarea ui-tinymce="tinymceOptions" ng-model="ua.desc" placeholder="Entrez votre texte ici" />
+		</div>
+		<div class="form-label">
+			<h1>Localisation de l'UA : </h1>
+			<span> {{ua.location_name}} </span>
+		</div>
+		<button class='btn-blue' ng-click="submit()">Créer aménagement</button>
+	</div>
+</collapse-sidebar>

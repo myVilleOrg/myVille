@@ -86,6 +86,22 @@ angular.module('appApp')
 				console.log(leafletPayload.leafletObject);
 			});
 
+  		function onMapClick() {
+  			leafletData.getMap().then(function(map){
+  				var geocoder = new L.Control.Geocoder.Nominatim();
+  				map.on('click', function(e) {
+              		geocoder.reverse(e.latlng, 1,function(result){
+              			var location = [result[0].name,[result[0].center.lng, result[0].center.lat]];
+              			$rootScope.$broadcast('UAlocationClic', location);
+              		});
+     				});
+              });
+  		};
+
+  		$scope.$on('leafletDirectiveMap.map.click', function(event){
+  			onMapClick();
+			});
+
 			$scope.$on('centerOnMap', function(event, coordinates){
 				$scope.center.lat = coordinates[1];
 				$scope.center.lng = coordinates[0];

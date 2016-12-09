@@ -84,6 +84,11 @@ angular
 					}
 				}
 			})
+	    .when('/createUA', {
+	       controller: 'UACtrl',
+	       controllerAs: 'ua',
+	       templateUrl: 'views/ua.html',
+	    })
 			.when('/profile/mine', {
 				controller: 'MineCtrl',
 				controllerAs: 'mine',

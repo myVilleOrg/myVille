@@ -204,7 +204,7 @@ a {
 		}
 		&>.content-side {
 			flex: 0.9;
-
+			overflow: auto;
 			display: flex;
 			flex-direction: column;
 			&>h1 {
@@ -382,6 +382,13 @@ a {
       color: @right-gray !important;
     }
   }
+}
+#createUA {
+	&>.content-side{
+		&>.form-dable{
+			padding: 1em;
+		}
+	}
 }
 .form-label {
 	display: flex;

@@ -201,6 +201,7 @@ a.active {
 }
 .side-sidebar > .wrapper-side-sidebar > .content-side {
   flex: 0.9;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 }
@@ -372,6 +373,9 @@ a.active {
   width: 100%;
   border: none !important;
   color: #9baebc !important;
+}
+#createUA > .content-side > .form-dable {
+  padding: 1em;
 }
 .form-label {
   display: flex;
