@@ -84,11 +84,16 @@ angular
 					}
 				}
 			})
-	    .when('/createUA', {
-	       controller: 'UACtrl',
-	       controllerAs: 'ua',
-	       templateUrl: 'views/ua.html',
-	    })
+			.when('/createUA', {
+				controller: 'UACtrl',
+				controllerAs: 'ua',
+				templateUrl: 'views/ua.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
 			.when('/profile/mine', {
 				controller: 'MineCtrl',
 				controllerAs: 'mine',
@@ -102,7 +107,7 @@ angular
 			.when('/ua/:uaId',{
 				controller: 'MainCtrl',
 				controllerAs: 'main',
-				template: ''
+				template: ' '
 			})
 			.otherwise({
 				redirectTo: '/'
