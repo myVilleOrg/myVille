@@ -101,7 +101,7 @@ angular
 			.when('/favorite', {
 				controller: 'FavoriteCtrl',
 				controllerAs: 'favorite',
-				template: 'views/favorite.html',
+				templateUrl: 'views/favorite.html',
 			})
 			.when('/ua/:uaId',{
 				controller: 'MainCtrl',

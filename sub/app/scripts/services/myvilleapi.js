@@ -30,6 +30,9 @@ angular.module('appApp')
           },
           get: function(data){
           	return $http.get(baseUrl + '/user/' + data);
+          },
+          favoris: function(){
+            return $http.get(baseUrl + '/user/get/favoris');
           }
 
         },
