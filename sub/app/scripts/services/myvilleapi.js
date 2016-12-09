@@ -26,13 +26,31 @@ angular.module('appApp')
             return $http.post(baseUrl + '/user/create', data);
           },
           update: function(data) {
-          	return $http.put(baseUrl + '/user/update', data, {headers: {'x-access-token': $rootScope.token}});
+            return $http.put(baseUrl + '/user/update', data);
+          },
+          updateAvatar: function(data) {
+            return $http.post(baseUrl + '/user/update/avatar', data, {transformRequest: angular.identify, headers: {'Content-Type': undefined, enctype:'multipart/form-data'}});	
+          },
+          get: function(data){
+          	return $http.get(baseUrl + '/user/' + data);
           }
         },
         UAS: {
         	get: function(data){
 						return $http.get(baseUrl + '/ua/get/geo', {params: data});
-        	}
+        	},
+        	getPopular: function(data){
+						return $http.get(baseUrl + '/ua/get/geo', {params: data});
+        	},
+        	getMine: function(){
+        		return $http.get(baseUrl + '/ua/get/mine');
+        	},
+        	getOne: function(id){
+        		return $http.get(baseUrl + '/ua/' + id);
+        	},
+          favor: function(data){
+            return $http.post(baseUrl + '/ua/favor', data); 
+          }
         }
       };
       return dataFactory;
