@@ -1,26 +1,20 @@
-<collapse-sidebar id="my_ua" heading-title="Mes UAs">
-	<div class="profile-picture">
-		<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
-		<div class="profile-nickname">{{user.username}}</div>
-
-		<div class="profile-detailled">
-
-		    <div ng-if="message">
-		      {{message}}
-		    </div>
-
-		    <h1>Titre</h1>
-			<span class="edit-field"><input type="text" ng-model="ua.title" /></span>
-
-			<h1>Description</h1>
-		    <form> 
-		       <textarea rows="5" cols="48" ng-model="ua.desc" placeholder="Entrez votre texte ici" />
-		    </form> 
-
-		    <h1>Localisation de l'UA : </h1>
-		    <span> {{ua.location_name}} </span>
-
-		    <button class='btn-blue' ng-click="submit()">Create UA</button>
+<collapse-sidebar id="createUA" heading-title="Créer un aménagement">
+	<div class="form-dable">
+		<div ng-if="message">
+		{{message}}
 		</div>
+		<div class="form-label">
+			<h1>Titre</h1>
+			<span class="edit-field"><input type="text" ng-model="ua.title" /></span>
+		</div>
+		<div class="form-label">
+			<h1>Description</h1>
+			<textarea ui-tinymce="tinymceOptions" ng-model="ua.desc" placeholder="Entrez votre texte ici" />
+		</div>
+		<div class="form-label">
+			<h1>Localisation de l'UA : </h1>
+			<span> {{ua.location_name}} </span>
+		</div>
+		<button class='btn-blue' ng-click="submit()">Créer aménagement</button>
 	</div>
 </collapse-sidebar>

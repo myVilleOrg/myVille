@@ -20,7 +20,7 @@
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-		<link rel="stylesheet" href="bower_components/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+		<link rel="stylesheet" href="leaflet-control-geocoder/dist/Control.Geocoder.css" />
 	</head>
 	<body ng-app="appApp" ng-cloak="">
 		<!--[if lte IE 8]>
@@ -43,7 +43,7 @@
 								</a>
 							</li>
 							<li ng-if="token">
-								<a href="/#/ua" ng-class="{ active: isActive('/ua') }">
+								<a href="/#/createUA" ng-class="{ active: isActive('/createUA') }">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 									<span class="text-icon">Add mine</span>
 								</a>
@@ -69,7 +69,7 @@
 								<div ng-if="token" class="user-profile">
 									<div class="disconnect-user" ng-click="disconnect()"><i class="fa fa-times-circle"></i></div>
 									<a href="/#/profile/update">
-										<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
+										<img ng-src="{{user.avatar ? 'http://localhost:3000/static/' + user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
 									</a>
 								</div>
 						</div>
@@ -119,6 +119,8 @@
 		<script src="bower_components/hello/dist/hello.all.min.js"></script>
 		<script src="bower_components/ng-hello/dist/ng-hello.min.js"></script>
 		<script src="bower_components/moment/moment.js"></script>
+		<script src="bower_components/tinymce/tinymce.js"></script>
+		<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
 		<!-- endbower -->
 		<!-- endbuild -->
 		<script src="bower_components/moment/locale/fr.js"></script>
@@ -127,7 +129,7 @@
 		<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
 		<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
 		<script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-  		<script src="bower_components/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+		<script src="leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 		<!-- build:js({.tmp,app}) scripts/scripts.js -->
 		<script src="scripts/app.js"></script>
 		<script src="scripts/services/filterDate.js"></script>
@@ -143,7 +145,7 @@
 		<script src="scripts/controllers/ua.js"></script>
 		<script src="scripts/controllers/create_ua.js"></script>
 		<script src="scripts/controllers/mine.js"></script>
-
+		<script src="scripts/controllers/editua.js"></script>
 		<!-- endbuild -->
 
 </body>

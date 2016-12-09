@@ -1,6 +1,9 @@
 <collapse-sidebar id="profile" heading-title="Mon profil">
 	<div class="profile-picture">
-		<img ng-src="{{user.avatar ? user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
+		<div class="profile-avatar">
+			<img ng-src="{{user.avatar ? 'http://localhost:3000/static/' + user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}"/>
+			<input type="file" id="new_avatar_file" onchange="angular.element(this).scope().editAvatarClick(this)" name="avatar"/>
+		</div>
 		<div class="profile-nickname">{{user.username}}</div>
 
 		<div ng-if="!editMode" class="profile-description" ng-if="user.description">{{user.description}}</div>

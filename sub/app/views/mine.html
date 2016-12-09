@@ -7,7 +7,7 @@
 			<div class="row-date">
 				{{feature.properties._doc.createdAt | formatDate}}
 			</div>
-			<div class="row-edit">
+			<div class="row-edit" ng-click="editUA(feature.properties._doc)">
 				<i class="fa fa-edit"></i>
 			</div>
 		</div>
