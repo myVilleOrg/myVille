@@ -506,6 +506,7 @@ input:focus {
 	outline: 0;
 }
 input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px white inset;
 		-webkit-box-shadow:0 0 0 50px white inset;
 }
 .leaflet-popup-content-wrapper {
@@ -516,11 +517,12 @@ input:-webkit-autofill {
 	display: block;
 	&>.heading-popup {
 		border-bottom: 1px solid @light-gray;
+		&>i{
+		position: relative;
+		left: 20px;
+		}
 	}
 	&>.owner-popup {
 		color: @dark-gray;
 	}
-}
-.fa {
-	line-height: inherit;
 }

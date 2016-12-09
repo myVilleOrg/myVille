@@ -29,7 +29,7 @@ angular.module('appApp')
             return $http.put(baseUrl + '/user/update', data);
           },
           updateAvatar: function(data) {
-            return $http.post(baseUrl + '/user/update/avatar', data, {transformRequest: angular.identify, headers: {'Content-Type': undefined, enctype:'multipart/form-data'}});
+            return $http.post(baseUrl + '/user/update/avatar', data, {transformRequest: angular.identify, headers: {'Content-Type': undefined, enctype:'multipart/form-data'}});	
           },
           get: function(data){
           	return $http.get(baseUrl + '/user/' + data);
@@ -56,12 +56,13 @@ angular.module('appApp')
         	getOne: function(id){
         		return $http.get(baseUrl + '/ua/' + id);
         	},
+          favor: function(data){
+            return $http.post(baseUrl + '/ua/favor', data); 
+          },
         	update: function(id, data){
 							return $http.put(baseUrl + '/ua/' + id, data);
         	}
-
         }
-
       };
       return dataFactory;
     }]);

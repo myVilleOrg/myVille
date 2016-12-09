@@ -503,10 +503,11 @@ input:-webkit-autofill {
 .popup-map > .heading-popup {
   border-bottom: 1px solid #e8ecef;
 }
+.popup-map > .heading-popup > i {
+  position: relative;
+  left: 20px;
+}
 .popup-map > .owner-popup {
   color: #5a5d82;
-}
-.fa {
-  line-height: inherit;
 }
 
