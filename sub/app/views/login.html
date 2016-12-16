@@ -1,4 +1,4 @@
-<div class="login-side" ng-if="log">
+<div class="login-side" ng-if="log == 1">
 	<div ng-if="message">
 		{{message}}
 	</div>
@@ -13,7 +13,7 @@
 		<div class="input-group">
 			<div class="input-group-addon"><i class="fa fa-lock"></i></div>
 			<input type="password" ng-model="user.password" placeholder="Password" />
-			<div class="top-right"><a href="">Mot de passe oublié ?</a></div>
+			<div class="top-right"><a ng-click="switchMode('forgot')">Mot de passe oublié ?</a></div>
 		</div>
 	</div>
 	<button class='btn-blue' ng-click="loginClick()">Login</button>
@@ -22,7 +22,7 @@
 			<input type="checkbox" checked="true" class="checkbox-input" /> Se souvenir de moi
 		</div>
 		<div class="create-account">
-		Vous n'avez pas de compte ? <a ng-click="switchMode()">S'inscrire</a>
+		Vous n'avez pas de compte ? <a ng-click="switchMode('signup')">S'inscrire</a>
 		</div>
 	</div>
 	<div class="social-group">
@@ -40,8 +40,8 @@
 	</div>
 </div>
 
-<div class="login-side" ng-if="!log">
-	<div class="top-left-dialog"><a ng-click="switchMode()"><</a></div>
+<div class="login-side" ng-if="log == 2">
+	<div class="top-left-dialog"><a ng-click="switchMode('login')"><</a></div>
 	<h1>Inscription</h1>
 	<div ng-if="message">
 		{{message}}
@@ -70,5 +70,20 @@
 			<input type="phonenumber" ng-model="signupUser.phonenumber" placeholder="Numéro de téléphone" />
 		</div>
 	</div>
-	<button class='btn-blue' ng-click="createClick()">Create Account</button>
+	<button class='btn-blue' ng-click="createClick()">Créer compte</button>
+</div>
+
+<div class="login-side" ng-if="log == 3">
+	<div class="top-left-dialog"><a ng-click="switchMode('login')"><</a></div>
+	<h1>Mot de passe oublié</h1>
+	<div ng-if="message">
+		{{message}}
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-addon"><i class="fa fa-mail"></i></div>
+			<input type="text" ng-model="forgotPwd.email" placeholder="Email" />
+		</div>
+	</div>
+	<button class='btn-blue' ng-click="forgotClick()">GO !</button>
 </div>

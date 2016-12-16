@@ -109,6 +109,11 @@ angular
 				controllerAs: 'main',
 				template: ' '
 			})
+			.when('/reset/:tokenReset',{
+				controller: 'MainCtrl',
+				controllerAs: 'main',
+				template: ' '
+			})
 			.otherwise({
 				redirectTo: '/'
 			});
