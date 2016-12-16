@@ -8,16 +8,34 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-  .controller('FavoriteCtrl', function ($scope, myVilleAPI) {
+  .controller('FavoriteCtrl', function ($rootScope, $scope, myVilleAPI) {
 
-	$scope.favorites=[];
+	var favorite = function(){
+		$scope.favorites=$rootScope.user.favoris;
+		$scope.tabFavorite = [];
+	  	if($scope.favorites!=null){
+	  		for(var i=0;i<$scope.favorites.length;i++){
+	  			myVilleAPI.UAS.getOne($scope.favorites[i]).then(function(ua){
+	  				myVilleAPI.User.get(ua.data.owner).then(function(user){
+	  					var data = {
+	  						ua: ua,
+	  						owner: user.data.username
+	  					};
+	  					$scope.tabFavorite.push(data);
+	  				});
+	  			});
 
-  	myVilleAPI.User.favoris().then(function(datas){
-  		for(var i=0;i<datas.length;i++){
-  			myVilleAPI.UAS.getOne(datas[i]).then(function(ua){
-  				$scope.favorites.push(ua.title);
-  			});
-  		}
-  	});
+	  		};
+	  	};
+	};
 
+	favorite();
+
+	$scope.$on('updateFavorite', function(){
+		favorite();
+	});
+
+  	$scope.centerOnMap = function(coordinates){
+		$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
+	};
  });

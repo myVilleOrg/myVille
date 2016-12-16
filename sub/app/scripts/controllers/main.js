@@ -98,7 +98,9 @@ angular.module('appApp')
 			$rootScope.user.favoris = user.data.favoris;
 			localStorageService.set('user', user.data);
 			angular.element(document.getElementById(ua_id))[0].className == "fa fa-star" ? angular.element(document.getElementById(ua_id))[0].className = "fa fa-star-o" : angular.element(document.getElementById(ua_id))[0].className = "fa fa-star";
+			$rootScope.$broadcast('updateFavorite');
 		});
+
 	};
 
 
