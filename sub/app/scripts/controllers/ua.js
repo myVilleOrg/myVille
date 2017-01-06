@@ -9,7 +9,7 @@
  */
 angular.module('appApp')
 	.controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
-
+	$scope.$emit('editMode')
 	$scope.ua = {};
 	$scope.tinymceOptions = {
 		onChange: function(e) {
@@ -20,28 +20,25 @@ angular.module('appApp')
 		skin: 'lightgray',
 		theme : 'modern'
 	};
-
-	$scope.$on('UAlocationClic', function(event, data) {
-		$scope.ua.location_name = data[0];
-		$scope.ua.location_coord = data[1];
+	$scope.$on('drawingData', function(event, drawing){
+		$scope.ua.drawing = drawing;
+		console.log(drawing)
 	});
-
 	$scope.submit = function(){
-
-		if(!$scope.ua.desc || !$scope.ua.title || !$scope.ua.location_coord){
+		if(!$scope.ua.desc || !$scope.ua.title){
 				return $scope.message = 'Un ou des champs sont manquant.';
 		}
+		if(!$scope.ua.drawing) return $scope.message = 'Vous devez dessiner sur la carte !'
 		var data = {
 			title: $scope.ua.title,
 			description: $scope.ua.desc,
-			geojson: JSON.stringify({"type": "Point", "coordinates": $scope.ua.location_coord})
+			geojson: JSON.stringify($scope.ua.drawing)
 		};
 
 		myVilleAPI.UAS.create(data).then(function(user){
 			ngDialog.open({controller: 'CreateUACtrl', template: 'views/create_ua.html'});
 			$scope.ua.title = null;
 			$scope.ua.desc = null;
-			$scope.ua.location = null;
 		}, function(error){
 			$scope.message = error.data.message;
 			console.log(error.data);

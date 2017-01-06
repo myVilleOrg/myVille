@@ -116,33 +116,9 @@ angular.module('appApp')
 		});
 	};
 
+	$scope.$on('leafletDirectiveMap.map.dragend', showUas);
 
-	/*$scope.$on('leafletDirectiveMap.map.load', function(event){
-			showUas();
-	});*/
-
-	$scope.$on('leafletDirectiveMap.map.dragend', function(event){
-			showUas();
-	});
-	$scope.$on('leafletDirectiveMap.map.zoomend', function(event){
-			showUas();
-	});
-
-	function onMapClick() {
-		leafletData.getMap().then(function(map){
-			var geocoder = new L.Control.Geocoder.Nominatim();
-			map.on('click', function(e) {
-				geocoder.reverse(e.latlng, 1,function(result){
-					var location = [result[0].name,[result[0].center.lng, result[0].center.lat]];
-					$rootScope.$broadcast('UAlocationClic', location);
-				});
-			});
-		});
-	};
-
-	$scope.$on('leafletDirectiveMap.map.click', function(event){
-		onMapClick();
-	});
+	$scope.$on('leafletDirectiveMap.map.zoomend', showUas);
 
 	$scope.$on('centerOnMap', function(event, coordinates){
 		$scope.center.lat = coordinates[1];
@@ -155,6 +131,8 @@ angular.module('appApp')
 		if(next === 'http://localhost:9000/#/profile/mine' && current != next){
 			$scope.filters.mine = true;
 		}
+		$scope.$emit('normalMode')
+
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
@@ -175,6 +153,63 @@ angular.module('appApp')
 				mine: false,
 				popular: true
 			}
+	});
+
+	/*Draw MAP*/
+	var drawnItems = new L.FeatureGroup();
+	var options = {
+		edit: {
+			featureGroup: drawnItems
+		},
+		draw: {
+			polygon: {
+				shapeOptions: {
+					color: 'purple'
+				}
+			},
+			polyline: {
+				shapeOptions: {
+					color: '#f357a1',
+					weight: 10
+				}
+			},
+			circle: {
+				shapeOptions: {
+					stroke: true,
+					weight: 4,
+					color: 'blue',
+					opacity: 0.5,
+					fill: true,
+					fillColor: null, //same as color by default
+					fillOpacity: 0.2,
+					clickable: true
+				}
+			}
+		},
+		showRadius: true
+	};
+
+	var drawControl = new L.Control.Draw(options);
+	var editMapMode = false;
+	$scope.$on('normalMode', function(){
+		if(editMapMode){
+			leafletData.getMap().then(function(map){
+				map.removeControl(drawControl);
+			});
+		}
+	});
+	$scope.$on('editMode', function(){
+		leafletData.getMap().then(function(map) {
+				map.addControl(drawControl);
+				editMapMode = true;
+				map.on('draw:created', function (e) {
+					var type = e.layerType,
+					layer = e.layer;
+					drawnItems.addLayer(layer);
+					map.addLayer(drawnItems)
+					$scope.$broadcast('drawingData', drawnItems.toGeoJSON());
+				});
+		});
 	});
 
 	var expiryTokenTime = localStorageService.get('expiryToken');
