@@ -2,7 +2,7 @@
 	<div class="list-ua">
 		<div class="ua-row" ng-repeat="favorite in tabFavorite">
 			<div class="row-title">
-				<a ng-click="centerOnMap(ua.data.location)">{{favorite.ua.data.title}}</a>
+				<a ng-click="centerOnMap(favorite.ua.data.location.coordinates)">{{favorite.ua.data.title}}</a>
 			</div>
 			<div class="row-owner">
 				{{favorite.owner}}

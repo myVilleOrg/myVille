@@ -127,6 +127,11 @@ angular.module('appApp')
 		});
 	};
 
+	$scope.Search = function(val){
+		
+		
+	}
+
 	$scope.$on('leafletDirectiveMap.map.click', function(event){
 		onMapClick();
 	});

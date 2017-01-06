@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @ngdoc function
  * @name appApp.controller:FavoriteCtrl
@@ -11,7 +10,7 @@ angular.module('appApp')
   .controller('FavoriteCtrl', function ($rootScope, $scope, myVilleAPI) {
 
 	var favorite = function(){
-		$scope.favorites=$rootScope.user.favoris;
+		$scope.favorites = $rootScope.user.favoris;
 		$scope.tabFavorite = [];
 	  	if($scope.favorites!=null){
 	  		for(var i=0;i<$scope.favorites.length;i++){
