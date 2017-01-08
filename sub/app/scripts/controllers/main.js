@@ -13,9 +13,6 @@ angular.module('appApp')
 
 	$scope.getPopupDescriptionUA = function(uaId) {
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
-			$scope.center.lat = data.data.location.coordinates[1];
-			$scope.center.lng = data.data.location.coordinates[0];
-			$scope.center.zoom = 18;
 			ngDialog.open({data: data.data, template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});
 	};
@@ -69,16 +66,22 @@ angular.module('appApp')
 		}
 	}, true);
 
-	var markers = L.markerClusterGroup();
+	var geoJsonLayer;
 	var showUas = function(){
 		leafletData.getMap().then(function(map){
-		 	markers.clearLayers();
+			try {
+				map.removeLayer(geoJsonLayer);
+			}
+			catch (e){
+
+			}
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
 			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.get;
 			filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
 				$rootScope.cachedMarkers = geocodes.data;
-				var geoJsonLayer = L.geoJson(geocodes.data, {
+				geoJsonLayer = L.geoJson(geocodes.data, {
 					onEachFeature: function (feature, layer) {
+
 						var starClass = 'fa fa-star';
 						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id)!=-1){
 							starClass = 'fa fa-star-o';
@@ -100,8 +103,7 @@ angular.module('appApp')
 						layer.bindPopup(content[0]);
 					}
 				});
-				markers.addLayer(geoJsonLayer);
-				map.addLayer(markers);
+				geoJsonLayer.addTo(map);
 			});
 		});
 	};
@@ -121,9 +123,18 @@ angular.module('appApp')
 	$scope.$on('leafletDirectiveMap.map.zoomend', showUas);
 
 	$scope.$on('centerOnMap', function(event, coordinates){
-		$scope.center.lat = coordinates[1];
-		$scope.center.lng = coordinates[0];
-		$scope.center.zoom = 18;
+		var point = coordinates[0];
+		var coordinate, zoom;
+		if(point.type == 'Polygon'){
+			coordinate = coordinates[0].coordinates[0][0];
+			zoom = 14;
+		} else if(point.type == 'Point'){
+			coordinate = coordinates[0].coordinates;
+			zoom = 18;
+		}
+		$scope.center.lat = coordinate[1];
+		$scope.center.lng = coordinate[0];
+		$scope.center.zoom = zoom;
 	});
 
 
@@ -190,10 +201,14 @@ angular.module('appApp')
 	};
 
 	var drawControl = new L.Control.Draw(options);
+	drawControl.setDrawingOptions({
+		circle: false
+	});
 	var editMapMode = false;
 	$scope.$on('normalMode', function(){
 		if(editMapMode){
 			leafletData.getMap().then(function(map){
+				map.removeLayer(drawnItems);
 				map.removeControl(drawControl);
 			});
 		}
