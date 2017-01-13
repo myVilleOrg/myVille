@@ -167,7 +167,6 @@ a.active {
   font-size: 0.8em;
 }
 .side-sidebar {
-  transition: all 1s ease;
   flex: 0.4;
   border-right: 1px #e8ecef solid;
 }
@@ -348,7 +347,6 @@ a.active {
   background-color: white !important;
   border-radius: 2px !important;
   width: 600px !important;
-  height: 100%;
   overflow: auto;
 }
 .form-group > .input-group {
@@ -375,7 +373,19 @@ a.active {
   color: #9baebc !important;
 }
 #createUA > .content-side > .form-dable {
+  flex-direction: column;
+  display: flex;
   padding: 1em;
+}
+#createUA > .content-side > .form-dable > .form-label > .edit-field > input {
+  width: 100%;
+}
+#createUA > .content-side > .form-dable > button {
+  width: 30%;
+  align-self: center;
+  display: flex;
+  text-align: center;
+  justify-content: center;
 }
 .form-label {
   display: flex;
@@ -444,7 +454,6 @@ a.active {
   flex: 0.1;
 }
 #map {
-  transition: all 0.5s ease;
   flex: 1;
 }
 #map > div > .map-filter-box {
@@ -468,6 +477,19 @@ a.active {
 #map > div > .map-filter-box > .filter-list {
   padding: 1em;
   list-style: none;
+}
+#map > div > .create-ua-button {
+  display: none;
+  position: absolute;
+  z-index: 1000000;
+  bottom: 10%;
+  left: 50%;
+}
+#map > div > .create-ua-button > button {
+  font-size: 2em;
+}
+.modalConfirm {
+  height: 10%;
 }
 label {
   display: inherit;
@@ -514,5 +536,15 @@ input:-webkit-autofill {
 }
 .popup-map > .owner-popup {
   color: #5a5d82;
+}
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+  pointer-events: auto !important;
+}
+.leaflet-popup-tip-container {
+  margin: initial !important;
 }
 

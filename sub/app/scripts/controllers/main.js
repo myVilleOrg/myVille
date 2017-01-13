@@ -13,9 +13,6 @@ angular.module('appApp')
 
 	$scope.getPopupDescriptionUA = function(uaId) {
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
-			$scope.center.lat = data.data.location.coordinates[1];
-			$scope.center.lng = data.data.location.coordinates[0];
-			$scope.center.zoom = 18;
 			ngDialog.open({data: data.data, template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});
 	};
@@ -48,6 +45,10 @@ angular.module('appApp')
 		ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html'});
 	};
 
+	$scope.submitUA = function(){
+		$scope.$broadcast('submitUA');
+	}
+
 	$scope.selectFilter = function(index){
 		if(index === 0) $scope.filters.mine = false;
 		if(index === 1) $scope.filters.popular = false
@@ -69,27 +70,33 @@ angular.module('appApp')
 		}
 	}, true);
 
-	var markers = L.markerClusterGroup();
+	var geoJsonLayer;
 	var showUas = function(){
 		leafletData.getMap().then(function(map){
-		 	markers.clearLayers();
+			try {
+				map.removeLayer(geoJsonLayer);
+			}
+			catch (e){
+
+			}
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
 			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.get;
 			filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
 				$rootScope.cachedMarkers = geocodes.data;
-				var geoJsonLayer = L.geoJson(geocodes.data, {
+				geoJsonLayer = L.geoJson(geocodes.data, {
 					onEachFeature: function (feature, layer) {
-						var starClass = 'fa fa-star';
+
+						var starClass = 'fa fa-star-o';
 						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id)!=-1){
-							starClass = 'fa fa-star-o';
+							starClass = 'fa fa-star';
 						}
-						var testFavoriHtml = $rootScope.user ? '<i id="'+feature.properties._doc._id+'" class="'+starClass+'" ng-click="editFavori(\''+feature.properties._doc._id+'\')" aria-hidden="true"></i>' : ''
+						var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
 						var htmlPopup = '<div class="popup-map">' +
 															'<div class="heading-popup">' +
 																'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
 																feature.properties._doc.title +
 																'</a>' +
-															testFavoriHtml+
+															testFavoriHtml +
 															'</div>' +
 															'<div class="owner-popup">' +
 															'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
@@ -100,8 +107,7 @@ angular.module('appApp')
 						layer.bindPopup(content[0]);
 					}
 				});
-				markers.addLayer(geoJsonLayer);
-				map.addLayer(markers);
+				geoJsonLayer.addTo(map);
 			});
 		});
 	};
@@ -113,50 +119,36 @@ angular.module('appApp')
 		myVilleAPI.UAS.favor(data).then(function(user){
 			$rootScope.user.favoris = user.data.favoris;
 			localStorageService.set('user', user.data);
-			angular.element(document.getElementById(ua_id))[0].className == "fa fa-star" ? angular.element(document.getElementById(ua_id))[0].className = "fa fa-star-o" : angular.element(document.getElementById(ua_id))[0].className = "fa fa-star";
+			angular.element(document.getElementById(ua_id))[0].className == "fa fa-star-o" ? angular.element(document.getElementById(ua_id))[0].className = "fa fa-star" : angular.element(document.getElementById(ua_id))[0].className = "fa fa-star-o";
 			$rootScope.$broadcast('updateFavorite');
 		});
 	};
 
+	$scope.$on('leafletDirectiveMap.map.dragend', showUas);
 
-	/*$scope.$on('leafletDirectiveMap.map.load', function(event){
-			showUas();
-	});*/
-
-	$scope.$on('leafletDirectiveMap.map.dragend', function(event){
-			showUas();
-	});
-	$scope.$on('leafletDirectiveMap.map.zoomend', function(event){
-			showUas();
-	});
-
-	function onMapClick() {
-		leafletData.getMap().then(function(map){
-			var geocoder = new L.Control.Geocoder.Nominatim();
-			map.on('click', function(e) {
-				geocoder.reverse(e.latlng, 1,function(result){
-					var location = [result[0].name,[result[0].center.lng, result[0].center.lat]];
-					$rootScope.$broadcast('UAlocationClic', location);
-				});
-			});
-		});
-	};
-
-	$scope.$on('leafletDirectiveMap.map.click', function(event){
-		onMapClick();
-	});
+	$scope.$on('leafletDirectiveMap.map.zoomend', showUas);
 
 	$scope.$on('centerOnMap', function(event, coordinates){
-		$scope.center.lat = coordinates[1];
-		$scope.center.lng = coordinates[0];
-		$scope.center.zoom = 18;
+		var point = coordinates[0];
+		var coordinate, zoom;
+		if(point.type == 'Polygon'){
+			coordinate = coordinates[0].coordinates[0][0];
+			zoom = 14;
+		} else if(point.type == 'Point'){
+			coordinate = coordinates[0].coordinates;
+			zoom = 18;
+		}
+		$scope.center.lat = coordinate[1];
+		$scope.center.lng = coordinate[0];
+		$scope.center.zoom = zoom;
 	});
-
 
 	$scope.$on('$locationChangeStart', function (event, next, current) {
 		if(next === 'http://localhost:9000/#/profile/mine' && current != next){
 			$scope.filters.mine = true;
 		}
+		$scope.$emit('normalMode')
+
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
@@ -177,6 +169,47 @@ angular.module('appApp')
 				mine: false,
 				popular: true
 			}
+	});
+
+	/*Draw MAP*/
+	var drawnItems = new L.FeatureGroup();
+	var options = {
+		edit: {
+			featureGroup: drawnItems
+		},
+		draw: {
+
+		},
+		showRadius: true
+	};
+
+	var drawControl = new L.Control.Draw(options);
+	drawControl.setDrawingOptions({
+		circle: false,
+		polyline: false,
+		polygon: false
+	});
+	var editMapMode = false;
+	$scope.$on('normalMode', function(){
+		if(editMapMode){
+			leafletData.getMap().then(function(map){
+				map.removeLayer(drawnItems);
+				map.removeControl(drawControl);
+			});
+		}
+	});
+	$scope.$on('editMode', function(){
+		leafletData.getMap().then(function(map) {
+				map.addControl(drawControl);
+				editMapMode = true;
+				map.on('draw:created', function (e) {
+					var type = e.layerType,
+					layer = e.layer;
+					drawnItems.addLayer(layer);
+					map.addLayer(drawnItems)
+					$scope.$broadcast('drawingData', drawnItems.toGeoJSON());
+				});
+		});
 	});
 
 	var expiryTokenTime = localStorageService.get('expiryToken');
