@@ -19,7 +19,8 @@ angular
 		'LocalStorageModule',
 		'ngDialog',
 		'ngHello',
-		'ui.tinymce'
+		'ui.tinymce',
+		'angular-intro'
 	])
 	.config(function(helloProvider) {
 		helloProvider.init({

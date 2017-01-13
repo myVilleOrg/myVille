@@ -275,6 +275,33 @@ angular.module('appApp')
 	/* Tutorial Mode */
 	var tutorialDone = localStorageService.get('tutorialMode');
 	if(!tutorialDone){
-
+		$scope.IntroOptions = {
+				steps:[
+				{
+					element: document.querySelector('.container'),
+					intro: 'Bienvenue sur myVille ! \n myVille est un site colloboratif où vous pouvez partager des aménagements urbains :)'
+				},
+				{
+					element: document.querySelector('.sidebar'),
+					intro: 'Ça c\'est la barre de menu !',
+					position: 'right'
+				},
+				{
+					element: document.querySelector('#map'),
+					intro: 'Là tu peux naviguer sur la carte et voir les aménagements d\'autres personnes, les aimer, les partager ...',
+				},
+				],
+				showStepNumbers: false,
+				exitOnOverlayClick: true,
+				exitOnEsc:true,
+				nextLabel: 'Suivant',
+				prevLabel: 'Précédent',
+				skipLabel: 'Quitter',
+				doneLabel: 'Quitter'
+		};
+		setTimeout(function(){
+			$scope.startIntro();
+			localStorageService.set('tutorialMode', 'true');
+		}, 500);
 	}
 }]);
