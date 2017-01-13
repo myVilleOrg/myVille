@@ -236,4 +236,10 @@ angular.module('appApp')
 		$scope.resetPwd = {};
 		ngDialog.open({data: {token: $routeParams.tokenReset}, controller: 'MainCtrl', template: 'views/reset_password.html', appendClassName: 'modal-single-ua'});
 	}
+
+	/* Tutorial Mode */
+	var tutorialDone = localStorageService.get('tutorialMode');
+	if(!tutorialDone){
+
+	}
 }]);
