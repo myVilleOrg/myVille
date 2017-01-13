@@ -9,6 +9,24 @@
 	  title="Twitter Tweet Button"
 	  style="border: 0; overflow: hidden;">
 		</iframe>
+		<div class='voteList'>
+			<div ng-app="" ng-init="showaime = false">
+				<span ng-mouseenter="showaime = true" ng-mouseleave="showaime = false">😃</span>
+				<p ng-show="showaime">j'aime</p>
+			</div>
+			<div>
+				<span>😣</span>
+			</div>
+			<div>
+				<span>😍</span>
+			</div>
+			<div>	
+				<span>😴</span>
+			</div>
+			<div>
+				<span>🤔</span>
+			</div>
+		</div>
 	</div>
 	<div class="ua-title">
 		{{ngDialogData.title}}
