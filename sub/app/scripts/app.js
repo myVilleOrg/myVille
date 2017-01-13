@@ -104,6 +104,11 @@ angular
 					}
 				}
 			})
+			.when('/favorite', {
+				controller: 'FavoriteCtrl',
+				controllerAs: 'favorite',
+				templateUrl: 'views/favorite.html',
+			})
 			.when('/ua/:uaId',{
 				controller: 'MainCtrl',
 				controllerAs: 'main',
