@@ -43,8 +43,8 @@ angular.module('appApp')
 				},
 
 				UAS: {
-					get: function(data){
-						return $http.get(baseUrl + '/ua/get/geo', {params: data});
+					getFavorites: function(data){
+						return $http.get(baseUrl + '/ua/get/favorite', {params: data});
 					},
 					create: function(data){
 						return $http.post(baseUrl + '/ua/create', data);
