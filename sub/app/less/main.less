@@ -425,7 +425,7 @@ a {
 		}
 	}
 }
-#myUAfavoriteUA {
+#myUA, #favoriteUA {
 	&>.content-side{
 		&>.list-ua {
 			display: flex;
@@ -452,29 +452,7 @@ a {
 		}
 	}
 }
-#favoriteUA {
-	&>.content-side{
-		&>.list-ua {
-			display: flex;
-			flex-direction: column;
-			overflow-y: auto;
-			&>.ua-row {
-				display: flex;
-				flex-direction: row;
-				width: 100%;
-				height: 10%;
-				padding: 1em;
-				border-bottom: 1px @light-gray solid;
-				&>.row-title{
-					flex: 0.5;
-				}
-				&>.row-owner{
-					flex: 0.4;
-				}
-			}
-		}
-	}
-}
+
 #map {
 		transition: all 0.5s ease;
 		flex: 1;

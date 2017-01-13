@@ -93,14 +93,14 @@ angular.module('appApp')
 	$scope.editFavori = function(ua_id){
 		var data = {
 			ua: ua_id
-		}
+		};
+
 		myVilleAPI.UAS.favor(data).then(function(user){
 			$rootScope.user.favoris = user.data.favoris;
 			localStorageService.set('user', user.data);
 			angular.element(document.getElementById(ua_id))[0].className == "fa fa-star" ? angular.element(document.getElementById(ua_id))[0].className = "fa fa-star-o" : angular.element(document.getElementById(ua_id))[0].className = "fa fa-star";
 			$rootScope.$broadcast('updateFavorite');
 		});
-
 	};
 
 
@@ -126,11 +126,6 @@ angular.module('appApp')
 			});
 		});
 	};
-
-	$scope.Search = function(val){
-		
-		
-	}
 
 	$scope.$on('leafletDirectiveMap.map.click', function(event){
 		onMapClick();
