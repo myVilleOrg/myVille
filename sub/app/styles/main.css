@@ -407,6 +407,20 @@ a.active {
 .modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > iframe {
   padding: 1px;
 }
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a > span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a > span {
+  position: absolute;
+  margin-top: -30px;
+  margin-left: 35px;
+  transform: scale(0) rotate(-12deg);
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a:hover span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a:hover span,
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div a:focus span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div a:focus span {
+  transform: scale(1) rotate(0);
+  opacity: 1;
+}
 .modal-single-ua > .ngdialog-content > #singleUA > .ua-title,
 .modal-edit-ua > .ngdialog-content > #singleUA > .ua-title {
   text-align: center;

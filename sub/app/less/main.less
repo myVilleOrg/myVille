@@ -414,6 +414,22 @@ a {
 				&>iframe {
 					padding: 1px;
 				}
+				&>.voteList {
+					&>div {
+						&>a {
+							&>span {
+								position:absolute;
+	   							margin-top:-30px;
+	    						margin-left:35px;
+							    transform:scale(0) rotate(-12deg);
+							}
+						}
+	   					&>a:hover span, a:focus span{
+							transform:scale(1) rotate(0);
+							opacity:1;
+	   					}
+					}
+				}
 			}
 			&>.ua-title {
 				text-align: center;
