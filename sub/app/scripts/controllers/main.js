@@ -144,6 +144,7 @@ angular.module('appApp')
 	$scope.$on('$locationChangeStart', function (event, next, current) {
 		if(next === 'http://localhost:9000/#/profile/mine' && current != next){
 			$scope.filters.mine = true;
+			$scope.filters.popular = false;
 		}
 		$scope.$emit('normalMode')
 
