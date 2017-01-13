@@ -416,12 +416,14 @@ a.active {
 .modal-edit-ua > .ngdialog-content > #singleUA > .ua-description {
   padding: 0.1em;
 }
-#myUA > .content-side > .list-ua {
+#myUA > .content-side > .list-ua,
+#favoriteUA > .content-side > .list-ua {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 }
-#myUA > .content-side > .list-ua > .ua-row {
+#myUA > .content-side > .list-ua > .ua-row,
+#favoriteUA > .content-side > .list-ua > .ua-row {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -429,13 +431,16 @@ a.active {
   padding: 1em;
   border-bottom: 1px #e8ecef solid;
 }
-#myUA > .content-side > .list-ua > .ua-row > .row-title {
+#myUA > .content-side > .list-ua > .ua-row > .row-title,
+#favoriteUA > .content-side > .list-ua > .ua-row > .row-title {
   flex: 0.5;
 }
-#myUA > .content-side > .list-ua > .ua-row > .row-date {
+#myUA > .content-side > .list-ua > .ua-row > .row-date,
+#favoriteUA > .content-side > .list-ua > .ua-row > .row-date {
   flex: 0.4;
 }
-#myUA > .content-side > .list-ua > .ua-row > .row-edit {
+#myUA > .content-side > .list-ua > .ua-row > .row-edit,
+#favoriteUA > .content-side > .list-ua > .ua-row > .row-edit {
   flex: 0.1;
 }
 #map {
@@ -509,5 +514,15 @@ input:-webkit-autofill {
 }
 .popup-map > .owner-popup {
   color: #5a5d82;
+}
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+  pointer-events: auto !important;
+}
+.leaflet-popup-tip-container {
+  margin: initial !important;
 }
 

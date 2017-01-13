@@ -82,17 +82,17 @@ angular.module('appApp')
 				geoJsonLayer = L.geoJson(geocodes.data, {
 					onEachFeature: function (feature, layer) {
 
-						var starClass = 'fa fa-star';
+						var starClass = 'fa fa-star-o';
 						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id)!=-1){
-							starClass = 'fa fa-star-o';
+							starClass = 'fa fa-star';
 						}
-						var testFavoriHtml = $rootScope.user ? '<i id="'+feature.properties._doc._id+'" class="'+starClass+'" ng-click="editFavori(\''+feature.properties._doc._id+'\')" aria-hidden="true"></i>' : ''
+						var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
 						var htmlPopup = '<div class="popup-map">' +
 															'<div class="heading-popup">' +
 																'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
 																feature.properties._doc.title +
 																'</a>' +
-															testFavoriHtml+
+															testFavoriHtml +
 															'</div>' +
 															'<div class="owner-popup">' +
 															'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
@@ -110,11 +110,13 @@ angular.module('appApp')
 	$scope.editFavori = function(ua_id){
 		var data = {
 			ua: ua_id
-		}
+		};
+
 		myVilleAPI.UAS.favor(data).then(function(user){
 			$rootScope.user.favoris = user.data.favoris;
 			localStorageService.set('user', user.data);
-			angular.element(document.getElementById(ua_id))[0].className == "fa fa-star" ? angular.element(document.getElementById(ua_id))[0].className = "fa fa-star-o" : angular.element(document.getElementById(ua_id))[0].className = "fa fa-star";
+			angular.element(document.getElementById(ua_id))[0].className == "fa fa-star-o" ? angular.element(document.getElementById(ua_id))[0].className = "fa fa-star" : angular.element(document.getElementById(ua_id))[0].className = "fa fa-star-o";
+			$rootScope.$broadcast('updateFavorite');
 		});
 	};
 
@@ -136,7 +138,6 @@ angular.module('appApp')
 		$scope.center.lng = coordinate[0];
 		$scope.center.zoom = zoom;
 	});
-
 
 	$scope.$on('$locationChangeStart', function (event, next, current) {
 		if(next === 'http://localhost:9000/#/profile/mine' && current != next){
@@ -173,36 +174,16 @@ angular.module('appApp')
 			featureGroup: drawnItems
 		},
 		draw: {
-			polygon: {
-				shapeOptions: {
-					color: 'purple'
-				}
-			},
-			polyline: {
-				shapeOptions: {
-					color: '#f357a1',
-					weight: 10
-				}
-			},
-			circle: {
-				shapeOptions: {
-					stroke: true,
-					weight: 4,
-					color: 'blue',
-					opacity: 0.5,
-					fill: true,
-					fillColor: null, //same as color by default
-					fillOpacity: 0.2,
-					clickable: true
-				}
-			}
+
 		},
 		showRadius: true
 	};
 
 	var drawControl = new L.Control.Draw(options);
 	drawControl.setDrawingOptions({
-		circle: false
+		circle: false,
+		polyline: false,
+		polygon: false
 	});
 	var editMapMode = false;
 	$scope.$on('normalMode', function(){

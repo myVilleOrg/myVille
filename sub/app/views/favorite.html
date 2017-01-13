@@ -1,0 +1,12 @@
+<collapse-sidebar id="favoriteUA" heading-title="Favoris">
+	<div class="list-ua">
+		<div class="ua-row" ng-repeat="favorite in tabFavorite">
+			<div class="row-title">
+				<a ng-click="centerOnMap(favorite.ua.data.geometry.geometries)">{{favorite.ua.data.title}}</a>
+			</div>
+			<div class="row-owner">
+				{{favorite.owner}}
+			</div>
+		</div>
+	</div>
+</collapse-sidebar>

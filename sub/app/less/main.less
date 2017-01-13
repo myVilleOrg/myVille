@@ -425,7 +425,7 @@ a {
 		}
 	}
 }
-#myUA {
+#myUA, #favoriteUA {
 	&>.content-side{
 		&>.list-ua {
 			display: flex;
@@ -452,6 +452,7 @@ a {
 		}
 	}
 }
+
 #map {
 		transition: all 0.5s ease;
 		flex: 1;
@@ -525,4 +526,10 @@ input:-webkit-autofill {
 	&>.owner-popup {
 		color: @dark-gray;
 	}
+}
+.leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path, .leaflet-tile-container {
+	pointer-events: auto !important;
+}
+.leaflet-popup-tip-container {
+	margin: initial !important;
 }
