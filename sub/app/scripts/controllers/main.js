@@ -50,8 +50,22 @@ angular.module('appApp')
 	}
 
 	$scope.selectFilter = function(index){
-		if(index === 0) $scope.filters.mine = false;
-		if(index === 1) $scope.filters.popular = false
+		if(index === 0){
+			$scope.filters.mine = false;
+			$scope.filters.favorite = false;
+			$scope.filters.popular = true;
+		}
+		if(index === 1){
+			$scope.filters.popular = false;
+			$scope.filters.favorite = false;
+			$scope.filters.mine = true;
+		}
+		if(index === 2) {
+			$scope.filters.popular = false;
+			$scope.filters.mine = false;
+			$scope.filters.favorite = true;
+		}
+
 	};
 	/*$rootScope.$on('$routeChangeStart', function (event, next, current) {
 		if (!AuthentificationService.routeGuardian()) {
@@ -63,11 +77,20 @@ angular.module('appApp')
 		if(JSON.stringify(newv) !== JSON.stringify(old)){
 			showUas();
 		}
+		if(newv.popular){
+			$window.location.href = '#/';
+		}
 		if(newv.mine){
 			$window.location.href = '#/profile/mine';
 		}
+		if(newv.favorite){
+			$window.location.href = '#/profile/favorite';
+		}
 	}, true);
 
+	$scope.$on('filterForce', function(e, idx){
+		$scope.selectFilter(idx);
+	});
 	var geoJsonLayer;
 	var showUas = function(){
 		leafletData.getMap().then(function(map){
@@ -78,14 +101,14 @@ angular.module('appApp')
 
 			}
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
-			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.get;
+			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.getFavorites;
 			filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
 				$rootScope.cachedMarkers = geocodes.data;
 				geoJsonLayer = L.geoJson(geocodes.data, {
 					onEachFeature: function (feature, layer) {
 
 						var starClass = 'fa fa-star-o';
-						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id)!=-1){
+						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) != -1){
 							starClass = 'fa fa-star';
 						}
 						var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
@@ -145,13 +168,24 @@ angular.module('appApp')
 		if(next === 'http://localhost:9000/#/profile/mine' && current != next){
 			$scope.filters.mine = true;
 			$scope.filters.popular = false;
+			$scope.filters.favorite = false;
+		}
+		if(next === 'http://localhost:9000/#/profile/favorite' && current != next){
+			$scope.filters.mine = false;
+			$scope.filters.popular = false;
+			$scope.filters.favorite = true;
+		}
+		if(next === 'http://localhost:9000/#/' && current != next){
+			$scope.filters.mine = false;
+			$scope.filters.popular = true;
+			$scope.filters.favorite = false;
 		}
 		$scope.$emit('normalMode')
 
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
-			$scope.filters = {mine: false, popular: true};
+			$scope.filters = {mine: false, popular: true, favorite: false};
 		}
 	});
 
@@ -166,7 +200,8 @@ angular.module('appApp')
 			geojson : {},
 			filters: {
 				mine: false,
-				popular: true
+				popular: true,
+				favorite: false
 			}
 	});
 
