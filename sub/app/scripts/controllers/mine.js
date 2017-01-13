@@ -8,7 +8,7 @@
 * Controller of the appApp
 */
 angular.module('appApp')
-.controller('MineCtrl', function ($scope, ngDialog) {
+.controller('MineCtrl', function ($scope, ngDialog, myVilleAPI) {
 
 	$scope.$on('$locationChangeStart', function (event, next, current) {
 		$scope.$emit('filtersReset', true);
@@ -19,5 +19,9 @@ angular.module('appApp')
 	$scope.editUA = function(ua){
 		ngDialog.open({data: ua, template: 'views/edit_ua.html', appendClassName: 'modal-edit-ua', controller: 'EdituaCtrl'});
 	}
-
+	$scope.deleteUA = function(ua){
+		myVilleAPI.UAS.delete(ua._id).then(function(){
+			$scope.$emit('leafletDirectiveMap.map.dragend')
+		});
+	}
 });

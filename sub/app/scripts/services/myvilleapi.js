@@ -63,6 +63,9 @@ angular.module('appApp')
 					},
 					update: function(id, data){
 							return $http.put(baseUrl + '/ua/' + id, data);
+					},
+					delete: function(id){
+						return $http.delete(baseUrl +  '/ua/' + id);
 					}
 				}
 			};

@@ -1,5 +1,10 @@
 <collapse-sidebar id="myUA" heading-title="{{'Mes propositions'}}">
 	<div class="list-ua">
+		<div class="ua-row" ng-if="cachedMarkers.features.length < 1">
+			<div>
+				Il n'y a rien pour l'instant 😞
+			</div>
+		</div>
 		<div class="ua-row" ng-if="cachedMarkers && feature.properties._doc.owner.username == user.username" ng-repeat="feature in cachedMarkers.features">
 			<div class="row-title">
 				<a ng-click="centerOnMap(feature.geometry.geometries)">{{feature.properties._doc.title}}</a>
@@ -8,7 +13,10 @@
 				{{feature.properties._doc.createdAt | formatDate}}
 			</div>
 			<div class="row-edit" ng-click="editUA(feature.properties._doc)">
-				<i class="fa fa-edit"></i>
+				<i title="Editer" class="fa fa-edit"></i>
+			</div>
+			<div class="row-edit" ng-click="deleteUA(feature.properties._doc)">
+				<i title="Supprimer" class="fa fa-close"></i>
 			</div>
 		</div>
 	</div>
