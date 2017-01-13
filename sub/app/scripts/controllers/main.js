@@ -65,8 +65,6 @@ angular.module('appApp')
 		}
 		if(newv.mine){
 			$window.location.href = '#/profile/mine';
-		} else {
-			$window.location.href = '#/';
 		}
 	}, true);
 
