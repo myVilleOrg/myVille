@@ -45,6 +45,10 @@ angular.module('appApp')
 		ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html'});
 	};
 
+	$scope.submitUA = function(){
+		$scope.$broadcast('submitUA');
+	}
+
 	$scope.selectFilter = function(index){
 		if(index === 0) $scope.filters.mine = false;
 		if(index === 1) $scope.filters.popular = false
