@@ -85,7 +85,7 @@ a.active {
 }
 @media only screen and (max-width: 479px) {
   .sidebar {
-    height: 7%;
+    height: auto;
     border-right: none;
     border-top: 1px #e8ecef solid;
   }

@@ -270,7 +270,7 @@ angular.module('appApp')
 				steps:[
 				{
 					element: document.querySelector('.container'),
-					intro: 'Bienvenue sur myVille ! \n myVille est un site colloboratif où vous pouvez partager des aménagements urbains :)'
+					intro: 'Bienvenue sur myVille ! \n myVille est un site colloboratif où vous pouvez partager vos aménagements urbains à la communauté :)'
 				},
 				{
 					element: document.querySelector('.sidebar'),
@@ -297,45 +297,49 @@ angular.module('appApp')
 	}
 	// in case if new user
 	var tutorialDone = localStorageService.get('tutorialMode');
-	if(tutorialDone && tutorialDone == 'mode1'){
-		$scope.IntroOptions = {
-				steps:[
-				{
-					intro: 'Bienvenue sur myVille ! Nous allons vous présentez les fonctionnalités du site.'
-				},
-				{
-					element: '#link-create',
-					intro: 'Ici, vous pouvez créer votre aménagement.',
-					position: 'right'
-				},
-				{
-					element: '#link-mine',
-					intro: 'Par là, vous pouvez voir vos créations.',
-					position: 'right'
-				},
-				{
-					element: '#link-favorite',
-					intro: 'Envie de lister vos favoris , il suffit de cliquer ici.',
-					position: 'right'
-				},
-				{
-					element:'.leaflet-marker-icon',
-					intro: 'Il suffit de cliquer pour voir les détails de cet aménagement.',
-					position: 'right'
-				}
-				],
-				showStepNumbers: false,
-				exitOnOverlayClick: true,
-				exitOnEsc:true,
-				nextLabel: 'Suivant',
-				prevLabel: 'Précédent',
-				skipLabel: 'Quitter',
-				doneLabel: 'Quitter'
-		};
+	if(AuthentificationService.routeGuardian() && tutorialDone && tutorialDone == 'mode1'){
+
 		$timeout(function(){
-			$scope.startIntro();
-			localStorageService.set('tutorialMode', 'mode1');
-		}, 500);
+			angular.extend($scope, {
+				IntroOptions: {
+						steps:[
+						{
+							intro: 'Bienvenue sur myVille ! Nous allons vous présentez les fonctionnalités du site.'
+						},
+						{
+							element: '#link-create',
+							intro: 'Ici, vous pouvez créer votre aménagement.',
+							position: 'right'
+						},
+						{
+							element: '#link-mine',
+							intro: 'Par là, vous pouvez voir vos créations.',
+							position: 'right'
+						},
+						{
+							element: '#link-favorite',
+							intro: 'Envie de lister vos favoris , il suffit de cliquer ici.',
+							position: 'right'
+						},
+						{
+							intro: 'Il suffit de cliquer sur un marqueur ou une forme pour voir les détails de cet aménagement.',
+							position: 'right'
+						}
+						],
+						showStepNumbers: false,
+						exitOnOverlayClick: true,
+						exitOnEsc:true,
+						nextLabel: 'Suivant',
+						prevLabel: 'Précédent',
+						skipLabel: 'Quitter',
+						doneLabel: 'Quitter'
+				}
+			});
+			$timeout(function(){
+				$scope.startIntro();
+				localStorageService.set('tutorialMode', 'mode2');
+			}, 200);
+		}, 1000);
 	}
 
 }]);
