@@ -5,6 +5,8 @@
 
 ```sh
 git clone https://github.com/myVilleOrg/myVille.git
+git pull && git submodule init && git submodule update && git submodule status
+
 ```
 
 ## Usage
