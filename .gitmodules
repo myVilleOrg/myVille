@@ -1,0 +1,6 @@
+[submodule "myville-frontend"]
+	path = myville-frontend
+	url = https://github.com/myVilleOrg/myville-frontend
+[submodule "myville-backend"]
+	path = myville-backend
+	url = https://github.com/myVilleOrg/myville-backend
