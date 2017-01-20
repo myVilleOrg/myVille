@@ -13,7 +13,7 @@ angular.module('appApp')
 
 	$scope.getPopupDescriptionUA = function(uaId) {
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
-			ngDialog.open({data: data.data, template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
+			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});
 	};
 	$scope.forgotClick = function(){

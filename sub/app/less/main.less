@@ -425,19 +425,32 @@ a {
 					padding: 1px;
 				}
 				&>.voteList {
+					display: flex;
+					flex-direction: row;
 					&>div {
-						&>a {
-							&>span {
-								position:absolute;
-	   							margin-top:-30px;
-	    						margin-left:35px;
-							    transform:scale(0) rotate(-12deg);
+						&>a{
+							display: flex;
+							flex-direction: column;
+							&.non-voted {
+								&>span {
+									position:relative;
+		    						opacity:0;
+								}
 							}
-						}
-	   					&>a:hover span, a:focus span{
-							transform:scale(1) rotate(0);
-							opacity:1;
-	   					}
+		   					&.non-voted:hover span, .non-voted:focus span{
+								opacity:1;
+		   					}
+		   					&.voted {
+		   						color: @dark-gray;
+								&>span {
+									position:relative;
+		    						opacity:0;
+								}
+							}
+		   					&.voted:hover span, .voted:focus span{
+								opacity:1;
+		   					}
+		   				}
 					}
 				}
 			}

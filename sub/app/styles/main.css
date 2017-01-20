@@ -417,18 +417,40 @@ a.active {
 .modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > iframe {
   padding: 1px;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a > span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a > span {
-  position: absolute;
-  margin-top: -30px;
-  margin-left: 35px;
-  transform: scale(0) rotate(-12deg);
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList {
+  display: flex;
+  flex-direction: row;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a:hover span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a:hover span,
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div a:focus span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div a:focus span {
-  transform: scale(1) rotate(0);
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a {
+  display: flex;
+  flex-direction: column;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.non-voted > span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.non-voted > span {
+  position: relative;
+  opacity: 0;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.non-voted:hover span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.non-voted:hover span,
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a .non-voted:focus span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a .non-voted:focus span {
+  opacity: 1;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted {
+  color: #5a5d82;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted > span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted > span {
+  position: relative;
+  opacity: 0;
+}
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted:hover span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted:hover span,
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a .voted:focus span,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a .voted:focus span {
   opacity: 1;
 }
 .modal-single-ua > .ngdialog-content > #singleUA > .ua-title,
