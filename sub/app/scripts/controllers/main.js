@@ -202,17 +202,12 @@ angular.module('appApp')
 			featureGroup: drawnItems
 		},
 		draw: {
-
+			circle: false
 		},
 		showRadius: true
 	};
 
 	var drawControl = new L.Control.Draw(options);
-	drawControl.setDrawingOptions({
-		circle: false,
-		polyline: false,
-		polygon: false
-	});
 	var editMapMode = false;
 	$scope.$on('normalMode', function(){
 		if(editMapMode){
@@ -224,8 +219,19 @@ angular.module('appApp')
 		}
 	});
 	$scope.$on('editMode', function(){
-		editMapMode = true;
 		leafletData.getMap().then(function(map) {
+			if(!editMapMode){
+				drawnItems = new L.FeatureGroup();
+				options = {
+					edit: {
+						featureGroup: drawnItems
+					},
+					draw: {
+						circle: false
+					},
+					showRadius: true
+				};
+				drawControl = new L.Control.Draw(options);
 				map.addControl(drawControl);
 				map.on('draw:created', function (e) {
 					var type = e.layerType,
@@ -234,6 +240,8 @@ angular.module('appApp')
 					map.addLayer(drawnItems)
 					$scope.$broadcast('drawingData', drawnItems.toGeoJSON());
 				});
+				editMapMode = true;
+			}
 		});
 	});
 
