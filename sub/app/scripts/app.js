@@ -104,6 +104,16 @@ angular
 					}
 				}
 			})
+			.when('/profile/favorite', {
+				controller: 'FavoriteCtrl',
+				controllerAs: 'favorite',
+				templateUrl: 'views/favorite.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
 			.when('/ua/:uaId',{
 				controller: 'MainCtrl',
 				controllerAs: 'main',

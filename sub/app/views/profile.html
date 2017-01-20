@@ -1,6 +1,8 @@
 <collapse-sidebar id="profile" heading-title="{{userWanted.username}}">
 	<div class="profile-picture">
-		<img ng-src="{{userWanted.avatar ? userWanted.avatar : (userWanted.facebook_id) ? 'http://graph.facebook.com/'+ userWanted.facebook_id +'/picture' : 'images/profile-default.png'}}" />
+		<div class="profile-avatar">
+			<img ng-src="{{userWanted.avatar ? 'http://localhost:3000/static/' + userWanted.avatar : (userWanted.facebook_id) ? 'http://graph.facebook.com/'+ userWanted.facebook_id +'/picture' : 'images/profile-default.png'}}"/>
+		</div>
 		<div class="profile-nickname">{{userWanted.username}}</div>
 	</div>
 </collapse-sidebar>
