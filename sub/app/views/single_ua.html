@@ -9,7 +9,7 @@
 	  title="Twitter Tweet Button"
 	  style="border: 0; overflow: hidden;">
 		</iframe>
-		<div class='voteList'>
+		<div ng-if="user" class='voteList'>
 			<div ng-repeat ="x in vote">
 				<a ng-class = "x.isVote ? 'voted' : 'non-voted'" ng-click="doVote($index)">{{x.smiley}}
 					<span>{{x.text}}</span>

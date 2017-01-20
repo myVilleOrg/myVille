@@ -70,6 +70,11 @@ angular.module('appApp')
 					vote: function(id, data){
 						return $http.post(baseUrl + '/ua/vote/' + id, data);
 					}
+				},
+				Vote: {
+					getVote: function(uaId){
+						return $http.get(baseUrl + '/vote/'+ uaId);
+					}
 				}
 			};
 			return dataFactory;

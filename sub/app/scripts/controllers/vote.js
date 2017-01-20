@@ -29,11 +29,19 @@ angular.module('appApp')
 		}
 	];
 
+	myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function(vote){
+		console.log($scope.ngDialogData._id);
+		console.log("lololo");
+		if(vote){
+			console.log(vote.data.vote[0]);
+			$scope.vote[vote.data.vote[0]].isVote = true;
+		}
+	})
+
 	$scope.doVote = function(id){
 		var data = {
 			vote: id
 		}
-		console.log($scope.ngDialogData._id);
 		myVilleAPI.UAS.vote($scope.ngDialogData._id, data).then(function(){
 			for(var i = 0; i<$scope.vote.length; i++){
 				if(i == id){
