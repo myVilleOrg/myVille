@@ -6,13 +6,13 @@
 	<div class="form-group">
 		<div class="input-group">
 			<div class="input-group-addon"><i class="fa fa-user"></i></div>
-			<input type="text" ng-model="user.email" placeholder="Email" />
+			<input type="text" ng-keyup="$event.keyCode == 13 && loginClick()" ng-model="user.email" placeholder="Email" />
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="input-group">
 			<div class="input-group-addon"><i class="fa fa-lock"></i></div>
-			<input type="password" ng-model="user.password" placeholder="Password" />
+			<input type="password" ng-keyup="$event.keyCode == 13 && loginClick()" ng-model="user.password" placeholder="Password" />
 			<div class="top-right"><a ng-click="switchMode('forgot')">Mot de passe oublié ?</a></div>
 		</div>
 	</div>

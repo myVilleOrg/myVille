@@ -19,13 +19,17 @@ angular
 		'LocalStorageModule',
 		'ngDialog',
 		'ngHello',
-		'ui.tinymce'
+		'ui.tinymce',
+		'angular-intro'
 	])
 	.config(function(helloProvider) {
 		helloProvider.init({
 			facebook: '269509866781876',
 			google: '49433176261-hjeueecpafioh56r67fik9nqkum5np0g.apps.googleusercontent.com'
 		});
+	})
+	.config(function($logProvider){
+		$logProvider.debugEnabled(false);
 	})
 	.config(function (localStorageServiceProvider) {
 		localStorageServiceProvider.setPrefix('myVille');
@@ -58,7 +62,7 @@ angular
 			};
 		}]);
 	})
-	.config(function ($routeProvider) {
+	.config(function ($routeProvider, $locationProvider) {
 		$routeProvider
 			.when('/', {
 				controller: 'MainCtrl',
@@ -127,4 +131,5 @@ angular
 			.otherwise({
 				redirectTo: '/'
 			});
+			$locationProvider.html5Mode(false).hashPrefix('');
 	});

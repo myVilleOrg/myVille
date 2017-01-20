@@ -8,7 +8,7 @@
  * Controller of the appApp
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', function ($scope, $location, localStorageService, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile) {
 	$scope.resetPwd = {};
 
 	$scope.getPopupDescriptionUA = function(uaId) {
@@ -51,19 +51,13 @@ angular.module('appApp')
 
 	$scope.selectFilter = function(index){
 		if(index === 0){
-			$scope.filters.mine = false;
-			$scope.filters.favorite = false;
-			$scope.filters.popular = true;
+			$scope.filters = {popular: true, mine: false, favorite: false};
 		}
 		if(index === 1){
-			$scope.filters.popular = false;
-			$scope.filters.favorite = false;
-			$scope.filters.mine = true;
+			$scope.filters = {popular: false, mine: true, favorite: false};
 		}
 		if(index === 2) {
-			$scope.filters.popular = false;
-			$scope.filters.mine = false;
-			$scope.filters.favorite = true;
+			$scope.filters = {popular: false, mine: false, favorite: true};
 		}
 
 	};
@@ -74,7 +68,7 @@ angular.module('appApp')
 		}
 	});*/
 	$scope.$watch('filters', function(newv, old){ //on filter change
-		if(JSON.stringify(newv) !== JSON.stringify(old)){
+		if(JSON.stringify(newv) != JSON.stringify(old)){
 			showUas();
 		}
 		if(newv.popular){
@@ -91,6 +85,7 @@ angular.module('appApp')
 	$scope.$on('filterForce', function(e, idx){
 		$scope.selectFilter(idx);
 	});
+
 	var geoJsonLayer;
 	var showUas = function(){
 		leafletData.getMap().then(function(map){
@@ -98,7 +93,6 @@ angular.module('appApp')
 				map.removeLayer(geoJsonLayer);
 			}
 			catch (e){
-
 			}
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
 			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.getFavorites;
@@ -133,14 +127,10 @@ angular.module('appApp')
 		});
 	};
 	$scope.editFavori = function(ua_id){
-		var data = {
-			ua: ua_id
-		};
-
-		myVilleAPI.UAS.favor(data).then(function(user){
+		myVilleAPI.UAS.favor({ua: ua_id}).then(function(user){
 			$rootScope.user.favoris = user.data.favoris;
 			localStorageService.set('user', user.data);
-			angular.element(document.getElementById(ua_id))[0].className == "fa fa-star-o" ? angular.element(document.getElementById(ua_id))[0].className = "fa fa-star" : angular.element(document.getElementById(ua_id))[0].className = "fa fa-star-o";
+			angular.element(document.getElementById(ua_id))[0].className == 'fa fa-star-o' ? angular.element(document.getElementById(ua_id))[0].className = 'fa fa-star' : angular.element(document.getElementById(ua_id))[0].className = 'fa fa-star-o';
 			$rootScope.$broadcast('updateFavorite');
 		});
 	};
@@ -212,30 +202,37 @@ angular.module('appApp')
 			featureGroup: drawnItems
 		},
 		draw: {
-
+			circle: false
 		},
 		showRadius: true
 	};
 
 	var drawControl = new L.Control.Draw(options);
-	drawControl.setDrawingOptions({
-		circle: false,
-		polyline: false,
-		polygon: false
-	});
 	var editMapMode = false;
 	$scope.$on('normalMode', function(){
 		if(editMapMode){
 			leafletData.getMap().then(function(map){
 				map.removeLayer(drawnItems);
 				map.removeControl(drawControl);
+				editMapMode = false;
 			});
 		}
 	});
 	$scope.$on('editMode', function(){
 		leafletData.getMap().then(function(map) {
+			if(!editMapMode){
+				drawnItems = new L.FeatureGroup();
+				options = {
+					edit: {
+						featureGroup: drawnItems
+					},
+					draw: {
+						circle: false
+					},
+					showRadius: true
+				};
+				drawControl = new L.Control.Draw(options);
 				map.addControl(drawControl);
-				editMapMode = true;
 				map.on('draw:created', function (e) {
 					var type = e.layerType,
 					layer = e.layer;
@@ -243,6 +240,8 @@ angular.module('appApp')
 					map.addLayer(drawnItems)
 					$scope.$broadcast('drawingData', drawnItems.toGeoJSON());
 				});
+				editMapMode = true;
+			}
 		});
 	});
 
@@ -271,4 +270,85 @@ angular.module('appApp')
 		$scope.resetPwd = {};
 		ngDialog.open({data: {token: $routeParams.tokenReset}, controller: 'MainCtrl', template: 'views/reset_password.html', appendClassName: 'modal-single-ua'});
 	}
+
+	/* Tutorial Mode */
+	var tutorialDone = localStorageService.get('tutorialMode');
+	if(!tutorialDone){
+		$scope.IntroOptions = {
+				steps:[
+				{
+					element: document.querySelector('.container'),
+					intro: 'Bienvenue sur myVille ! \n myVille est un site colloboratif où vous pouvez partager vos aménagements urbains à la communauté :)'
+				},
+				{
+					element: document.querySelector('.sidebar'),
+					intro: 'Ça c\'est la barre de menu !',
+					position: 'right'
+				},
+				{
+					element: document.querySelector('#map'),
+					intro: 'Là tu peux naviguer sur la carte et voir les aménagements d\'autres personnes, les aimer, les partager ...',
+				},
+				],
+				showStepNumbers: false,
+				exitOnOverlayClick: true,
+				exitOnEsc: true,
+				nextLabel: 'Suivant',
+				prevLabel: 'Précédent',
+				skipLabel: 'Quitter',
+				doneLabel: 'Quitter'
+		};
+		$timeout(function(){
+			$scope.startIntro();
+			localStorageService.set('tutorialMode', 'mode1');
+		}, 500);
+	}
+	$scope.$on('firstLoginTutorial', function(){
+		var tutorialDone = localStorageService.get('tutorialMode');
+		if(AuthentificationService.routeGuardian() && tutorialDone && tutorialDone == 'mode1'){
+
+			$timeout(function(){
+				angular.extend($scope, {
+					IntroOptions: {
+							steps:[
+							{
+								intro: 'Bienvenue sur myVille ! Nous allons vous présentez les fonctionnalités du site.'
+							},
+							{
+								element: '#link-create',
+								intro: 'Ici, vous pouvez créer votre aménagement.',
+								position: 'right'
+							},
+							{
+								element: '#link-mine',
+								intro: 'Par là, vous pouvez voir vos créations.',
+								position: 'right'
+							},
+							{
+								element: '#link-favorite',
+								intro: 'Envie de lister vos favoris , il suffit de cliquer ici.',
+								position: 'right'
+							},
+							{
+								intro: 'Il suffit de cliquer sur un marqueur ou une forme pour voir les détails de cet aménagement.',
+								position: 'right'
+							}
+							],
+							showStepNumbers: false,
+							exitOnOverlayClick: true,
+							exitOnEsc:true,
+							nextLabel: 'Suivant',
+							prevLabel: 'Précédent',
+							skipLabel: 'Quitter',
+							doneLabel: 'Quitter'
+					}
+				});
+				$timeout(function(){
+					$scope.startIntro();
+					localStorageService.set('tutorialMode', 'finished');
+				}, 200);
+			}, 1000);
+		}
+	});
+
 }]);

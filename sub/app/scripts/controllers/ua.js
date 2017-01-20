@@ -59,12 +59,14 @@ angular.module('appApp')
 			ngDialog.open({controller: 'UACtrl', template: 'views/modalUaCreated.html'});
 			$scope.ua.title = null;
 			$scope.ua.desc = null;
+			$scope.ua.drawing = null;
 		}, function(error){
 			$scope.message = error.data.message;
 			console.log(error.data);
 		});
 	});
 	$scope.$on("$destroy", function(){
+			$scope.$emit('normalMode');
 			angular.element(document.getElementById('map'))[0].style.flex = 1;
 			angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
 			angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';

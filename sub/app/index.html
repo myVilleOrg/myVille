@@ -14,6 +14,7 @@
 		<link rel='stylesheet' href='bower_components/ng-dialog/css/ngDialog-theme-default.css' />
 		<link rel='stylesheet' href='bower_components/leaflet/dist/leaflet.css' />
 		<link rel='stylesheet' href='bower_components/leaflet-draw/dist/leaflet.draw.css' />
+		<link rel='stylesheet' href='bower_components/intro.js/introjs.css' />
 		<!-- endbower -->
 		<!-- endbuild -->
 		<!-- build:css(.tmp) styles/main.css -->
@@ -23,18 +24,17 @@
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	</head>
-	<body ng-app="appApp" ng-cloak="">
+	<body ng-app="appApp" ng-cloak="" ng-controller="MainCtrl">
 		<!--[if lte IE 8]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 		<!--<div class="loading">
 			<i class="fa fa-spinner fa-spin"></i>
 		</div>-->
-		<div id="container" ng-controller="MainCtrl">
+		<div id="container" ng-intro-options="IntroOptions" ng-intro-method="startIntro">
 			<div class="sidebar">
 					<div class="sidebar-wrapper">
 						<div class="brand">
-							<i class="fa fa-building"></i>
 						</div>
 						<ul>
 							<li>
@@ -43,19 +43,19 @@
 									<span class="text-icon">MAPS</span>
 								</a>
 							</li>
-							<li ng-if="token">
+							<li ng-if="token" id="link-create">
 								<a href="/#/createUA" ng-class="{ active: isActive('/createUA') }">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 									<span class="text-icon">Add mine</span>
 								</a>
 							</li>
-							<li ng-if="token">
+							<li ng-if="token" id="link-mine">
 								<a href="/#/profile/mine" ng-class="{ active: isActive('/profile/mine') }">
 									<i class="fa fa-thumb-tack" aria-hidden="true"></i>
 									<span class="text-icon">Mine</span>
 								</a>
 							</li>
-							<li ng-if="token">
+							<li ng-if="token" id="link-favorite">
 								<a href="/#/profile/favorite" ng-class="{ active: isActive('/profile/favorite') }">
 									<i class="fa fa-star-o" aria-hidden="true"></i>
 									<span class="text-icon">Favorites</span>
@@ -86,21 +86,21 @@
 					<ul class="filter-list">
 						<li>
 							<label>
-								<input class="checkbox" ng-model="filters.popular" ng-checked="filters.popular" ng-click="selectFilter(0)" type="checkbox" />
+								<input class="checkbox" ng-checked="filters.popular" ng-checked="isActive('/') || filters.popular" ng-click="selectFilter(0)" type="checkbox" />
 								<span class="fakeCheckbox"></span>
 								Les plus populaires
 							</label>
 						</li>
 						<li ng-if="token">
 							<label>
-								<input class="checkbox" ng-model="filters.mine" ng-click="selectFilter(1)" ng-checked="isActive('/profile/mine')" type="checkbox" />
+								<input class="checkbox" ng-click="selectFilter(1)" ng-checked="isActive('/profile/mine') || filters.mine" type="checkbox" />
 								<span class="fakeCheckbox"></span>
 								Mes propositions
 							</label>
 						</li>
 						<li ng-if="token">
 							<label>
-								<input class="checkbox" ng-model="filters.favorite" ng-click="selectFilter(2)" ng-checked="isActive('/profile/favorite')" type="checkbox" />
+								<input class="checkbox" ng-click="selectFilter(2)" ng-checked="isActive('/profile/favorite') || filters.favorite" type="checkbox" />
 								<span class="fakeCheckbox"></span>
 								Mes favoris
 							</label>
@@ -131,6 +131,8 @@
 		<script src="bower_components/tinymce/tinymce.js"></script>
 		<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
 		<script src="bower_components/leaflet/dist/leaflet-src.js"></script>
+		<script src="bower_components/intro.js/intro.js"></script>
+		<script src="bower_components/angular-intro.js/src/angular-intro.js"></script>
 		<!-- endbower -->
 		<!-- endbuild -->
 		<script src="bower_components/moment/locale/fr.js"></script>
