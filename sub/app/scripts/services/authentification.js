@@ -24,6 +24,7 @@ angular.module('appApp')
 					localStorageService.set('token', token);
 					localStorageService.set('user', user);
 					$rootScope.$broadcast('firstLoginTutorial');
+					$rootScope.$broadcast('leafletDirectiveMap.map.dragend'); // update map
 				},
 				logout: function(){
 					delete $rootScope.token;

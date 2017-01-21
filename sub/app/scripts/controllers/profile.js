@@ -17,8 +17,15 @@ angular.module('appApp')
   };
 
   $scope.editClick = function(){
-  	if(!$scope.editUser.username) return $scope.message = 'Le champ pseudonyme ne peut pas être vide.';
-  	if(!$scope.editUser.Opassword && $scope.editUser.Npassword) return $scope.message = 'Nous avons besoin de votre ancien mot de passe.';
+  	if(!$scope.editUser.username){
+  		$scope.message = 'Le champ pseudonyme ne peut pas être vide.';
+  		return;
+  	}
+  	if(!$scope.editUser.Opassword && $scope.editUser.Npassword) {
+  		$scope.message = 'Nous avons besoin de votre ancien mot de passe.';
+  		return;
+  	}
+
   	var data = {
   		username: $scope.editUser.username,
   		password: $scope.editUser.Npassword,

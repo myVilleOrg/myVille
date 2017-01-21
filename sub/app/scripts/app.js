@@ -40,7 +40,7 @@ angular
 				request: function(config) {
 					var token = localStorageService.get('token');
 					config.headers = config.headers || {};
-					if (token != null) {
+					if (token !== null) {
 						config.headers['x-access-token'] = token;
 					}
 					return config || Promise.resolve(config);
@@ -51,7 +51,7 @@ angular
 				response: function(response){
 					var currentToken = localStorageService.get('token');
 					var receivedToken = response.headers('x-access-token');
-					if(receivedToken != null && currentToken != receivedToken) {
+					if(receivedToken !== null && currentToken !== receivedToken) {
 						localStorageService.set('token', receivedToken);
 					}
 					return response || Promise.resolve(response);
@@ -71,12 +71,12 @@ angular
 			.when('/login', {
 				controller: 'LoginCtrl',
 				controllerAs: 'login',
-				templateUrl: 'views/login.html',
+				templateUrl: 'views/login.html'
 			})
 			.when('/user/:userId', {
 				controller: 'ProfileCtrl',
 				controllerAs: 'profile',
-				templateUrl: 'views/profile.html',
+				templateUrl: 'views/profile.html'
 			})
 			.when('/profile/update', {
 				controller: 'ProfileCtrl',

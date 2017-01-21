@@ -12,7 +12,8 @@ angular.module('appApp')
 	var getFavorites = function(){
 		$scope.favorites = $rootScope.user.favoris;
 		$scope.tabFavorite = [];
-	  	if($scope.favorites != null){
+		//TODO Recode this function with favorite route
+	  	if($scope.favorites !== null){
 	  		for(var i=0;i < $scope.favorites.length;i++){
 	  			myVilleAPI.UAS.getOne($scope.favorites[i]).then(function(ua){
 						myVilleAPI.User.get(ua.data.owner).then(function(user){
@@ -23,9 +24,8 @@ angular.module('appApp')
 							$scope.tabFavorite.push(data);
 						});
 	  			});
-
-	  		};
-	  	};
+	  		}
+	  	}
 	};
 
 	getFavorites();

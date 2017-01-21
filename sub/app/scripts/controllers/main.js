@@ -16,8 +16,12 @@ angular.module('appApp')
 			ngDialog.open({data: data.data, template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});
 	};
+
 	$scope.forgotClick = function(){
-		if($scope.resetPwd.pwd1 !== $scope.resetPwd.pwd2) return $scope.message = 'Mot de passe différent.';
+		if($scope.resetPwd.pwd1 !== $scope.resetPwd.pwd2) {
+			$scope.message = 'Mot de passe différent.';
+			return;
+		}
 
 		var data = {
 			tokenReset: $scope.ngDialogData.token,
@@ -26,8 +30,10 @@ angular.module('appApp')
 
 		myVilleAPI.User.reset(data).then(function(){
 			$scope.closeThisDialog();
+			return;
 		}).catch(function(err){
 			$scope.message = err.data.message;
+			return;
 		});
 	};
 
@@ -61,14 +67,9 @@ angular.module('appApp')
 		}
 
 	};
-	/*$rootScope.$on('$routeChangeStart', function (event, next, current) {
-		if (!AuthentificationService.routeGuardian()) {
-			event.preventDefault();
-			$location.path('/');
-		}
-	});*/
+
 	$scope.$watch('filters', function(newv, old){ //on filter change
-		if(JSON.stringify(newv) != JSON.stringify(old)){
+		if(JSON.stringify(newv) !== JSON.stringify(old)){
 			showUas();
 		}
 		if(newv.popular){
@@ -102,7 +103,7 @@ angular.module('appApp')
 					onEachFeature: function (feature, layer) {
 
 						var starClass = 'fa fa-star-o';
-						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) != -1){
+						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
 							starClass = 'fa fa-star';
 						}
 						var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
@@ -130,7 +131,7 @@ angular.module('appApp')
 		myVilleAPI.UAS.favor({ua: ua_id}).then(function(user){
 			$rootScope.user.favoris = user.data.favoris;
 			localStorageService.set('user', user.data);
-			angular.element(document.getElementById(ua_id))[0].className == 'fa fa-star-o' ? angular.element(document.getElementById(ua_id))[0].className = 'fa fa-star' : angular.element(document.getElementById(ua_id))[0].className = 'fa fa-star-o';
+			angular.element(document.getElementById(ua_id))[0].className === 'fa fa-star-o' ? angular.element(document.getElementById(ua_id))[0].className = 'fa fa-star' : angular.element(document.getElementById(ua_id))[0].className = 'fa fa-star-o';
 			$rootScope.$broadcast('updateFavorite');
 		});
 	};
@@ -142,12 +143,15 @@ angular.module('appApp')
 	$scope.$on('centerOnMap', function(event, coordinates){
 		var point = coordinates[0];
 		var coordinate, zoom;
-		if(point.type == 'Polygon'){
+		if(point.type === 'Polygon'){
 			coordinate = coordinates[0].coordinates[0][0];
 			zoom = 14;
-		} else if(point.type == 'Point'){
+		} else if(point.type === 'Point'){
 			coordinate = coordinates[0].coordinates;
 			zoom = 18;
+		} else if(point.type === 'LineString'){
+			coordinate = coordinates[0].coordinates[0];
+			zoom = 14;
 		}
 		$scope.center.lat = coordinate[1];
 		$scope.center.lng = coordinate[0];
@@ -155,17 +159,17 @@ angular.module('appApp')
 	});
 
 	$scope.$on('$locationChangeStart', function (event, next, current) {
-		if(next === 'http://localhost:9000/#/profile/mine' && current != next){
+		if(next === 'http://localhost:9000/#/profile/mine' && current !== next){
 			$scope.filters.mine = true;
 			$scope.filters.popular = false;
 			$scope.filters.favorite = false;
 		}
-		if(next === 'http://localhost:9000/#/profile/favorite' && current != next){
+		if(next === 'http://localhost:9000/#/profile/favorite' && current !== next){
 			$scope.filters.mine = false;
 			$scope.filters.popular = false;
 			$scope.filters.favorite = true;
 		}
-		if(next === 'http://localhost:9000/#/' && current != next){
+		if(next === 'http://localhost:9000/#/' && current !== next){
 			$scope.filters.mine = false;
 			$scope.filters.popular = true;
 			$scope.filters.favorite = false;
@@ -288,7 +292,7 @@ angular.module('appApp')
 				{
 					element: document.querySelector('#map'),
 					intro: 'Là tu peux naviguer sur la carte et voir les aménagements d\'autres personnes, les aimer, les partager ...',
-				},
+				}
 				],
 				showStepNumbers: false,
 				exitOnOverlayClick: true,
@@ -305,7 +309,7 @@ angular.module('appApp')
 	}
 	$scope.$on('firstLoginTutorial', function(){
 		var tutorialDone = localStorageService.get('tutorialMode');
-		if(AuthentificationService.routeGuardian() && tutorialDone && tutorialDone == 'mode1'){
+		if(AuthentificationService.routeGuardian() && tutorialDone && tutorialDone === 'mode1'){
 
 			$timeout(function(){
 				angular.extend($scope, {

@@ -13,11 +13,35 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 	$scope.signupUser = {};
 	$scope.forgotPwd = {};
 	$scope.log = true;
+	var loginSocialNetwork = function(network){
+		var configNetwork = {
+			google: {
+				scope: 'basic,email',
+				apiCall: myVilleAPI.User.loginGoogle
+			},
+			facebook: {
+				scope: 'basic, email',
+				apiCall: myVilleAPI.User.loginFacebook
+			}
+		};
+
+		hello(network).login({scope: configNetwork[network].scope}).then(function(auth){
+			if(auth.network === network){
+				configNetwork[network].apiCall({accessToken: auth.authResponse.access_token}).then(function(user){
+					AuthentificationService.login(user.data.token, user.data.user);
+					$scope.closeThisDialog();
+				});
+			}
+		});
+	};
 
 	$scope.loginClick = function() {
 		if($scope.user.username || $scope.user.password){
 				myVilleAPI.User.login($scope.user).then(function(user){
-					if(!user.data.user) return $scope.message = 'Mauvaise combinaison';
+					if(!user.data.user) {
+						$scope.message = 'Mauvaise combinaison';
+						return;
+					}
 
 					AuthentificationService.login(user.data.token, user.data.user);
 					$scope.message = '';
@@ -41,7 +65,8 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 	$scope.createClick = function(){
 
 		if(!$scope.signupUser.nickname || !$scope.signupUser.password || !$scope.signupUser.email || !$scope.signupUser.phonenumber){
-			return $scope.message = 'Un ou des champs sont manquant.';
+			$scope.message = 'Un ou des champs sont manquant.';
+			return;
 		}
 		var data = {
 			username: $scope.signupUser.nickname,
@@ -59,7 +84,10 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 	};
 
 	$scope.forgotClick = function(){
-		if(!$scope.forgotPwd.email) return $scope.message = 'Un ou des champs sont manquant.';
+		if(!$scope.forgotPwd.email) {
+			$scope.message = 'Un ou des champs sont manquants.';
+			return;
+		}
 		myVilleAPI.User.forgot({email: $scope.forgotPwd.email}).then(function(data){
 			$scope.switchMode('login');
 			$scope.message = 'Mail de récupération de mot de passe envoyé !';
@@ -69,27 +97,10 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 	};
 
 	$scope.loginFB = function(){
-		hello('facebook').login({scope: 'basic,email'}).then(function(auth){
-			if(auth.network === 'facebook') {
-				myVilleAPI.User.loginFacebook({accessToken: auth.authResponse.access_token}).then(function(user){
-					AuthentificationService.login(user.data.token, user.data.user);
-					$scope.closeThisDialog();
-				});
-			}
-		});
+		loginSocialNetwork('facebook');
 	};
 	$scope.loginGoogle = function(){
-		hello('google').login({scope: 'basic,email'}).then(function(auth){
-			if(auth.network === 'google'){
-				myVilleAPI.User.loginGoogle({accessToken: auth.authResponse.access_token}).then(function(user){
-					AuthentificationService.login(user.data.token, user.data.user);
-					$scope.closeThisDialog();
-				});
-			}
-		});
-	};
-	$scope.loginTwitter = function(){
-		hello('twitter').login();
+		loginSocialNetwork('google');
 	};
 
 });

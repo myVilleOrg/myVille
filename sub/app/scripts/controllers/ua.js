@@ -46,9 +46,14 @@ angular.module('appApp')
 		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
 		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
 		if(!$scope.ua.desc || !$scope.ua.title){
-				return $scope.message = 'Un ou des champs sont manquant.';
+			$scope.message = 'Un ou des champs sont manquants.';
+			return;
 		}
-		if(!$scope.ua.drawing) return $scope.message = 'Vous devez dessiner sur la carte !'
+		if(!$scope.ua.drawing){
+			$scope.message = 'Vous devez dessiner sur la carte !'
+			return;
+		}
+
 		var data = {
 			title: $scope.ua.title,
 			description: $scope.ua.desc,
