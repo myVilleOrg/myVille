@@ -11,10 +11,6 @@
 			<h1>Description</h1>
 			<textarea ui-tinymce="tinymceOptions" ng-model="ua.desc" placeholder="Entrez votre texte ici" />
 		</div>
-		<div class="form-label">
-			<h1>Localisation de l'UA : </h1>
-			<span> {{ua.location_name}} </span>
-		</div>
-		<button class='btn-blue' ng-click="submit()">Créer aménagement</button>
+		<button class='btn-blue' ng-click="showEditMap()">Choisir l'emplacement de l'aménagement</button>
 	</div>
 </collapse-sidebar>

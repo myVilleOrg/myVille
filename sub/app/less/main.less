@@ -55,6 +55,11 @@ a {
 	display: flex;
 	flex-direction: row;
 	flex-flow: row wrap;
+	@media @smartphones {
+		flex-direction: column-reverse;
+		flex-flow: column-reverse !important;
+	}
+	overflow: auto;
 }
 .loading {
 	display: flex;
@@ -74,21 +79,34 @@ a {
 		font-size: 3em;
 	}
 }
+
 .sidebar {
+	@media @smartphones {
+		height: auto;
+		border-right: none;
+		border-top: 1px @light-gray solid;
+	}
 	display: block;
 	flex: 0.05;
 	height: 100%;
 	color: @gray;
 	border-right: 1px @light-gray solid;
+
 	&>.sidebar-wrapper {
 		width: 100%;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
+		@media @smartphones {
+			flex-direction: row;
+		}
 		&>.brand {
 			font-size: 2em;
 			text-align: center;
 			flex: 0.05;
+			&>img{
+
+			}
 		}
 		&>.user-sidebar{
 			flex: 0.1;
@@ -145,6 +163,9 @@ a {
 			text-align: center;
 			align-items: center;
 			justify-content: center;
+			@media @smartphones {
+				flex-direction: row;
+			}
 			&>li {
 				height: 20%;
 				width: 100%;
@@ -172,7 +193,6 @@ a {
 	}
 }
 .side-sidebar {
-	transition: all 1s ease;
 	flex: 0.4;
 	border-right: 1px @light-gray solid;
 	&>.wrapper-side-sidebar {
@@ -192,13 +212,21 @@ a {
 			align-items: center;
 			padding: 0.1em;
 			a {
+				display: flex;
+				justify-content: center;
+				flex-direction: column;
 				color: white;
 				flex: 0.2;
+				height: 100%;
 				&:hover {
 					color: white;
 				}
 			}
 			&>.heading-title {
+				display: flex;
+				justify-content: center;
+				flex-direction: column;
+				height: 100%;
 				flex: 0.8;
 			}
 		}
@@ -355,7 +383,6 @@ a {
 	background-color: white !important;
 	border-radius: 2px !important;
 	width: 600px !important;
-	height: 100%;
 	overflow: auto;
 }
 .form-group {
@@ -386,7 +413,19 @@ a {
 #createUA {
 	&>.content-side{
 		&>.form-dable{
+			flex-direction:column;
+			display: flex;
 			padding: 1em;
+			&>.form-label > .edit-field > input{
+				width: 100%;
+			}
+			&>button {
+				width: 30%;
+				align-self: center;
+				display: flex;
+				text-align: center;
+				justify-content: center;
+			}
 		}
 	}
 }
@@ -441,7 +480,7 @@ a {
 		}
 	}
 }
-#myUA {
+#myUA, #favoriteUA {
 	&>.content-side{
 		&>.list-ua {
 			display: flex;
@@ -468,8 +507,8 @@ a {
 		}
 	}
 }
+
 #map {
-		transition: all 0.5s ease;
 		flex: 1;
 		&>div>.map-filter-box {
 			position: absolute;
@@ -493,6 +532,19 @@ a {
 				list-style: none;
 		}
 	}
+	&>div>.create-ua-button {
+		display: none;
+		position: absolute;
+		z-index: 1000000;
+		bottom: 10%;
+		left: 50%;
+		&>button {
+			font-size: 2em;
+		}
+	}
+}
+.modalConfirm {
+	height: 10%;
 }
 label{
 	display: inherit;
@@ -542,3 +594,11 @@ input:-webkit-autofill {
 		color: @dark-gray;
 	}
 }
+.leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path, .leaflet-tile-container {
+	pointer-events: auto !important;
+}
+.leaflet-popup-tip-container {
+	margin: initial !important;
+}
+
+/*Mobile*/

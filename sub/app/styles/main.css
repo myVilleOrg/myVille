@@ -51,6 +51,13 @@ a.active {
   display: flex;
   flex-direction: row;
   flex-flow: row wrap;
+  overflow: auto;
+}
+@media only screen and (max-width: 479px) {
+  #container {
+    flex-direction: column-reverse;
+    flex-flow: column-reverse !important;
+  }
 }
 .loading {
   position: fixed;
@@ -76,11 +83,23 @@ a.active {
   color: #C9D3DB;
   border-right: 1px #e8ecef solid;
 }
+@media only screen and (max-width: 479px) {
+  .sidebar {
+    height: auto;
+    border-right: none;
+    border-top: 1px #e8ecef solid;
+  }
+}
 .sidebar > .sidebar-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+@media only screen and (max-width: 479px) {
+  .sidebar > .sidebar-wrapper {
+    flex-direction: row;
+  }
 }
 .sidebar > .sidebar-wrapper > .brand {
   font-size: 2em;
@@ -143,6 +162,11 @@ a.active {
   align-items: center;
   justify-content: center;
 }
+@media only screen and (max-width: 479px) {
+  .sidebar > .sidebar-wrapper > ul {
+    flex-direction: row;
+  }
+}
 .sidebar > .sidebar-wrapper > ul > li {
   height: 20%;
   width: 100%;
@@ -167,7 +191,6 @@ a.active {
   font-size: 0.8em;
 }
 .side-sidebar {
-  transition: all 1s ease;
   flex: 0.4;
   border-right: 1px #e8ecef solid;
 }
@@ -190,13 +213,21 @@ a.active {
   padding: 0.1em;
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side a {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   color: white;
   flex: 0.2;
+  height: 100%;
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side a:hover {
   color: white;
 }
 .side-sidebar > .wrapper-side-sidebar > .heading-side > .heading-title {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
   flex: 0.8;
 }
 .side-sidebar > .wrapper-side-sidebar > .content-side {
@@ -348,7 +379,6 @@ a.active {
   background-color: white !important;
   border-radius: 2px !important;
   width: 600px !important;
-  height: 100%;
   overflow: auto;
 }
 .form-group > .input-group {
@@ -375,7 +405,19 @@ a.active {
   color: #9baebc !important;
 }
 #createUA > .content-side > .form-dable {
+  flex-direction: column;
+  display: flex;
   padding: 1em;
+}
+#createUA > .content-side > .form-dable > .form-label > .edit-field > input {
+  width: 100%;
+}
+#createUA > .content-side > .form-dable > button {
+  width: 30%;
+  align-self: center;
+  display: flex;
+  text-align: center;
+  justify-content: center;
 }
 .form-label {
   display: flex;
@@ -430,12 +472,14 @@ a.active {
 .modal-edit-ua > .ngdialog-content > #singleUA > .ua-description {
   padding: 0.1em;
 }
-#myUA > .content-side > .list-ua {
+#myUA > .content-side > .list-ua,
+#favoriteUA > .content-side > .list-ua {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 }
-#myUA > .content-side > .list-ua > .ua-row {
+#myUA > .content-side > .list-ua > .ua-row,
+#favoriteUA > .content-side > .list-ua > .ua-row {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -443,17 +487,19 @@ a.active {
   padding: 1em;
   border-bottom: 1px #e8ecef solid;
 }
-#myUA > .content-side > .list-ua > .ua-row > .row-title {
+#myUA > .content-side > .list-ua > .ua-row > .row-title,
+#favoriteUA > .content-side > .list-ua > .ua-row > .row-title {
   flex: 0.5;
 }
-#myUA > .content-side > .list-ua > .ua-row > .row-date {
+#myUA > .content-side > .list-ua > .ua-row > .row-date,
+#favoriteUA > .content-side > .list-ua > .ua-row > .row-date {
   flex: 0.4;
 }
-#myUA > .content-side > .list-ua > .ua-row > .row-edit {
+#myUA > .content-side > .list-ua > .ua-row > .row-edit,
+#favoriteUA > .content-side > .list-ua > .ua-row > .row-edit {
   flex: 0.1;
 }
 #map {
-  transition: all 0.5s ease;
   flex: 1;
 }
 #map > div > .map-filter-box {
@@ -477,6 +523,19 @@ a.active {
 #map > div > .map-filter-box > .filter-list {
   padding: 1em;
   list-style: none;
+}
+#map > div > .create-ua-button {
+  display: none;
+  position: absolute;
+  z-index: 1000000;
+  bottom: 10%;
+  left: 50%;
+}
+#map > div > .create-ua-button > button {
+  font-size: 2em;
+}
+.modalConfirm {
+  height: 10%;
 }
 label {
   display: inherit;
@@ -524,4 +583,15 @@ input:-webkit-autofill {
 .popup-map > .owner-popup {
   color: #5a5d82;
 }
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+  pointer-events: auto !important;
+}
+.leaflet-popup-tip-container {
+  margin: initial !important;
+}
+/*Mobile*/
 

@@ -12,6 +12,9 @@
 		<link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
 		<link rel='stylesheet' href='bower_components/ng-dialog/css/ngDialog.css' />
 		<link rel='stylesheet' href='bower_components/ng-dialog/css/ngDialog-theme-default.css' />
+		<link rel='stylesheet' href='bower_components/leaflet/dist/leaflet.css' />
+		<link rel='stylesheet' href='bower_components/leaflet-draw/dist/leaflet.draw.css' />
+		<link rel='stylesheet' href='bower_components/intro.js/introjs.css' />
 		<!-- endbower -->
 		<!-- endbuild -->
 		<!-- build:css(.tmp) styles/main.css -->
@@ -20,20 +23,18 @@
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-		<link rel="stylesheet" href="leaflet-control-geocoder/dist/Control.Geocoder.css" />
 	</head>
-	<body ng-app="appApp" ng-cloak="">
+	<body ng-app="appApp" ng-cloak="" ng-controller="MainCtrl">
 		<!--[if lte IE 8]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 		<!--<div class="loading">
 			<i class="fa fa-spinner fa-spin"></i>
 		</div>-->
-		<div id="container" ng-controller="MainCtrl">
+		<div id="container" ng-intro-options="IntroOptions" ng-intro-method="startIntro">
 			<div class="sidebar">
 					<div class="sidebar-wrapper">
 						<div class="brand">
-							<i class="fa fa-building"></i>
 						</div>
 						<ul>
 							<li>
@@ -42,16 +43,22 @@
 									<span class="text-icon">MAPS</span>
 								</a>
 							</li>
-							<li ng-if="token">
+							<li ng-if="token" id="link-create">
 								<a href="/#/createUA" ng-class="{ active: isActive('/createUA') }">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 									<span class="text-icon">Add mine</span>
 								</a>
 							</li>
-							<li ng-if="token">
-								<a href="/#/profile/mine" ng-class="{ active: isActive('/mine') }">
+							<li ng-if="token" id="link-mine">
+								<a href="/#/profile/mine" ng-class="{ active: isActive('/profile/mine') }">
 									<i class="fa fa-thumb-tack" aria-hidden="true"></i>
 									<span class="text-icon">Mine</span>
+								</a>
+							</li>
+							<li ng-if="token" id="link-favorite">
+								<a href="/#/profile/favorite" ng-class="{ active: isActive('/profile/favorite') }">
+									<i class="fa fa-star-o" aria-hidden="true"></i>
+									<span class="text-icon">Favorites</span>
 								</a>
 							</li>
 						</ul>
@@ -71,7 +78,7 @@
 			</div>
 			<div class="side-sidebar" ng-view="">
 			</div>
-			<leaflet id="map" width="auto" height="100%" lf-center="center">
+			<leaflet id="map" width="auto" height="100%" controls="controls" lf-center="center">
 				<div class="map-filter-box">
 					<div class="heading">
 							Affichage
@@ -79,19 +86,29 @@
 					<ul class="filter-list">
 						<li>
 							<label>
-								<input class="checkbox" ng-model="filters.popular" ng-checked="filters.popular" ng-click="selectFilter(0)" type="checkbox" />
+								<input class="checkbox" ng-checked="filters.popular" ng-checked="isActive('/') || filters.popular" ng-click="selectFilter(0)" type="checkbox" />
 								<span class="fakeCheckbox"></span>
 								Les plus populaires
 							</label>
 						</li>
 						<li ng-if="token">
 							<label>
-								<input class="checkbox" ng-model="filters.mine" ng-click="selectFilter(1)" ng-checked="isActive('/profile/mine')" type="checkbox" />
+								<input class="checkbox" ng-click="selectFilter(1)" ng-checked="isActive('/profile/mine') || filters.mine" type="checkbox" />
 								<span class="fakeCheckbox"></span>
 								Mes propositions
 							</label>
 						</li>
+						<li ng-if="token">
+							<label>
+								<input class="checkbox" ng-click="selectFilter(2)" ng-checked="isActive('/profile/favorite') || filters.favorite" type="checkbox" />
+								<span class="fakeCheckbox"></span>
+								Mes favoris
+							</label>
+						</li>
 					</ul>
+				</div>
+				<div class="create-ua-button">
+					<button class='btn-blue' ng-click="submitUA()">J'ai fini !</button>
 				</div>
 			</leaflet>
 		</div>
@@ -113,6 +130,9 @@
 		<script src="bower_components/moment/moment.js"></script>
 		<script src="bower_components/tinymce/tinymce.js"></script>
 		<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+		<script src="bower_components/leaflet/dist/leaflet-src.js"></script>
+		<script src="bower_components/intro.js/intro.js"></script>
+		<script src="bower_components/angular-intro.js/src/angular-intro.js"></script>
 		<!-- endbower -->
 		<!-- endbuild -->
 		<script src="bower_components/moment/locale/fr.js"></script>
@@ -121,7 +141,8 @@
 		<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
 		<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
 		<script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-		<script src="leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+		<script src="bower_components/leaflet-draw/dist/leaflet.draw.js"></script>
+
 		<!-- build:js({.tmp,app}) scripts/scripts.js -->
 		<script src="scripts/app.js"></script>
 		<script src="scripts/services/filterDate.js"></script>
@@ -133,8 +154,8 @@
 		<script src="scripts/directives/ngloading.js"></script>
 		<script src="scripts/directives/collapse-sidebar.js"></script>
 		<script src="scripts/controllers/profile.js"></script>
+		<script src="scripts/controllers/favorite.js"></script>
 		<script src="scripts/controllers/ua.js"></script>
-		<script src="scripts/controllers/create_ua.js"></script>
 		<script src="scripts/controllers/mine.js"></script>
 		<script src="scripts/controllers/editua.js"></script>
 		<!-- endbuild -->

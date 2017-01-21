@@ -23,6 +23,8 @@ angular.module('appApp')
 					localStorageService.set('expiryToken', Date.now() + 24*60*60*1000);
 					localStorageService.set('token', token);
 					localStorageService.set('user', user);
+					$rootScope.$broadcast('firstLoginTutorial');
+					$rootScope.$broadcast('leafletDirectiveMap.map.dragend'); // update map
 				},
 				logout: function(){
 					delete $rootScope.token;

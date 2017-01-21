@@ -10,6 +10,12 @@
 angular.module('appApp')
 	.controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
 
+	$scope.$emit('editMode')
+
+	/*Change the style*/
+	angular.element(document.getElementById('map'))[0].style.flex = 0;
+	angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
+
 	$scope.ua = {};
 	$scope.tinymceOptions = {
 		onChange: function(e) {
@@ -18,35 +24,61 @@ angular.module('appApp')
 		inline: false,
 		plugins : 'advlist autolink link image lists charmap preview textcolor',
 		skin: 'lightgray',
-		theme : 'modern'
+		theme : 'modern',
+		height: '20em'
 	};
 
-	$scope.$on('UAlocationClic', function(event, data) {
-		$scope.ua.location_name = data[0];
-		$scope.ua.location_coord = data[1];
+	$scope.okClick = function() {
+		$scope.closeThisDialog();
+	}
+
+	$scope.$on('ngDialog.closing', function(){
+		$scope.$emit('leafletDirectiveMap.map.zoomend');
+		$window.location = '#/';
 	});
 
-	$scope.submit = function(){
+	$scope.$on('drawingData', function(event, drawing){
+		$scope.ua.drawing = drawing;
+	});
 
-		if(!$scope.ua.desc || !$scope.ua.title || !$scope.ua.location_coord){
-				return $scope.message = 'Un ou des champs sont manquant.';
+	$scope.$on('submitUA', function(e, d){
+		angular.element(document.getElementById('map'))[0].style.flex = 0;
+		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
+		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
+		if(!$scope.ua.desc || !$scope.ua.title){
+			$scope.message = 'Un ou des champs sont manquants.';
+			return;
 		}
+		if(!$scope.ua.drawing){
+			$scope.message = 'Vous devez dessiner sur la carte !'
+			return;
+		}
+
 		var data = {
 			title: $scope.ua.title,
 			description: $scope.ua.desc,
-			geojson: JSON.stringify({"type": "Point", "coordinates": $scope.ua.location_coord})
+			geojson: JSON.stringify($scope.ua.drawing)
 		};
 
 		myVilleAPI.UAS.create(data).then(function(user){
-			ngDialog.open({controller: 'CreateUACtrl', template: 'views/create_ua.html'});
+			ngDialog.open({controller: 'UACtrl', template: 'views/modalUaCreated.html'});
 			$scope.ua.title = null;
 			$scope.ua.desc = null;
-			$scope.ua.location = null;
+			$scope.ua.drawing = null;
 		}, function(error){
 			$scope.message = error.data.message;
 			console.log(error.data);
 		});
-
-		$scope.$emit('leafletDirectiveMap.map.zoomend');
+	});
+	$scope.$on("$destroy", function(){
+			$scope.$emit('normalMode');
+			angular.element(document.getElementById('map'))[0].style.flex = 1;
+			angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
+			angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
+  });
+	$scope.showEditMap = function(){
+		angular.element(document.getElementById('map'))[0].style.flex = 1;
+		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'block';
+		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'none';
 	};
 });

@@ -19,13 +19,17 @@ angular
 		'LocalStorageModule',
 		'ngDialog',
 		'ngHello',
-		'ui.tinymce'
+		'ui.tinymce',
+		'angular-intro'
 	])
 	.config(function(helloProvider) {
 		helloProvider.init({
 			facebook: '269509866781876',
 			google: '49433176261-hjeueecpafioh56r67fik9nqkum5np0g.apps.googleusercontent.com'
 		});
+	})
+	.config(function($logProvider){
+		$logProvider.debugEnabled(false);
 	})
 	.config(function (localStorageServiceProvider) {
 		localStorageServiceProvider.setPrefix('myVille');
@@ -36,7 +40,7 @@ angular
 				request: function(config) {
 					var token = localStorageService.get('token');
 					config.headers = config.headers || {};
-					if (token != null) {
+					if (token !== null) {
 						config.headers['x-access-token'] = token;
 					}
 					return config || Promise.resolve(config);
@@ -47,7 +51,7 @@ angular
 				response: function(response){
 					var currentToken = localStorageService.get('token');
 					var receivedToken = response.headers('x-access-token');
-					if(receivedToken != null && currentToken != receivedToken) {
+					if(receivedToken !== null && currentToken !== receivedToken) {
 						localStorageService.set('token', receivedToken);
 					}
 					return response || Promise.resolve(response);
@@ -58,7 +62,7 @@ angular
 			};
 		}]);
 	})
-	.config(function ($routeProvider) {
+	.config(function ($routeProvider, $locationProvider) {
 		$routeProvider
 			.when('/', {
 				controller: 'MainCtrl',
@@ -67,12 +71,12 @@ angular
 			.when('/login', {
 				controller: 'LoginCtrl',
 				controllerAs: 'login',
-				templateUrl: 'views/login.html',
+				templateUrl: 'views/login.html'
 			})
 			.when('/user/:userId', {
 				controller: 'ProfileCtrl',
 				controllerAs: 'profile',
-				templateUrl: 'views/profile.html',
+				templateUrl: 'views/profile.html'
 			})
 			.when('/profile/update', {
 				controller: 'ProfileCtrl',
@@ -104,6 +108,16 @@ angular
 					}
 				}
 			})
+			.when('/profile/favorite', {
+				controller: 'FavoriteCtrl',
+				controllerAs: 'favorite',
+				templateUrl: 'views/favorite.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
 			.when('/ua/:uaId',{
 				controller: 'MainCtrl',
 				controllerAs: 'main',
@@ -117,4 +131,5 @@ angular
 			.otherwise({
 				redirectTo: '/'
 			});
+			$locationProvider.html5Mode(false).hashPrefix('');
 	});
