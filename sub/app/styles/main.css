@@ -444,6 +444,7 @@ a.active {
 .modal-edit-ua > .ngdialog-content > #singleUA > .socialUA {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 .modal-single-ua > .ngdialog-content > #singleUA > .socialUA > iframe,
 .modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > iframe {
@@ -454,36 +455,39 @@ a.active {
   display: flex;
   flex-direction: row;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a {
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column {
+  position: relative;
+  padding: 1em;
   display: flex;
   flex-direction: column;
+  text-align: center;
+  flex: 0.2;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.non-voted > span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.non-voted > span {
-  position: relative;
-  opacity: 0;
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column > .vote-column-heading,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column > .vote-column-heading {
+  cursor: pointer;
+  transform: translate3d(0px, 0px, 0px);
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.non-voted:hover span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.non-voted:hover span,
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a .non-voted:focus span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a .non-voted:focus span {
-  opacity: 1;
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column > .vote-column-heading.voted,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column > .vote-column-heading.voted {
+  filter: grayscale(0.5) blur(1px);
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted {
-  color: #5a5d82;
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column > .vote-column-heading:hover + .vote-column-overlay,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column > .vote-column-heading:hover + .vote-column-overlay {
+  display: block;
 }
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted > span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted > span {
-  position: relative;
-  opacity: 0;
-}
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted:hover span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a.voted:hover span,
-.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a .voted:focus span,
-.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > div > a .voted:focus span {
-  opacity: 1;
+.modal-single-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column > .vote-column-overlay,
+.modal-edit-ua > .ngdialog-content > #singleUA > .socialUA > .voteList > .vote-column > .vote-column-overlay {
+  display: none;
+  position: absolute;
+  top: -20%;
+  left: -40%;
+  width: 100px;
+  z-index: 1000;
+  border-radius: 0.4em;
+  padding: 0.1em;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 .modal-single-ua > .ngdialog-content > #singleUA > .ua-title,
 .modal-edit-ua > .ngdialog-content > #singleUA > .ua-title {
@@ -615,5 +619,8 @@ input:-webkit-autofill {
 .leaflet-popup-tip-container {
   margin: initial !important;
 }
-/*Mobile*/
+.emoji {
+  width: 27px !important;
+  height: 27px !important;
+}
 

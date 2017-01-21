@@ -1,55 +1,59 @@
 'use strict';
 angular.module('appApp')
 .controller('VoteCtrl', function ($rootScope, $scope, myVilleAPI) {
+	twemoji.size = 72;
+	$scope.twemoji = twemoji;
 	$scope.vote = [
-		{
-			smiley: '😃',
-			isVote: false,
-			text: "wouah"
-		},
-		{
-			smiley: '😣',
-			isVote: false,
-			text: "j'aime pas"
-		},
 		{
 			smiley: '😍',
 			isVote: false,
-			text: "j'aime"
+			text: "J'aime"
 		},
 		{
-			smiley: '😴',
+			smiley: '😃',
 			isVote: false,
-			text: "sans intérêt"
+			text: "Wouah"
 		},
 		{
 			smiley: '🤔',
 			isVote: false,
-			text: "bien pensé"
-		}
+			text: "Bien pensé"
+		},
+		{
+			smiley: '😴',
+			isVote: false,
+			text: "Sans intérêt"
+		},
+		{
+			smiley: '😣',
+			isVote: false,
+			text: "J'aime pas"
+		},
 	];
 
 	myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function(vote){
-		console.log($scope.ngDialogData._id);
-		console.log("lololo");
 		if(vote){
-			console.log(vote.data.vote[0]);
 			$scope.vote[vote.data.vote[0]].isVote = true;
 		}
-	})
+		$scope.voteCount = vote.data.count;
+	}).catch(function(count){
+		$scope.voteCount = count.data.count;
+	});
 
 	$scope.doVote = function(id){
-		var data = {
-			vote: id
-		}
-		myVilleAPI.UAS.vote($scope.ngDialogData._id, data).then(function(){
+		myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
+			var alreadyVoted = false;
 			for(var i = 0; i<$scope.vote.length; i++){
+				if($scope.vote[i].isVote) {
+					alreadyVoted = true;
+				}
 				if(i == id){
 					$scope.vote[i].isVote = true;
 				}else{
 					$scope.vote[i].isVote = false;
 				}
 			}
+			if(!alreadyVoted) $scope.voteCount++;
 		});
 	};
 });

@@ -9,11 +9,16 @@
 	  title="Twitter Tweet Button"
 	  style="border: 0; overflow: hidden;">
 		</iframe>
+		<div class="vote-counter">
+		{{voteCount}} {{voteCount > 1 ? 'réactions' : 'réaction'}}, et vous ?
+		</div>
 		<div ng-if="user" class='voteList'>
-			<div ng-repeat ="x in vote">
-				<a ng-class = "x.isVote ? 'voted' : 'non-voted'" ng-click="doVote($index)">{{x.smiley}}
-					<span>{{x.text}}</span>
-				</a>
+			<div class="vote-column" ng-repeat ="x in vote">
+				<div class="vote-column-heading" ng-class = "x.isVote ? 'voted' : 'no-voted'" ng-click="doVote($index)" ng-bind-html="twemoji.parse(x.smiley)">
+				</div>
+				<div class="vote-column-overlay">
+					{{x.text}}
+				</div>
 			</div>
 		</div>
 	</div>
