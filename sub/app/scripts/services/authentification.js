@@ -32,6 +32,7 @@ angular.module('appApp')
 					localStorageService.remove('token');
 					localStorageService.remove('user');
 					localStorageService.remove('expiryToken');
+					$rootScope.$broadcast('leafletDirectiveMap.map.dragend');
   			},
         updateAvatar: function(user){
           $rootScope.user = user.data;
