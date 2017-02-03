@@ -1,6 +1,6 @@
 'use strict';
 angular.module('appApp')
-.controller('VoteCtrl', function ($rootScope, $scope, myVilleAPI) {
+.controller('VoteCtrl', function ($rootScope, $scope, myVilleAPI, AuthentificationService) {
 	twemoji.size = 72;
 	$scope.twemoji = twemoji;
 	$scope.vote = [
