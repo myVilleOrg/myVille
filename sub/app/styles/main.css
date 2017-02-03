@@ -154,8 +154,9 @@ a.active {
 .sidebar > .sidebar-wrapper > ul {
   flex: 0.9;
   text-decoration: none;
+  width: 5.5em;
   list-style: none;
-  padding: 1em;
+  padding: 0.5em;
   display: flex;
   flex-direction: column;
   text-align: center;
