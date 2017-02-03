@@ -20,7 +20,6 @@ angular.module('appApp')
 		};
 		$scope.editUa = function(){
 			myVilleAPI.UAS.update($scope.ngDialogData._id, {title: $scope.ngDialogData.title, description: $scope.ngDialogData.description, publish: $scope.ngDialogData.private.toString()}).then(function(ua){
-				console.log(ua.data);
 				$scope.closeThisDialog();
 			});
 		};

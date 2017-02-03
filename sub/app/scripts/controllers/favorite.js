@@ -8,7 +8,7 @@
  */
 angular.module('appApp')
   .controller('FavoriteCtrl', function ($rootScope, $scope, myVilleAPI) {
-	$scope.$emit('filterForce', 2);
+	$scope.$emit('filterForce', 3);
 	var getFavorites = function(){
 		$scope.favorites = $rootScope.user.favoris;
 		$scope.tabFavorite = [];

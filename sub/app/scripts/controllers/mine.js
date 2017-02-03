@@ -9,7 +9,7 @@
 */
 angular.module('appApp')
 .controller('MineCtrl', function ($scope, ngDialog, myVilleAPI) {
-	$scope.$emit('filterForce', 1);
+	$scope.$emit('filterForce', 2);
 	$scope.centerOnMap = function(coordinates){
 		$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
 	}

@@ -57,13 +57,16 @@ angular.module('appApp')
 
 	$scope.selectFilter = function(index){
 		if(index === 0){
-			$scope.filters = {popular: true, mine: false, favorite: false};
+			$scope.filters = {all: true, popular: false, mine: false, favorite: false};
 		}
 		if(index === 1){
-			$scope.filters = {popular: false, mine: true, favorite: false};
+			$scope.filters = {all: false, popular: true, mine: false, favorite: false};
 		}
-		if(index === 2) {
-			$scope.filters = {popular: false, mine: false, favorite: true};
+		if(index === 2){
+			$scope.filters = {all: false, popular: false, mine: true, favorite: false};
+		}
+		if(index === 3) {
+			$scope.filters = {all: false, popular: false, mine: false, favorite: true};
 		}
 
 	};
@@ -73,6 +76,9 @@ angular.module('appApp')
 			showUas();
 		}
 		if(newv.popular){
+			$window.location.href = '#/';
+		}
+		if(newv.all){
 			$window.location.href = '#/';
 		}
 		if(newv.mine){
@@ -96,7 +102,7 @@ angular.module('appApp')
 			catch (e){
 			}
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
-			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : myVilleAPI.UAS.getFavorites;
+			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
 			filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
 				$rootScope.cachedMarkers = geocodes.data;
 				geoJsonLayer = L.geoJson(geocodes.data, {
@@ -163,23 +169,21 @@ angular.module('appApp')
 			$scope.filters.mine = true;
 			$scope.filters.popular = false;
 			$scope.filters.favorite = false;
+			$scope.filters.all = false;
+
 		}
 		if(next === 'http://localhost:9000/#/profile/favorite' && current !== next){
 			$scope.filters.mine = false;
 			$scope.filters.popular = false;
 			$scope.filters.favorite = true;
-		}
-		if(next === 'http://localhost:9000/#/' && current !== next){
-			$scope.filters.mine = false;
-			$scope.filters.popular = true;
-			$scope.filters.favorite = false;
+			$scope.filters.all = false;
 		}
 		$scope.$emit('normalMode')
 
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
-			$scope.filters = {mine: false, popular: true, favorite: false};
+			$scope.filters = {all: false, popular: false, mine: false, favorite: false};
 		}
 	});
 
@@ -193,8 +197,9 @@ angular.module('appApp')
 			bounds: {},
 			geojson : {},
 			filters: {
+				all: true,
+				popular: false,
 				mine: false,
-				popular: true,
 				favorite: false
 			}
 	});
