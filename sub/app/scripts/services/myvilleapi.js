@@ -72,6 +72,9 @@ angular.module('appApp')
 					},
 					vote: function(id, data){
 						return $http.post(baseUrl + '/ua/vote/' + id, data);
+					},
+					deleteVote: function(id){
+						return $http.delete(baseUrl + '/ua/vote/' + id);
 					}
 				},
 				Vote: {
