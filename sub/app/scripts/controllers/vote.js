@@ -35,10 +35,8 @@ angular.module('appApp')
 		if(vote){
 			$scope.vote[vote.data.vote[0]].isVote = true;
 		}
-		$scope.voteCount = vote.data.count;
-	}).catch(function(count){
-		$scope.voteCount = count.data.count;
-	});
+	})
+	$scope.voteCount = $scope.ngDialogData.vote.length;
 
 	$scope.doVote = function(id){
 		if(!$scope.vote[id].isVote){
