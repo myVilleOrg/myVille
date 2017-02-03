@@ -42,7 +42,7 @@ angular.module('appApp')
 		if(!$scope.vote[id].isVote){
 			myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
 				var alreadyVoted = false;
-				for(var i = 0; i<$scope.vote.length; i++){
+				for(var i = 0; i < $scope.vote.length; i++){
 					if($scope.vote[i].isVote) {
 						alreadyVoted = true;
 					}
@@ -54,9 +54,9 @@ angular.module('appApp')
 				}
 				if(!alreadyVoted) $scope.voteCount++;
 			});
-		}else{
+		} else {
 			myVilleAPI.UAS.deleteVote($scope.ngDialogData._id).then(function(){
-				for(var i = 0; i<$scope.vote.length; i++){
+				for(var i = 0; i < $scope.vote.length; i++){
 					if($scope.vote[i].isVote) {
 						$scope.vote[i].isVote = false;
 						$scope.voteCount--;
