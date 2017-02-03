@@ -39,19 +39,30 @@ angular.module('appApp')
 	$scope.voteCount = $scope.ngDialogData.vote.length;
 
 	$scope.doVote = function(id){
-		myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
-			var alreadyVoted = false;
-			for(var i = 0; i<$scope.vote.length; i++){
-				if($scope.vote[i].isVote) {
-					alreadyVoted = true;
+		if(!$scope.vote[id].isVote){
+			myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
+				var alreadyVoted = false;
+				for(var i = 0; i<$scope.vote.length; i++){
+					if($scope.vote[i].isVote) {
+						alreadyVoted = true;
+					}
+					if(i == id){
+						$scope.vote[i].isVote = true;
+					}else{
+						$scope.vote[i].isVote = false;
+					}
 				}
-				if(i == id){
-					$scope.vote[i].isVote = true;
-				}else{
-					$scope.vote[i].isVote = false;
+				if(!alreadyVoted) $scope.voteCount++;
+			});
+		}else{
+			myVilleAPI.UAS.deleteVote($scope.ngDialogData._id).then(function(){
+				for(var i = 0; i<$scope.vote.length; i++){
+					if($scope.vote[i].isVote) {
+						$scope.vote[i].isVote = false;
+						$scope.voteCount--;
+					}
 				}
-			}
-			if(!alreadyVoted) $scope.voteCount++;
-		});
+			});
+		}
 	};
 });
