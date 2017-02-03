@@ -31,11 +31,13 @@ angular.module('appApp')
 		},
 	];
 
-	myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function(vote){
-		if(vote){
-			$scope.vote[vote.data.vote[0]].isVote = true;
-		}
-	})
+	if(AuthentificationService.routeGuardian()){
+		myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function(vote){
+			if(vote){
+				$scope.vote[vote.data.vote[0]].isVote = true;
+			}
+		})
+	}
 	$scope.voteCount = $scope.ngDialogData.vote.length;
 
 	$scope.doVote = function(id){
