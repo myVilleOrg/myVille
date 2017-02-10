@@ -13,6 +13,7 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 	$scope.signupUser = {};
 	$scope.forgotPwd = {};
 	$scope.log = true;
+
 	var loginSocialNetwork = function(network){
 		var configNetwork = {
 			google: {

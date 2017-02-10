@@ -48,7 +48,7 @@ angular.module('appApp')
 	};
 
 	$scope.login = function(){
-		ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html'});
+		ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html', appendClassName: 'popup-auto-height'});
 	};
 
 	$scope.submitUA = function(){

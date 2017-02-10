@@ -51,8 +51,9 @@ angular.module('appApp')
       formData.append('avatar',files[0]);
 
       myVilleAPI.User.updateAvatar(formData).then(function(user){
-        console.log(user);
         AuthentificationService.updateAvatar(user);
+      }, function(err){
+      	$scope.message = err.data.message;
       });
     }
   };

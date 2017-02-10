@@ -25,7 +25,7 @@ angular.module('appApp')
 		plugins : 'advlist autolink link image lists charmap preview textcolor',
 		skin: 'lightgray',
 		theme : 'modern',
-		height: '20em'
+		height: '250px'
 	};
 
 	$scope.okClick = function() {
@@ -61,7 +61,7 @@ angular.module('appApp')
 		};
 
 		myVilleAPI.UAS.create(data).then(function(user){
-			ngDialog.open({controller: 'UACtrl', template: 'views/modalUaCreated.html'});
+			ngDialog.open({controller: 'UACtrl', template: 'views/modalUaCreated.html', appendClassName: 'popup-auto-height'});
 			$scope.ua.title = null;
 			$scope.ua.desc = null;
 			$scope.ua.drawing = null;
