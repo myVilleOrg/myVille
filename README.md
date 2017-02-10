@@ -13,7 +13,8 @@ git pull && git submodule init && git submodule update && git submodule status
 
 ```
 See Readme in other branch
-
+Or
+./runmyVille start
 ```
 
 ## License

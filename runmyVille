@@ -1,0 +1,26 @@
+#!/bin/bash
+
+stop() {
+	sudo killall node
+	sudo killall grunt
+	echo 'Service stopped' >&2
+}
+start() {
+	cd myville-backend; nodemon "app.js" &
+	cd ../myville-frontend/; grunt serve &
+}
+
+case "$1" in
+	start)
+		start
+	;;
+	stop)
+		stop
+	;;
+	restart)
+		stop
+		start
+	;;
+*)
+	echo "Usage: $0 {start|stop|restart}"
+esac
