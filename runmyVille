@@ -6,7 +6,7 @@ stop() {
 	echo 'Service stopped' >&2
 }
 start() {
-	cd myville-backend; nodemon "app.js" &
+	cd myville-backend; node "app.js" &
 	cd ../myville-frontend/; grunt serve &
 }
 
