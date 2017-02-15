@@ -1,5 +1,10 @@
 'use strict';
-
+/**
+ * @name FilterDate
+ * @description
+ * # myVille
+ * Permits to format date in a string like few moments ago
+ */
 angular.module('appApp')
  .filter('formatDate', function ($filter) {
 		return function (date) {

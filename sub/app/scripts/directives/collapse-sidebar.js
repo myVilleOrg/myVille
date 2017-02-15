@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * @ngdoc directive
- * @name appApp.directive:collapseSidebar
+ * @name Sidebar
  * @description
- * # collapseSidebar
+ * # myVille
+ * Directive for left sidebar
  */
 angular.module('appApp')
 	.directive('collapseSidebar', function($timeout) {

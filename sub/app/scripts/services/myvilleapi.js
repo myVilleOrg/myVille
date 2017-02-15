@@ -1,15 +1,12 @@
 'use strict';
-
 /**
- * @ngdoc service
- * @name appApp.myVilleAPI
+ * @name myVille API
  * @description
- * # myVilleAPI
- * Factory in the appApp.
+ * # myVille
+ * Services deliver by myVille API.
  */
 angular.module('appApp')
 	.factory('myVilleAPI', ['$http', '$rootScope', function ($http, $rootScope) {
-
 			var baseUrl = 'http://localhost:3000';
 			var dataFactory = {
 				User: {

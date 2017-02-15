@@ -1,17 +1,17 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name appApp.controller:ProfileCtrl
+ * @name ProfileCtrl
  * @description
- * # ProfileCtrl
- * Controller of the appApp
+ * # myVille
+ * Controller of profile view which permits to edit and see info on user
  */
 angular.module('appApp')
 .controller('ProfileCtrl',['$scope', '$rootScope', 'myVilleAPI','AuthentificationService', '$routeParams', function ($scope, $rootScope, myVilleAPI, AuthentificationService, $routeParams) {
 
-	$scope.editUser = Object.assign({}, $scope.user);
-  $scope.editBox = function(){
+	$scope.editUser = Object.assign({}, $scope.user); // copy a local version of our user
+
+  $scope.editBox = function(){ //switch mode
     if($scope.editMode) $scope.editMode = false;
     else $scope.editMode = true;
   };
@@ -40,7 +40,7 @@ angular.module('appApp')
   	});
   };
 
-  $scope.editAvatarClick = function(element){
+  $scope.editAvatarClick = function(element){ // click on avatar
 
     var files = element.files;
     var reader = new FileReader();
@@ -58,7 +58,7 @@ angular.module('appApp')
     }
   };
 
-	$scope.editMode = false;
+	$scope.editMode = false; // back to see mode
   if($routeParams.userId){
   	myVilleAPI.User.get($routeParams.userId).then(function(data){
   		$scope.userWanted = {

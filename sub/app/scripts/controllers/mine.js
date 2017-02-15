@@ -1,8 +1,7 @@
 'use strict';
 
 /**
-* @ngdoc function
-* @name appApp.controller:MineCtrl
+* @name MineCtrl
 * @description
 * # MineCtrl
 * Controller of the appApp

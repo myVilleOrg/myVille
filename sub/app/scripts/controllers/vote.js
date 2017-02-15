@@ -1,4 +1,10 @@
 'use strict';
+/**
+ * @name VoteCtrl
+ * @description
+ * # myVille
+ * Controller which permits user to vote for a ua
+ */
 angular.module('appApp')
 .controller('VoteCtrl', function ($rootScope, $scope, myVilleAPI, AuthentificationService) {
 	twemoji.size = 72;
@@ -30,7 +36,7 @@ angular.module('appApp')
 			text: "J'aime pas"
 		},
 	];
-
+	// If logged which search if user has voted
 	if(AuthentificationService.routeGuardian()){
 		myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function(vote){
 			if(vote){
@@ -40,8 +46,9 @@ angular.module('appApp')
 	}
 	$scope.voteCount = $scope.ngDialogData.vote.length;
 
+	// call for a vote
 	$scope.doVote = function(id){
-		if(!$scope.vote[id].isVote){
+		if(!$scope.vote[id].isVote){ // Not voted we add a vote
 			myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
 				var alreadyVoted = false;
 				for(var i = 0; i < $scope.vote.length; i++){
@@ -56,7 +63,7 @@ angular.module('appApp')
 				}
 				if(!alreadyVoted) $scope.voteCount++;
 			});
-		} else {
+		} else { // Already voted we remove the vote
 			myVilleAPI.UAS.deleteVote($scope.ngDialogData._id).then(function(){
 				for(var i = 0; i < $scope.vote.length; i++){
 					if($scope.vote[i].isVote) {

@@ -1,11 +1,10 @@
 'use strict';
 
 /**
- * @ngdoc service
- * @name appApp.Authentification
+ * @name Authentification
  * @description
- * # Authentification
- * Factory in the appApp.
+ * # myVille
+ * Service that delivers basic functions to logout, login ...
  */
 angular.module('appApp')
 .factory('AuthentificationService', ['$rootScope', 'localStorageService', function($rootScope, localStorageService) {

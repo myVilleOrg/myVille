@@ -1,23 +1,22 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name appApp.controller:MainCtrl
+ * @name MainCtrl
  * @description
- * # MainCtrl
- * Controller of the appApp
+ * # myVille
+ * Controller of map and home
  */
 angular.module('appApp')
 .controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile) {
 	$scope.resetPwd = {};
 
-	$scope.getPopupDescriptionUA = function(uaId) {
+	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});
 	};
 
-	$scope.forgotClick = function(){
+	$scope.forgotClick = function(){ // reset password function
 		if($scope.resetPwd.pwd1 !== $scope.resetPwd.pwd2) {
 			$scope.message = 'Mot de passe différent.';
 			return;
@@ -37,12 +36,12 @@ angular.module('appApp')
 		});
 	};
 
-	$scope.isActive = function (viewLocation) {
+	$scope.isActive = function (viewLocation) { // Page is active ?
 		var active = (viewLocation === $location.path());
 		return active;
 	};
 
-	$scope.disconnect = function(){
+	$scope.disconnect = function(){ // disconnect function
 		AuthentificationService.logout();
 		$window.location.href = '#/';
 	};
@@ -51,11 +50,11 @@ angular.module('appApp')
 		ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html', appendClassName: 'popup-auto-height'});
 	};
 
-	$scope.submitUA = function(){
+	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
 		$scope.$broadcast('submitUA');
 	}
 
-	$scope.selectFilter = function(index){
+	$scope.selectFilter = function(index){ // filter for the map display
 		if(index === 0){
 			$scope.filters = {all: true, popular: false, mine: false, favorite: false};
 		}
@@ -89,25 +88,28 @@ angular.module('appApp')
 		}
 	}, true);
 
-	$scope.$on('filterForce', function(e, idx){
+	$scope.$on('filterForce', function(e, idx){ // In a specific case we force filter
 		$scope.selectFilter(idx);
 	});
 
+	// The function which permits to display items on map
 	var geoJsonLayer;
 	var showUas = function(){
 		leafletData.getMap().then(function(map){
+			// we remove data on map if there are some
 			try {
 				map.removeLayer(geoJsonLayer);
 			}
 			catch (e){
 			}
+			//get gps of map bounds
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
+			// filter we gonna use based on filters we select
 			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
 			filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
-				$rootScope.cachedMarkers = geocodes.data;
 				geoJsonLayer = L.geoJson(geocodes.data, {
 					onEachFeature: function (feature, layer) {
-
+						//for each items we attach a popup
 						var starClass = 'fa fa-star-o';
 						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
 							starClass = 'fa fa-star';
@@ -124,15 +126,16 @@ angular.module('appApp')
 															'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
 															'</div>' +
 														'</div>';
-						var link = $compile(htmlPopup);
+						var link = $compile(htmlPopup); // display html stored in descriptiond
 						var content = link($scope);
 						layer.bindPopup(content[0]);
 					}
 				});
-				geoJsonLayer.addTo(map);
+				geoJsonLayer.addTo(map); // we need our layer in the map
 			});
 		});
 	};
+
 	$scope.editFavori = function(ua_id){
 		myVilleAPI.UAS.favor({ua: ua_id}).then(function(user){
 			$rootScope.user.favoris = user.data.favoris;
@@ -142,11 +145,11 @@ angular.module('appApp')
 		});
 	};
 
-	$scope.$on('leafletDirectiveMap.map.dragend', showUas);
+	$scope.$on('leafletDirectiveMap.map.dragend', showUas); // on drag we update map
 
-	$scope.$on('leafletDirectiveMap.map.zoomend', showUas);
+	$scope.$on('leafletDirectiveMap.map.zoomend', showUas);// on drag we update map
 
-	$scope.$on('centerOnMap', function(event, coordinates){
+	$scope.$on('centerOnMap', function(event, coordinates){ // event to center
 		var point = coordinates[0];
 		var coordinate, zoom;
 		if(point.type === 'Polygon'){
@@ -164,7 +167,7 @@ angular.module('appApp')
 		$scope.center.zoom = zoom;
 	});
 
-	$scope.$on('$locationChangeStart', function (event, next, current) {
+	$scope.$on('$locationChangeStart', function (event, next, current) { // force filter on url
 		if(next === 'http://localhost:9000/#/profile/mine' && current !== next){
 			$scope.filters.mine = true;
 			$scope.filters.popular = false;
@@ -204,7 +207,7 @@ angular.module('appApp')
 			}
 	});
 
-	/*Draw MAP*/
+	/*Draw on MAP and save what is drawing*/
 	var drawnItems = new L.FeatureGroup();
 	var options = {
 		edit: {
@@ -247,13 +250,14 @@ angular.module('appApp')
 					layer = e.layer;
 					drawnItems.addLayer(layer);
 					map.addLayer(drawnItems)
-					$scope.$broadcast('drawingData', drawnItems.toGeoJSON());
+					$scope.$broadcast('drawingData', drawnItems.toGeoJSON()); // we send the drawing data to other controllers
 				});
 				editMapMode = true;
 			}
 		});
 	});
 
+	// we update token if expiring
 	var expiryTokenTime = localStorageService.get('expiryToken');
 
 	if(expiryTokenTime && Date.now() < expiryTokenTime) {
@@ -267,6 +271,7 @@ angular.module('appApp')
 		$scope.disconnect();
 	}
 
+	// if we are on detailled url for an ua
 	if($routeParams.uaId){
 		myVilleAPI.UAS.getOne($routeParams.uaId).then(function(data){
 			$scope.center.lat = data.data.location.coordinates[1];
@@ -275,6 +280,8 @@ angular.module('appApp')
 			ngDialog.open({data: data.data, template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});
 	}
+
+	// if we are on token reset page
 	if($routeParams.tokenReset){
 		$scope.resetPwd = {};
 		ngDialog.open({data: {token: $routeParams.tokenReset}, controller: 'MainCtrl', template: 'views/reset_password.html', appendClassName: 'modal-single-ua'});

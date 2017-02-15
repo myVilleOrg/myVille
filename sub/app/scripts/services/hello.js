@@ -1,11 +1,10 @@
 'use strict';
 
 /**
- * @ngdoc service
- * @name appApp.hello
+ * @name Hello
  * @description
- * # hello
- * Provider in the appApp.
+ * # myVille
+ * Wrapper for Hello.js
  */
 angular.module('appApp')
 .provider('hello', function () {

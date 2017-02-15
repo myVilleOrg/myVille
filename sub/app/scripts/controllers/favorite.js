@@ -1,10 +1,9 @@
 'use strict';
 /**
- * @ngdoc function
- * @name appApp.controller:FavoriteCtrl
+ * @name MainCtrl
  * @description
- * # UACtrl
- * Controller of the appApp
+ * # myVille
+ * Controller of favorite page
  */
 angular.module('appApp')
   .controller('FavoriteCtrl', function ($rootScope, $scope, myVilleAPI) {

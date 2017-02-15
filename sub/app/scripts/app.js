@@ -1,10 +1,9 @@
 'use strict';
 
 /**
- * @ngdoc overview
  * @name appApp
  * @description
- * # appApp
+ * # myVille
  *
  * Main module of the application.
  */
@@ -23,6 +22,7 @@ angular
 		'angular-intro'
 	])
 	.config(function(helloProvider) {
+		// Setting for Hello to manage login with social network
 		helloProvider.init({
 			facebook: '269509866781876',
 			google: '49433176261-hjeueecpafioh56r67fik9nqkum5np0g.apps.googleusercontent.com'
@@ -35,6 +35,7 @@ angular
 		localStorageServiceProvider.setPrefix('myVille');
 	})
 	.config(function($httpProvider) {
+		// add token when logged to HTTP requests
 		$httpProvider.interceptors.push(['localStorageService', function(localStorageService){
 			return {
 				request: function(config) {

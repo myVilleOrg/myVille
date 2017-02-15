@@ -1,18 +1,14 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name appApp.controller:EdituaCtrl
+ * @name EdituaCtrl
  * @description
- * # EdituaCtrl
- * Controller of the appApp
+ * # myVille
+ * Controller of edit ua modal box
  */
 angular.module('appApp')
 	.controller('EdituaCtrl', ['$scope', 'myVilleAPI', function($scope, myVilleAPI) {
 		$scope.tinymceOptions = {
-			onChange: function(e) {
-				// put logic here for keypress and cut/paste changes
-			},
 			inline: false,
 			plugins : 'advlist autolink link image lists charmap preview',
 			skin: 'lightgray',
