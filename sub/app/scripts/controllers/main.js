@@ -209,7 +209,8 @@ angular.module('appApp')
 	});
   navigator.geolocation.getCurrentPosition(function(position){
   	$scope.center.lat = position.coords.latitude;
-  	$scope.center.lng = position.coords.longitude
+  	$scope.center.lng = position.coords.longitude;
+  	showUas();
   });
 
 	/*Draw on MAP and save what is drawing*/
