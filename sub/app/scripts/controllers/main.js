@@ -107,6 +107,7 @@ angular.module('appApp')
 			// filter we gonna use based on filters we select
 			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
 			filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
+				$rootScope.cachedMarkers = geocodes.data;
 				geoJsonLayer = L.geoJson(geocodes.data, {
 					onEachFeature: function (feature, layer) {
 						//for each items we attach a popup

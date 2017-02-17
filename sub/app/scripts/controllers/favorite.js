@@ -1,6 +1,6 @@
 'use strict';
 /**
- * @name MainCtrl
+ * @name FavoriteCtrl
  * @description
  * # myVille
  * Controller of favorite page
