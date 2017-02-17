@@ -14,9 +14,13 @@ git pull && git submodule init && git submodule update && git submodule status
 ```
 See Readme in other branch
 Or
-./runmyVille start
+./runmyVille {start|stop|restart}
 ```
 
+## Update to last version
+```
+git pull --recurse-submodules
+```
 ## License
 
 MIT © [SyStEm]()
