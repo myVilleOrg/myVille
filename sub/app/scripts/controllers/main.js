@@ -196,7 +196,7 @@ angular.module('appApp')
 					lat: 51.505,
 					lng: -0.09,
 					zoom: 14,
-					autoDiscover: true
+					autoDiscover: false
 			},
 			bounds: {},
 			geojson : {},
@@ -207,6 +207,10 @@ angular.module('appApp')
 				favorite: false
 			}
 	});
+  navigator.geolocation.getCurrentPosition(function(position){
+  	$scope.center.lat = position.coords.latitude;
+  	$scope.center.lng = position.coords.longitude
+  });
 
 	/*Draw on MAP and save what is drawing*/
 	var drawnItems = new L.FeatureGroup();
@@ -253,9 +257,6 @@ angular.module('appApp')
 					map.addLayer(drawnItems)
 					$scope.$broadcast('drawingData', drawnItems.toGeoJSON()); // we send the drawing data to other controllers
 				});
-				map.on('draw:deleted', function(){
-					$scope.$broadcast('drawingData', drawnItems.toGeoJSON()); // we send the drawing data to other controllers
-				})
 				editMapMode = true;
 			}
 		});
