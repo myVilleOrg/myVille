@@ -253,6 +253,9 @@ angular.module('appApp')
 					map.addLayer(drawnItems)
 					$scope.$broadcast('drawingData', drawnItems.toGeoJSON()); // we send the drawing data to other controllers
 				});
+				map.on('draw:deleted', function(){
+					$scope.$broadcast('drawingData', drawnItems.toGeoJSON()); // we send the drawing data to other controllers
+				})
 				editMapMode = true;
 			}
 		});

@@ -4,7 +4,7 @@
  * @name UACtrl
  * @description
  * # myVille
- * Controller which to create a ua
+ * Controller which permits to create a ua
  */
 angular.module('appApp')
 	.controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
@@ -47,7 +47,8 @@ angular.module('appApp')
 			$scope.message = 'Un ou des champs sont manquants.';
 			return;
 		}
-		if(!$scope.ua.drawing){
+
+		if(!$scope.ua.drawing || $scope.ua.drawing.features.length === 0){
 			$scope.message = 'Vous devez dessiner sur la carte !'
 			return;
 		}
