@@ -3,12 +3,13 @@
 stop() {
 	sudo killall node
 	sudo killall grunt
-	sudo service mongod stop 
+	sudo killall mongod 
 	echo 'Service stopped' >&2
 }
 start() {
-	cd myville-backend; node "app.js" &
 	cd myville-backend; sudo service mongod start &
+	wait
+	node "app.js" &
 	cd ../myville-frontend/; grunt serve &
 }
 
