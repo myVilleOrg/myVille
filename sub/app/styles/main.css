@@ -314,6 +314,9 @@ a.active {
   margin: 4px 2px;
   cursor: pointer;
 }
+.profile-picture > .disconnect-user > button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
 .login-side {
   padding: 1em;
   display: flex;
