@@ -135,14 +135,6 @@ a.active {
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile {
   position: relative;
 }
-.sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > .disconnect-user {
-  position: absolute;
-  z-index: 10000;
-  color: red;
-  right: 0;
-  top: -0.5em;
-  cursor: pointer;
-}
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > a {
   display: flex;
   flex-direction: column;
@@ -308,6 +300,19 @@ a.active {
   text-transform: uppercase;
   font-size: 0.8em;
   color: #5a5d82;
+}
+.profile-picture > .disconnect-user > button {
+  background-color: #f44336;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 .login-side {
   padding: 1em;

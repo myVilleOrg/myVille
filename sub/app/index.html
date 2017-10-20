@@ -68,7 +68,6 @@
 									<span class="text-icon">Login</span>
 								</a>
 								<div ng-if="token" class="user-profile">
-									<div class="disconnect-user" ng-click="disconnect()"><i class="fa fa-times-circle"></i></div>
 									<a href="/#/profile/update">
 										<img ng-src="{{user.avatar ? 'http://localhost:3000/static/' + user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}" />
 									</a>
@@ -83,7 +82,6 @@
 				  <div class="heading">
 				      Affichage
 				  </div>
-					<!--This is a commentaire unuseless -->
 				  <ul class="filter-list">
 				      <label>
 								<select ng-model="optionChosen" ng-options="x.name for x in showChosens" ng-change="selectFilter(optionChosen.functionChosen)" ng-init="optionChosen = showChosens[0]">
