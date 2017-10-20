@@ -61,10 +61,10 @@ angular.module('appApp')
 		if(index === 1){
 			$scope.filters = {all: false, popular: true, mine: false, favorite: false};
 		}
-		if(index === 2){
+		if(index === 2 && localStorageService.get('token') ){
 			$scope.filters = {all: false, popular: false, mine: true, favorite: false};
 		}
-		if(index === 3) {
+		if(index === 3 && localStorageService.get('token') ) {
 			$scope.filters = {all: false, popular: false, mine: false, favorite: true};
 		}
 
