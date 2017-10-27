@@ -52,22 +52,24 @@ angular.module('appApp')
 
 	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
 		$scope.$broadcast('submitUA');
-	}
+	};
 
 	$scope.selectFilter = function(index){ // filter for the map display
 		if(index === 0){
-			$scope.filters = {all: true, popular: false, mine: false, favorite: false};
+			$scope.filters = {all: true, popular: false, mine: false, favorite: false, search: false};
 		}
 		if(index === 1){
-			$scope.filters = {all: false, popular: true, mine: false, favorite: false};
+			$scope.filters = {all: false, popular: true, mine: false, favorite: false, search: false};
 		}
 		if(index === 2){
-			$scope.filters = {all: false, popular: false, mine: true, favorite: false};
+			$scope.filters = {all: false, popular: false, mine: true, favorite: false, search: false};
 		}
 		if(index === 3) {
-			$scope.filters = {all: false, popular: false, mine: false, favorite: true};
+			$scope.filters = {all: false, popular: false, mine: false, favorite: true, search: false};
 		}
-
+		if(index === 4) {
+			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: true};
+		}
 	};
 
 	$scope.$watch('filters', function(newv, old){ //on filter change
@@ -86,6 +88,9 @@ angular.module('appApp')
 		if(newv.favorite){
 			$window.location.href = '#/profile/favorite';
 		}
+		if(newv.search){
+			$window.location.href = '#/';
+		}
 	}, true);
 
 	$scope.$on('filterForce', function(e, idx){ // In a specific case we force filter
@@ -96,6 +101,7 @@ angular.module('appApp')
 	var geoJsonLayer;
 	var showUas = function(){
 		leafletData.getMap().then(function(map){
+
 			// we remove data on map if there are some
 			try {
 				map.removeLayer(geoJsonLayer);
@@ -104,36 +110,71 @@ angular.module('appApp')
 			}
 			//get gps of map bounds
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
-			// filter we gonna use based on filters we select
-			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
-			filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
-				$rootScope.cachedMarkers = geocodes.data;
-				geoJsonLayer = L.geoJson(geocodes.data, {
-					onEachFeature: function (feature, layer) {
-						//for each items we attach a popup
-						var starClass = 'fa fa-star-o';
-						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
-							starClass = 'fa fa-star';
+			if (!$scope.filters.search){
+				// filter we gonna use based on filters we select
+				var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
+				filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
+					$rootScope.cachedMarkers = geocodes.data;
+					geoJsonLayer = L.geoJson(geocodes.data, {
+						onEachFeature: function (feature, layer) {
+							//for each items we attach a popup
+							var starClass = 'fa fa-star-o';
+							if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
+								starClass = 'fa fa-star';
+							}
+							var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
+							var htmlPopup = '<div class="popup-map">' +
+																'<div class="heading-popup">' +
+																	'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
+																	feature.properties._doc.title +
+																	'</a>' +
+																testFavoriHtml +
+																'</div>' +
+																'<div class="owner-popup">' +
+																'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
+																'</div>' +
+															'</div>';
+							var link = $compile(htmlPopup); // display html stored in descriptiond
+							var content = link($scope);
+							layer.bindPopup(content[0]);
 						}
-						var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
-						var htmlPopup = '<div class="popup-map">' +
-															'<div class="heading-popup">' +
-																'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
-																feature.properties._doc.title +
-																'</a>' +
-															testFavoriHtml +
-															'</div>' +
-															'<div class="owner-popup">' +
-															'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
-															'</div>' +
-														'</div>';
-						var link = $compile(htmlPopup); // display html stored in descriptiond
-						var content = link($scope);
-						layer.bindPopup(content[0]);
-					}
+					});
+					geoJsonLayer.addTo(map); // we need our layer in the map
 				});
-				geoJsonLayer.addTo(map); // we need our layer in the map
-			});
+			};
+			$scope.search = function (res) {
+				$scope.selectFilter(4);
+				console.log('Recherche : ' + res);
+				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
+					$rootScope.cachedMarkers = geocodes.data;
+					geoJsonLayer = L.geoJson(geocodes.data, {
+						onEachFeature: function (feature, layer) {
+							//for each items we attach a popup
+							var starClass = 'fa fa-star-o';
+							if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
+								starClass = 'fa fa-star';
+							}
+							var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
+							var htmlPopup = '<div class="popup-map">' +
+																'<div class="heading-popup">' +
+																	'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
+																	feature.properties._doc.title +
+																	'</a>' +
+																testFavoriHtml +
+																'</div>' +
+																'<div class="owner-popup">' +
+																'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
+																'</div>' +
+															'</div>';
+							var link = $compile(htmlPopup); // display html stored in descriptiond
+							var content = link($scope);
+							layer.bindPopup(content[0]);
+						}
+					});
+					geoJsonLayer.addTo(map); // we need our layer in the map
+				});
+				console.log("test4");
+			};
 		});
 	};
 
@@ -174,20 +215,21 @@ angular.module('appApp')
 			$scope.filters.popular = false;
 			$scope.filters.favorite = false;
 			$scope.filters.all = false;
-
+			$scope.filters.search = false
 		}
 		if(next === 'http://localhost:9000/#/profile/favorite' && current !== next){
 			$scope.filters.mine = false;
 			$scope.filters.popular = false;
 			$scope.filters.favorite = true;
 			$scope.filters.all = false;
+			$scope.filters.search = false
 		}
 		$scope.$emit('normalMode')
 
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
-			$scope.filters = {all: false, popular: false, mine: false, favorite: false};
+			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: false};
 		}
 	});
 
@@ -204,7 +246,8 @@ angular.module('appApp')
 				all: true,
 				popular: false,
 				mine: false,
-				favorite: false
+				favorite: false,
+				search: false
 			}
 	});
   navigator.geolocation.getCurrentPosition(function(position){

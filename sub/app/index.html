@@ -19,6 +19,7 @@
 		<!-- endbuild -->
 		<!-- build:css(.tmp) styles/main.css -->
 		<link rel="stylesheet" href="styles/main.css">
+		<link rel="stylesheet" href="styles/leaflet-search.css">
 		<!-- endbuild -->
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
@@ -78,12 +79,23 @@
 			</div>
 			<div class="side-sidebar" ng-view="">
 			</div>
-			<leaflet id="map" width="auto" height="100%" controls="controls" lf-center="center">
+				<leaflet id="map" width="auto" height="100%" controls="controls" lf-center="center">
+					<div class="filter-research">
+            	<input type="text"  placeholder="Recherche" required/>
+					</div>
 				<div class="map-filter-box">
 					<div class="heading">
 							Affichage
 					</div>
 					<ul class="filter-list">
+						<li>
+							<label>
+								<form class="searchForm">
+										<input type="text" ng-model="searchKey"  placeholder="Recherche Mine" style="width: 90%"/>
+										<button type="button" class="glyphicon glyphicon-search" ng-click="search(searchKey)" style="margin-left: 5%;"></button>
+								</form>
+							</label>
+						</li>
 						<li>
 							<label>
 								<input class="checkbox" ng-click="selectFilter(0)" ng-checked="filters.all" type="checkbox" />
@@ -132,7 +144,7 @@
 		<script src="bower_components/angular-touch/angular-touch.js"></script>
 		<script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
 		<script src="bower_components/ng-dialog/js/ngDialog.js"></script>
-		<script src="bower_components/hello/dist/hello.all.min.js"></script>
+		<script src="bower_components/hello/dist/hello.all.js"></script>
 		<script src="bower_components/ng-hello/dist/ng-hello.min.js"></script>
 		<script src="bower_components/moment/moment.js"></script>
 		<script src="bower_components/tinymce/tinymce.js"></script>
@@ -145,6 +157,7 @@
 		<script src="bower_components/moment/locale/fr.js"></script>
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
 		<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+		<script src='http://labs.easyblog.it/maps/leaflet-search/dist/leaflet-search.min.js'></script>
 		<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
 		<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
 		<script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>

@@ -12,8 +12,8 @@ angular.module('appApp')
 	$scope.$emit('editMode'); // Prevents to switch another page
 
 	/*Change the style to get a full page and hide map*/
-	angular.element(document.getElementById('map'))[0].style.flex = 0;
-	angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
+	// angular.element(document.getElementById('map'))[0].style.flex = 0;
+	// angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
 
 	$scope.ua = {};
 	$scope.tinymceOptions = {
@@ -40,7 +40,7 @@ angular.module('appApp')
 	$scope.$on('submitUA', function(e, d){
 		// submit our ua
 		// back to default page for creating
-		angular.element(document.getElementById('map'))[0].style.flex = 0;
+		angular.element(document.getElementById('map'))[0].style.flex = 1;
 		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
 		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
 		if(!$scope.ua.desc || !$scope.ua.title){
@@ -80,6 +80,6 @@ angular.module('appApp')
 		// we show the map to draw
 		angular.element(document.getElementById('map'))[0].style.flex = 1;
 		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'block';
-		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'none';
+		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
 	};
 });
