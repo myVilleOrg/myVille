@@ -9,11 +9,17 @@
 angular.module('appApp')
 	.controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
 
+
+	/*Boolean to set the display mode*/
+	$scope.full_page=false;
+
 	$scope.$emit('editMode'); // Prevents to switch another page
 
 	/*Change the style to get a full page and hide map*/
+	/*
 	angular.element(document.getElementById('map'))[0].style.flex = 0;
 	angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
+	*/
 
 	$scope.ua = {};
 	$scope.tinymceOptions = {
@@ -40,9 +46,29 @@ angular.module('appApp')
 	$scope.$on('submitUA', function(e, d){
 		// submit our ua
 		// back to default page for creating
-		angular.element(document.getElementById('map'))[0].style.flex = 0;
+/*
+		angular.element(document.getElementById('map'))[0].style.flex = 1;
+		//angular.element(document.getElementById('map'))[0].style.display = 'flex';
 		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
 		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
+*/
+
+
+		if ($scope.full_page==false) {
+			$scope.small_sidebar;
+		}
+
+		if ($scope.full_page==true) {
+			$scope.full_sidebar;
+			angular.element(document.getElementById('map'))[0].style.flex = 0;
+			//angular.element(document.getElementById('map'))[0].style.flex = 0;
+			//angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
+			//angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
+
+		}
+
+		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
+
 		if(!$scope.ua.desc || !$scope.ua.title){
 			$scope.message = 'Un ou des champs sont manquants.';
 			return;
@@ -70,16 +96,41 @@ angular.module('appApp')
 		});
 	});
 	$scope.$on("$destroy", function(){
-			//on leave page back to no edit mode map and default style
+			//on leave page back to no edit mode map and default style (or changing menue)
+
 			$scope.$emit('normalMode');
+
 			angular.element(document.getElementById('map'))[0].style.flex = 1;
+			angular.element(document.getElementById('map'))[0].style.display = 'flex';  //the map is displayed in full page
 			angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
 			angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
+
   });
 	$scope.showEditMap = function(){
 		// we show the map to draw
-		angular.element(document.getElementById('map'))[0].style.flex = 1;
-		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'block';
-		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'none';
+			angular.element(document.getElementById('map'))[0].style.flex = 1;
+			angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'block';
+			angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'none';
 	};
+	$scope.full_sidebar= function () {
+		angular.element(document.getElementById('map'))[0].style.flex = 0;
+		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
+		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
+	};
+	$scope.small_sidebar= function () {
+		angular.element(document.getElementById('map'))[0].style.flex = 1;
+		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
+		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 0.4;
+
+	};
+	$scope.display_mode= function () {
+		if ($scope.full_page==false) {
+			$scope.full_sidebar();
+			$scope.full_page=true;
+		} else {
+			$scope.small_sidebar();
+			$scope.full_page=false;
+		}
+	};
+
 });

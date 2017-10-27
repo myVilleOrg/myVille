@@ -11,6 +11,9 @@
 			<h1>Description</h1>
 			<textarea ui-tinymce="tinymceOptions" ng-model="ua.desc" placeholder="Entrez votre texte ici" />
 		</div>
-		<button class='btn-blue create-btn' ng-click="showEditMap()">Choisir l'emplacement de l'aménagement</button>
+		<button class='btn-blue create-btn' ng-if="full_page===true" ng-click="display_mode()">Afficher en taille réduite</button>
+		<button class='btn-blue create-btn' ng-if="full_page===true" ng-click="showEditMap()">Définir l'emplacement</button>
+		<button class='btn-blue create-btn' ng-if="full_page===false" ng-click="display_mode()">Afficher en plein écran</button>
+		<button class='btn-blue create-btn' ng-if="full_page===false" ng-click="submitUA()">J'ai fini !</button>
 	</div>
 </collapse-sidebar>
