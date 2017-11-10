@@ -15,6 +15,7 @@ angular.module('appApp')
 
 	$scope.$emit('editMode'); // Prevents to switch another page
 
+
 	$scope.ua = {};
 	$scope.tinymceOptions = {
 		inline: false,
