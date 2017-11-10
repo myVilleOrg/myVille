@@ -135,14 +135,6 @@ a {
 			}
 			&>.user-profile {
 				position: relative;
-				&>.disconnect-user{
-					position: absolute;
-					z-index: 10000;
-					color: red;
-					right: 0;
-					top: -0.5em;
-					cursor: pointer;
-				}
 				&>a {
 					display: flex;
 					flex-direction: column;
@@ -310,6 +302,24 @@ a {
 			text-transform: uppercase;
 			font-size: 0.8em;
 			color: @dark-gray;
+		}
+	}
+	&>.disconnect-user {
+		&>button {
+			background-color: #f44336;
+		  border: none;
+		  border-radius: 8px;
+		  color: white;
+		  padding: 15px 32px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 16px;
+		  margin: 4px 2px;
+		  cursor: pointer;
+		}
+		&>button:hover {
+			 box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 		}
 	}
 }
@@ -550,11 +560,12 @@ a {
 			cursor: initial;
 			top: 10px;
 			right: 10px;
+			height : 85px;
 			max-width: 200px;
-			min-width: 200px;
+			min-width: 180px;
 			background: white;
 			box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-			padding: 13px 19px;
+			padding: 10px 10px;
 			line-height: 1.4;
 			text-align: center;
 			z-index: 10000;

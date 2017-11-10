@@ -36,8 +36,10 @@ angular.module('appApp')
   		$scope.editMode = false;
   		$scope.message = '';
   	}, function(err){
-  		$scope.message = err.data.message;
+  			$scope.message = err.data.message;
   	});
+		$scope.editUser.Opassword='';
+		$scope.editUser.Npassword='';
   };
 
   $scope.editAvatarClick = function(element){ // click on avatar
@@ -53,8 +55,8 @@ angular.module('appApp')
       myVilleAPI.User.updateAvatar(formData).then(function(user){
         AuthentificationService.updateAvatar(user);
       }, function(err){
-      	$scope.message = err.data.message;
-      });
+    	 		$scope.message = err.data.message;
+    	  });
     }
   };
 

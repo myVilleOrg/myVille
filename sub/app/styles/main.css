@@ -20,7 +20,7 @@ a {
   font-weight: normal;
 }
 input {
-  border: 1px #C9D3DB solid;
+  border: 1px #808080 solid;
   border-radius: 0.3em;
   padding: 0.1em 0.3em 0.1em 0.3em;
 }
@@ -39,7 +39,7 @@ button.btn-blue.create-btn {
 }
 a {
   text-decoration: none !important;
-  color: #C9D3DB;
+  color: #808080;
   transition: color 0.75s ease;
 }
 a:hover {
@@ -83,14 +83,14 @@ a.active {
   display: block;
   flex: 0.05;
   height: 100%;
-  color: #C9D3DB;
-  border-right: 1px #e8ecef solid;
+  color: #808080;
+  border-right: 1px #9a9a9a solid;
 }
 @media only screen and (max-width: 479px) {
   .sidebar {
     height: auto;
     border-right: none;
-    border-top: 1px #e8ecef solid;
+    border-top: 1px #9a9a9a solid;
   }
 }
 .sidebar > .sidebar-wrapper {
@@ -134,14 +134,6 @@ a.active {
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile {
   position: relative;
-}
-.sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > .disconnect-user {
-  position: absolute;
-  z-index: 10000;
-  color: red;
-  right: 0;
-  top: -0.5em;
-  cursor: pointer;
 }
 .sidebar > .sidebar-wrapper > .user-sidebar > .user-profile > a {
   display: flex;
@@ -196,7 +188,7 @@ a.active {
 }
 .side-sidebar {
   flex: 0.4;
-  border-right: 1px #e8ecef solid;
+  border-right: 1px #9a9a9a solid;
 }
 .side-sidebar > .wrapper-side-sidebar {
   width: 100%;
@@ -277,7 +269,7 @@ a.active {
 }
 .profile-picture > .profile-description {
   margin-top: 0.5em;
-  color: #C9D3DB;
+  color: #808080;
   font-size: 0.9em;
 }
 .profile-picture > .profile-detailled {
@@ -309,6 +301,22 @@ a.active {
   font-size: 0.8em;
   color: #5a5d82;
 }
+.profile-picture > .disconnect-user > button {
+  background-color: #f44336;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.profile-picture > .disconnect-user > button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
 .login-side {
   padding: 1em;
   display: flex;
@@ -325,7 +333,7 @@ a.active {
   margin-top: 15px;
   display: flex;
   flex-direction: row;
-  color: #C9D3DB;
+  color: #808080;
   font-size: 0.9em;
 }
 .login-side > .action-group > .remember-action {
@@ -347,7 +355,7 @@ a.active {
 .login-side > .social-group {
   display: flex;
   flex-direction: row;
-  color: #C9D3DB;
+  color: #808080;
   font-size: 0.9em;
   margin-top: 30px;
 }
@@ -363,7 +371,7 @@ a.active {
   text-align: center;
   line-height: 2.5em;
   color: #5a5d82;
-  border: 1.5px #C9D3DB solid;
+  border: 1.5px #808080 solid;
   margin-right: 5px;
   width: 36px;
   height: 36px;
@@ -389,7 +397,7 @@ a.active {
 }
 .form-group > .input-group {
   position: relative;
-  border-bottom: 1px solid #e8ecef;
+  border-bottom: 1px solid #9a9a9a;
 }
 .form-group > .input-group > .top-right {
   position: absolute;
@@ -403,12 +411,12 @@ a.active {
 .form-group > .input-group > .input-group-addon {
   background-color: white !important;
   border: none;
-  color: #e8ecef;
+  color: #9a9a9a;
 }
 .form-group > .input-group > input {
   width: 100%;
   border: none !important;
-  color: #9baebc !important;
+  color: #5a5a5a !important;
 }
 #createUA > .content-side > .form-dable {
   flex-direction: column;
@@ -505,7 +513,7 @@ a.active {
 .modal-single-ua > .ngdialog-content > #singleUA > .ua-title,
 .modal-edit-ua > .ngdialog-content > #singleUA > .ua-title {
   text-align: center;
-  border-bottom: 1px #e8ecef solid;
+  border-bottom: 1px #9a9a9a solid;
 }
 .modal-single-ua > .ngdialog-content > #singleUA > .ua-description,
 .modal-edit-ua > .ngdialog-content > #singleUA > .ua-description {
@@ -524,7 +532,7 @@ a.active {
   width: 100%;
   height: 10%;
   padding: 1em;
-  border-bottom: 1px #e8ecef solid;
+  border-bottom: 1px #9a9a9a solid;
 }
 #myUA > .content-side > .list-ua > .ua-row > .row-title,
 #favoriteUA > .content-side > .list-ua > .ua-row > .row-title {
@@ -546,18 +554,19 @@ a.active {
   cursor: initial;
   top: 10px;
   right: 10px;
+  height: 85px;
   max-width: 200px;
-  min-width: 200px;
+  min-width: 180px;
   background: white;
   box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
-  padding: 13px 19px;
+  padding: 10px 10px;
   line-height: 1.4;
   text-align: center;
   z-index: 10000;
 }
 #map > div > .map-filter-box > .heading {
   text-transform: uppercase;
-  border-bottom: 1px #e8ecef solid;
+  border-bottom: 1px #9a9a9a solid;
 }
 #map > div > .map-filter-box > .filter-list {
   padding: 1em;
@@ -613,7 +622,7 @@ input:-webkit-autofill {
   display: block;
 }
 .popup-map > .heading-popup {
-  border-bottom: 1px solid #e8ecef;
+  border-bottom: 1px solid #9a9a9a;
 }
 .popup-map > .heading-popup > i {
   position: relative;
