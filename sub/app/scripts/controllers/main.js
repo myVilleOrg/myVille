@@ -98,7 +98,7 @@ angular.module('appApp')
 	});
 
 	$scope.showChosens = [ // In the dropdown menu, the option chosen
-		{name: 'tout', functionChosen: 0},
+		{name: 'Tout', functionChosen: 0},
 		{name: 'Les plus populaires', functionChosen: 1},
 		{name: 'Mes propositions', functionChosen: 2},
 		{name: 'Mes favoris', functionChosen: 3}
