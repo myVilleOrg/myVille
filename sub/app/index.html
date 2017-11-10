@@ -40,32 +40,32 @@
 							<li>
 								<a href="/#/" ng-class="{ active: isActive('/') }">
 									<i class="fa fa-map-o" aria-hidden="true"></i>
-									<span class="text-icon">MAPS</span>
+									<span class="text-icon">Carte</span>
 								</a>
 							</li>
 							<li ng-if="token" id="link-create">
 								<a href="/#/createUA" ng-class="{ active: isActive('/createUA') }">
 									<i class="fa fa-plus" aria-hidden="true"></i>
-									<span class="text-icon">Add mine</span>
+									<span class="text-icon">Ajout de projet</span>
 								</a>
 							</li>
 							<li ng-if="token" id="link-mine">
 								<a href="/#/profile/mine" ng-class="{ active: isActive('/profile/mine') }">
 									<i class="fa fa-thumb-tack" aria-hidden="true"></i>
-									<span class="text-icon">Mine</span>
+									<span class="text-icon">Projet</span>
 								</a>
 							</li>
 							<li ng-if="token" id="link-favorite">
 								<a href="/#/profile/favorite" ng-class="{ active: isActive('/profile/favorite') }">
 									<i class="fa fa-star-o" aria-hidden="true"></i>
-									<span class="text-icon">Favorites</span>
+									<span class="text-icon">Favoris</span>
 								</a>
 							</li>
 						</ul>
 						<div class="user-sidebar">
 								<a ng-if="!token" ng-click="login()" ng-class="{ active: isActive('/login') }">
 									<i class="fa fa-user" aria-hidden="true"></i>
-									<span class="text-icon">Login</span>
+									<span class="text-icon">Connexion</span>
 								</a>
 								<div ng-if="token" class="user-profile">
 									<div class="disconnect-user" ng-click="disconnect()"><i class="fa fa-times-circle"></i></div>
