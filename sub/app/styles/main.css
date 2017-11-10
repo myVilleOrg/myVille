@@ -48,11 +48,10 @@ a:hover {
 a.active {
   color: #55A3F6;
 }
-.searchForm{
-  display:inline-block;
+.searchForm {
+  display: inline-block;
   float: none;
 }
-
 #container {
   width: 100%;
   height: 100%;
