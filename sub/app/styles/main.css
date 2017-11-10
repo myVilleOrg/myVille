@@ -48,6 +48,11 @@ a:hover {
 a.active {
   color: #55A3F6;
 }
+.searchForm{
+  display:inline-block;
+  float: none;
+}
+
 #container {
   width: 100%;
   height: 100%;
@@ -550,7 +555,7 @@ a.active {
   min-width: 200px;
   background: white;
   box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
-  padding: 13px 19px;
+  padding: 5px 5px;
   line-height: 1.4;
   text-align: center;
   z-index: 10000;
@@ -573,7 +578,7 @@ a.active {
 #map > div > .create-ua-button > button {
   font-size: 2em;
 }
-#map > div > .filter-research {
+#map > div > .filter-search {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -644,4 +649,3 @@ input:-webkit-autofill {
 .popup-auto-height > .ngdialog-content {
   height: auto;
 }
-

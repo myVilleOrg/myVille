@@ -80,9 +80,6 @@
 			<div class="side-sidebar" ng-view="">
 			</div>
 				<leaflet id="map" width="auto" height="100%" controls="controls" lf-center="center">
-					<div class="filter-research">
-            	<input type="text"  placeholder="Recherche" required/>
-					</div>
 				<div class="map-filter-box">
 					<div class="heading">
 							Affichage
@@ -91,8 +88,8 @@
 						<li>
 							<label>
 								<form class="searchForm">
-										<input type="text" ng-model="searchKey"  placeholder="Recherche Mine" style="width: 90%"/>
-										<button type="button" class="glyphicon glyphicon-search" ng-click="search(searchKey)" style="margin-left: 5%;"></button>
+										<input type="text" ng-model="searchKey"  placeholder="Recherche Mine" style="width: 70%"/>
+										<button type="button" class="glyphicon glyphicon-search" ng-click="search(searchKey)" ng-checked="filters.search" style="margin-left: 1%;"></button>
 								</form>
 							</label>
 						</li>

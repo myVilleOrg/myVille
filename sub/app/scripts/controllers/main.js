@@ -101,82 +101,68 @@ angular.module('appApp')
 	var geoJsonLayer;
 	var showUas = function(){
 		leafletData.getMap().then(function(map){
-
-			// we remove data on map if there are some
-			try {
-				map.removeLayer(geoJsonLayer);
-			}
-			catch (e){
-			}
 			//get gps of map bounds
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
 			if (!$scope.filters.search){
 				// filter we gonna use based on filters we select
 				var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
 				filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
-					$rootScope.cachedMarkers = geocodes.data;
-					geoJsonLayer = L.geoJson(geocodes.data, {
-						onEachFeature: function (feature, layer) {
-							//for each items we attach a popup
-							var starClass = 'fa fa-star-o';
-							if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
-								starClass = 'fa fa-star';
-							}
-							var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
-							var htmlPopup = '<div class="popup-map">' +
-																'<div class="heading-popup">' +
-																	'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
-																	feature.properties._doc.title +
-																	'</a>' +
-																testFavoriHtml +
-																'</div>' +
-																'<div class="owner-popup">' +
-																'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
-																'</div>' +
-															'</div>';
-							var link = $compile(htmlPopup); // display html stored in descriptiond
-							var content = link($scope);
-							layer.bindPopup(content[0]);
-						}
-					});
-					geoJsonLayer.addTo(map); // we need our layer in the map
+					$scope.geoJL(geocodes.data);
 				});
+			} else {
+				$scope.search($scope.res);
 			};
+
+			$scope.res;
+
 			$scope.search = function (res) {
+				$scope.res = res;
 				$scope.selectFilter(4);
-				console.log('Recherche : ' + res);
 				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
-					$rootScope.cachedMarkers = geocodes.data;
-					geoJsonLayer = L.geoJson(geocodes.data, {
-						onEachFeature: function (feature, layer) {
-							//for each items we attach a popup
-							var starClass = 'fa fa-star-o';
-							if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
-								starClass = 'fa fa-star';
-							}
-							var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
-							var htmlPopup = '<div class="popup-map">' +
-																'<div class="heading-popup">' +
-																	'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
-																	feature.properties._doc.title +
-																	'</a>' +
-																testFavoriHtml +
-																'</div>' +
-																'<div class="owner-popup">' +
-																'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
-																'</div>' +
-															'</div>';
-							var link = $compile(htmlPopup); // display html stored in descriptiond
-							var content = link($scope);
-							layer.bindPopup(content[0]);
-						}
-					});
-					geoJsonLayer.addTo(map); // we need our layer in the map
+					$scope.geoJL(geocodes.data);
 				});
-				console.log("test4");
 			};
+
+			$scope.geoJL = function (geoC){
+
+				// we remove data on map if there are some
+				$rootScope.cachedMarkers = geoC;
+				try {
+					map.removeLayer(geoJsonLayer);
+				}
+				catch (e){
+				}
+
+				geoJsonLayer = L.geoJson(geoC, {
+					onEachFeature: function (feature, layer) {
+						//for each items we attach a popup
+						var starClass = 'fa fa-star-o';
+						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
+							starClass = 'fa fa-star';
+						}
+						var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
+						var htmlPopup = '<div class="popup-map">' +
+															'<div class="heading-popup">' +
+																'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
+																feature.properties._doc.title +
+																'</a>' +
+															testFavoriHtml +
+															'</div>' +
+															'<div class="owner-popup">' +
+															'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
+															'</div>' +
+														'</div>';
+						var link = $compile(htmlPopup); // display html stored in descriptiond
+						var content = link($scope);
+						layer.bindPopup(content[0]);
+					}
+				});
+				geoJsonLayer.addTo(map); // we need our layer in the map
+			};
+
 		});
 	};
+
 
 	$scope.editFavori = function(ua_id){
 		myVilleAPI.UAS.favor({ua: ua_id}).then(function(user){
@@ -225,7 +211,6 @@ angular.module('appApp')
 			$scope.filters.search = false
 		}
 		$scope.$emit('normalMode')
-
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
