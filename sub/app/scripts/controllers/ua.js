@@ -10,16 +10,10 @@ angular.module('appApp')
 	.controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
 
 
-	/*Boolean to set the display mode*/
+	// Boolean to set the display mode
 	$scope.full_page=false;
 
 	$scope.$emit('editMode'); // Prevents to switch another page
-
-	/*Change the style to get a full page and hide map*/
-	/*
-	angular.element(document.getElementById('map'))[0].style.flex = 0;
-	angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
-	*/
 
 	$scope.ua = {};
 	$scope.tinymceOptions = {
@@ -46,28 +40,16 @@ angular.module('appApp')
 	$scope.$on('submitUA', function(e, d){
 		// submit our ua
 		// back to default page for creating
-/*
-		angular.element(document.getElementById('map'))[0].style.flex = 1;
-		//angular.element(document.getElementById('map'))[0].style.display = 'flex';
-		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
-		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
-*/
 
-
-		if ($scope.full_page==false) {
-			$scope.small_sidebar;
-		}
-
+		// If the display mode of the side-sidebar was initially fullpage
+		// The function showEditMap is triggered and then this function is triggered
+		// We need to restore the initial setting
 		if ($scope.full_page==true) {
-			$scope.full_sidebar;
-			angular.element(document.getElementById('map'))[0].style.flex = 0;
-			//angular.element(document.getElementById('map'))[0].style.flex = 0;
-			//angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
-			//angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
+			$scope.full_sidebar();
 
+			// showEditMap disable the display of side-sidebar. We need to restore it.
+			angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
 		}
-
-		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
 
 		if(!$scope.ua.desc || !$scope.ua.title){
 			$scope.message = 'Un ou des champs sont manquants.';
@@ -96,7 +78,7 @@ angular.module('appApp')
 		});
 	});
 	$scope.$on("$destroy", function(){
-			//on leave page back to no edit mode map and default style (or changing menue)
+			// on leave page back to no edit mode map and default style (or changing menue)
 
 			$scope.$emit('normalMode');
 
@@ -112,17 +94,24 @@ angular.module('appApp')
 			angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'block';
 			angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'none';
 	};
+
+
+	// Display mode which hide the map and show the side-sidebar on fullscreen
 	$scope.full_sidebar= function () {
 		angular.element(document.getElementById('map'))[0].style.flex = 0;
 		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 1;
 		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
 	};
+
+	// Display mode which display the side-sidebar with a small size
 	$scope.small_sidebar= function () {
 		angular.element(document.getElementById('map'))[0].style.flex = 1;
-		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
 		angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.flex = 0.4;
+		angular.element(document.getElementsByClassName('create-ua-button')[0])[0].style.display = 'none';
 
 	};
+
+	// Change the display mode of the sidebar
 	$scope.display_mode= function () {
 		if ($scope.full_page==false) {
 			$scope.full_sidebar();
