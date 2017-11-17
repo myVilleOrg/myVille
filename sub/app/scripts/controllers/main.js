@@ -9,7 +9,7 @@
 angular.module('appApp')
 .controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile) {
 	$scope.resetPwd = {};
-
+	$scope.showChosens =[];
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
@@ -41,13 +41,31 @@ angular.module('appApp')
 		return active;
 	};
 
+	if (localStorageService.get('token')){
+		$scope.showChosens = [ // In the dropdown menu, the option chosen
+			{name: 'Tout', functionChosen: 0},
+			{name: 'Les plus populaires', functionChosen: 1},
+			{name: 'Mes propositions', functionChosen: 2},
+			{name: 'Mes favoris', functionChosen: 3}
+		];
+	};
 	$scope.disconnect = function(){ // disconnect function
 		AuthentificationService.logout();
 		$window.location.href = '#/';
+		$scope.showChosens = [ // In the dropdown menu, the option chosen
+			{name: 'Tout', functionChosen: 0},
+			{name: 'Les plus populaires', functionChosen: 1}
+		];
 	};
 
 	$scope.login = function(){
 		ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html', appendClassName: 'popup-auto-height'});
+		$scope.showChosens = [ // In the dropdown menu, the option chosen
+			{name: 'Tout', functionChosen: 0},
+			{name: 'Les plus populaires', functionChosen: 1},
+			{name: 'Mes propositions', functionChosen: 2},
+			{name: 'Mes favoris', functionChosen: 3}
+		];
 	};
 
 	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
@@ -97,12 +115,7 @@ angular.module('appApp')
 		$scope.selectFilter(idx);
 	});
 
-	$scope.showChosens = [ // In the dropdown menu, the option chosen
-		{name: 'tout', functionChosen: 0},
-		{name: 'Les plus populaires', functionChosen: 1},
-		{name: 'Mes propositions', functionChosen: 2},
-		{name: 'Mes favoris', functionChosen: 3}
-	];
+
 
 	// The function which permits to display items on map
 	var geoJsonLayer;
