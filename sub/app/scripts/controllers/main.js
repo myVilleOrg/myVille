@@ -9,7 +9,7 @@
 angular.module('appApp')
 .controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile) {
 	$scope.resetPwd = {};
-
+	$scope.showChosens =[];
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
@@ -41,33 +41,53 @@ angular.module('appApp')
 		return active;
 	};
 
+	if (localStorageService.get('token')){
+		$scope.showChosens = [ // In the dropdown menu, the option chosen
+			{name: 'Tout', functionChosen: 0},
+			{name: 'Les plus populaires', functionChosen: 1},
+			{name: 'Mes propositions', functionChosen: 2},
+			{name: 'Mes favoris', functionChosen: 3}
+		];
+	};
 	$scope.disconnect = function(){ // disconnect function
 		AuthentificationService.logout();
 		$window.location.href = '#/';
+		$scope.showChosens = [ // In the dropdown menu, the option chosen
+			{name: 'Tout', functionChosen: 0},
+			{name: 'Les plus populaires', functionChosen: 1}
+		];
 	};
 
 	$scope.login = function(){
 		ngDialog.open({controller: 'LoginCtrl', template: 'views/login.html', appendClassName: 'popup-auto-height'});
+		$scope.showChosens = [ // In the dropdown menu, the option chosen
+			{name: 'Tout', functionChosen: 0},
+			{name: 'Les plus populaires', functionChosen: 1},
+			{name: 'Mes propositions', functionChosen: 2},
+			{name: 'Mes favoris', functionChosen: 3}
+		];
 	};
 
 	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
 		$scope.$broadcast('submitUA');
-	}
+	};
 
 	$scope.selectFilter = function(index){ // filter for the map display
 		if(index === 0){
-			$scope.filters = {all: true, popular: false, mine: false, favorite: false};
+			$scope.filters = {all: true, popular: false, mine: false, favorite: false, search: false};
 		}
 		if(index === 1){
-			$scope.filters = {all: false, popular: true, mine: false, favorite: false};
+			$scope.filters = {all: false, popular: true, mine: false, favorite: false, search: false};
 		}
 		if(index === 2 && localStorageService.get('token') ){
-			$scope.filters = {all: false, popular: false, mine: true, favorite: false};
+			$scope.filters = {all: false, popular: false, mine: true, favorite: false, search: false};
 		}
 		if(index === 3 && localStorageService.get('token') ) {
-			$scope.filters = {all: false, popular: false, mine: false, favorite: true};
+			$scope.filters = {all: false, popular: false, mine: false, favorite: true, search: false};
 		}
-
+		if(index === 4) {
+			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: true};
+		}
 	};
 
 	$scope.$watch('filters', function(newv, old){ //on filter change
@@ -86,36 +106,54 @@ angular.module('appApp')
 		if(newv.favorite){
 			$window.location.href = '#/profile/favorite';
 		}
+		if(newv.search){
+			$window.location.href = '#/';
+		}
 	}, true);
 
 	$scope.$on('filterForce', function(e, idx){ // In a specific case we force filter
 		$scope.selectFilter(idx);
 	});
 
-	$scope.showChosens = [ // In the dropdown menu, the option chosen
-		{name: 'tout', functionChosen: 0},
-		{name: 'Les plus populaires', functionChosen: 1},
-		{name: 'Mes propositions', functionChosen: 2},
-		{name: 'Mes favoris', functionChosen: 3}
-	];
+
 
 	// The function which permits to display items on map
 	var geoJsonLayer;
 	var showUas = function(){
 		leafletData.getMap().then(function(map){
-			// we remove data on map if there are some
-			try {
-				map.removeLayer(geoJsonLayer);
-			}
-			catch (e){
-			}
 			//get gps of map bounds
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
-			// filter we gonna use based on filters we select
-			var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
-			filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
-				$rootScope.cachedMarkers = geocodes.data;
-				geoJsonLayer = L.geoJson(geocodes.data, {
+			if (!$scope.filters.search){
+				// filter we gonna use based on filters we select
+				var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
+				filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
+					$scope.geoJL(geocodes.data);
+				});
+			} else {
+				$scope.search($scope.res);
+			};
+
+			$scope.res;
+
+			$scope.search = function (res) {
+				$scope.res = res;
+				$scope.selectFilter(4);
+				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
+					$scope.geoJL(geocodes.data);
+				});
+			};
+
+			$scope.geoJL = function (geoC){
+
+				// we remove data on map if there are some
+				$rootScope.cachedMarkers = geoC;
+				try {
+					map.removeLayer(geoJsonLayer);
+				}
+				catch (e){
+				}
+
+				geoJsonLayer = L.geoJson(geoC, {
 					onEachFeature: function (feature, layer) {
 						//for each items we attach a popup
 						var starClass = 'fa fa-star-o';
@@ -140,9 +178,11 @@ angular.module('appApp')
 					}
 				});
 				geoJsonLayer.addTo(map); // we need our layer in the map
-			});
+			};
+
 		});
 	};
+
 
 	$scope.editFavori = function(ua_id){
 		myVilleAPI.UAS.favor({ua: ua_id}).then(function(user){
@@ -181,20 +221,20 @@ angular.module('appApp')
 			$scope.filters.popular = false;
 			$scope.filters.favorite = false;
 			$scope.filters.all = false;
-
+			$scope.filters.search = false
 		}
 		if(next === 'http://localhost:9000/#/profile/favorite' && current !== next){
 			$scope.filters.mine = false;
 			$scope.filters.popular = false;
 			$scope.filters.favorite = true;
 			$scope.filters.all = false;
+			$scope.filters.search = false
 		}
 		$scope.$emit('normalMode')
-
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
-			$scope.filters = {all: false, popular: false, mine: false, favorite: false};
+			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: false};
 		}
 	});
 
@@ -211,7 +251,8 @@ angular.module('appApp')
 				all: true,
 				popular: false,
 				mine: false,
-				favorite: false
+				favorite: false,
+				search: false
 			}
 	});
   navigator.geolocation.getCurrentPosition(function(position){

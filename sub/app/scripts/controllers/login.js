@@ -50,7 +50,7 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 					$scope.message = error.data.message;
 				});
 		} else {
-			$scope.message = 'Error, fiels needed.';
+			$scope.message = 'Erreur dans un des champs';
 		}
 	};
 

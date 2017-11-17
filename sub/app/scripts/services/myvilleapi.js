@@ -55,6 +55,9 @@ angular.module('appApp')
 					getMine: function(){
 						return $http.get(baseUrl + '/ua/get/mine');
 					},
+					search: function(data) {
+						return $http.post(baseUrl + '/ua/search', data);
+					},
 					getOne: function(id){
 						return $http.get(baseUrl + '/ua/' + id);
 					},
