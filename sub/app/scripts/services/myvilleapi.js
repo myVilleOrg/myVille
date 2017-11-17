@@ -3,7 +3,7 @@
  * @name myVille API
  * @description
  * # myVille
- * Services deliver by myVille API.
+ * Services deliver by myVille API.--
  */
 angular.module('appApp')
 	.factory('myVilleAPI', ['$http', '$rootScope', function ($http, $rootScope) {
@@ -78,6 +78,9 @@ angular.module('appApp')
 					getVote: function(uaId){
 						return $http.get(baseUrl + '/vote/'+ uaId);
 					}
+					/*countVote: function(cUaId){
+						return $http.get(baseUrl + '/vote/'+ cUaId);
+					}*/
 				}
 			};
 			return dataFactory;
