@@ -107,7 +107,7 @@ angular.module('appApp')
 			$window.location.href = '#/profile/favorite';
 		}
 		if(newv.search){
-			$window.location.href = '#/';
+			$window.location.href = '#/search';
 		}
 	}, true);
 
@@ -136,11 +136,13 @@ angular.module('appApp')
 			$scope.res;
 
 			$scope.search = function (res) {
-				$scope.res = res;
-				$scope.selectFilter(4);
 				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
-					$scope.geoJL(geocodes.data);
+						$scope.geoJL(geocodes.data);
+						$rootScope.searchUAS = geocodes.data;
+						console.log('rootScope :', $rootScope.searchUAS.features);
+						$scope.selectFilter(4);
 				});
+
 			};
 
 			$scope.geoJL = function (geoC){

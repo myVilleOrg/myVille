@@ -79,6 +79,11 @@ angular
 				controllerAs: 'profile',
 				templateUrl: 'views/profile.html'
 			})
+			.when('/search', {
+				controller: 'SearchCtrl',
+				controllerAs: 'search',
+				templateUrl: 'views/search.html'
+			})
 			.when('/profile/update', {
 				controller: 'ProfileCtrl',
 				controllerAs: 'profile',
