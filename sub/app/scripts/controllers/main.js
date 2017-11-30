@@ -86,6 +86,7 @@ angular.module('appApp')
 			$scope.filters = {all: false, popular: false, mine: false, favorite: true, search: false};
 		}
 		if(index === 4) {
+			console.log("filter");
 			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: true};
 		}
 	};
@@ -107,6 +108,7 @@ angular.module('appApp')
 			$window.location.href = '#/profile/favorite';
 		}
 		if(newv.search){
+			console.log('root');
 			$window.location.href = '#/search';
 		}
 	}, true);
@@ -136,12 +138,15 @@ angular.module('appApp')
 			$scope.res;
 
 			$scope.search = function (res) {
+				$scope.res = res;
 				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						$scope.geoJL(geocodes.data);
 						$rootScope.searchUAS = geocodes.data;
 						console.log('rootScope :', $rootScope.searchUAS.features);
 						$scope.selectFilter(4);
+						$rootScope.$broadcast('updateSearch');
 				});
+
 
 			};
 
