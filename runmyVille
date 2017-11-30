@@ -3,12 +3,20 @@
 stop() {
 	sudo killall node
 	sudo killall grunt
-	sudo killall mongod 
+	sudo killall mongod
 	echo 'Service stopped' >&2
 }
 start() {
 	cd myville-backend; sudo service mongod start &
 	wait
+	node "app.js" &
+	cd ../myville-frontend/; grunt serve &
+}
+restart() {
+	sudo killall node
+	sudo killall grunt
+	wait
+	cd myville-backend;
 	node "app.js" &
 	cd ../myville-frontend/; grunt serve &
 }
@@ -21,8 +29,7 @@ case "$1" in
 		stop
 	;;
 	restart)
-		stop
-		start
+		restart
 	;;
 *)
 	echo "Usage: $0 {start|stop|restart}"
