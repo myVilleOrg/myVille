@@ -1,0 +1,17 @@
+<collapse-sidebar id="searchUA" heading-title="Search">
+	<div class="list-ua">
+		<div class="ua-row" ng-if="tabSearch.length < 1">
+			<div>
+				Il n'y a rien pour l'instant 😞
+			</div>
+		</div>
+		<div class="ua-row" ng-repeat="search in tabSearch">
+			<div class="row-title">
+				<a ng-click="centerOnMap(search.geometry.geometries)">{{search.properties._doc.title}}</a>
+			</div>
+			<div class="row-owner">
+				{{search.properties._doc.owner.username}}
+			</div>
+		</div>
+	</div>
+</collapse-sidebar>
