@@ -7,10 +7,10 @@
 		</div>
 		<div class="ua-row" ng-repeat="search in tabSearch">
 			<div class="row-title">
-				<a ng-click="centerOnMap(search.geometry.geometries)">{{search.properties._doc.title}}</a>
+				<a ng-click="centerOnMap(search.geometry.geometries)">{{search.properties.title}}</a>
 			</div>
 			<div class="row-owner">
-				{{search.properties._doc.owner.username}}
+				{{search.properties.owner.username[0]}}
 			</div>
 		</div>
 	</div>
