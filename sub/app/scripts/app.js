@@ -124,6 +124,26 @@ angular
 					}
 				}
 			})
+			.when('/profile/group', {
+				controller: 'CGroupCtrl',
+				controllerAs: 'group',
+				templateUrl: 'views/group.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
+			.when('/profile/create_group', {
+				controller: 'CGroupCtrl',
+				controllerAs: 'group',
+				templateUrl: 'views/create_group.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
 			.when('/ua/:uaId',{
 				controller: 'MainCtrl',
 				controllerAs: 'main',

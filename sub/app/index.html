@@ -62,6 +62,12 @@
 									<span class="text-icon">Favoris</span>
 								</a>
 							</li>
+							<li ng-if="token" id="link-group"><!--@LIUYan-->
+								<a href="/#/profile/group" ng-class="{ active: isActive('/profile/group') }" ng-click="getGroup()">
+									<i class="fa fa-users" aria-hidden="true"></i>
+									<span class="text-icon">Group</span>
+								</a>
+							</li>
 						</ul>
 						<div class="user-sidebar">
 								<a ng-if="!token" ng-click="login()" ng-class="{ active: isActive('/login') }">
@@ -150,6 +156,7 @@
 		<script src="scripts/controllers/editua.js"></script>
 		<script src="scripts/controllers/vote.js"></script>
 		<script src="scripts/controllers/search.js"></script>
+		<script src="scripts/controllers/group.js"></script>
 		<!-- endbuild -->
 
 </body>
