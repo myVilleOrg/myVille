@@ -127,7 +127,6 @@ angular.module('appApp')
 				// filter we gonna use based on filters we select
 				var filterRequest = $scope.filters.mine ? myVilleAPI.UAS.getMine : $scope.filters.popular ? myVilleAPI.UAS.getPopular : $scope.filters.all ? myVilleAPI.UAS.getAll : myVilleAPI.UAS.getFavorites;
 				filterRequest({map: JSON.stringify(mapBounds)}).then(function(geocodes){
-					console.log(geocodes.data);
 					$scope.geoJL(geocodes.data);
 				});
 			} else {
@@ -140,17 +139,11 @@ angular.module('appApp')
 				$scope.res = res;
 				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						$rootScope.searchUAS = geocodes.data;
-						console.log($rootScope.searchUAS);
 						$scope.geoJL(geocodes.data,"search");
-
-
 						$scope.selectFilter(4);
 						$rootScope.$broadcast('updateSearch');
 				});
-
-
 			};
-
 			$scope.geoJL = function (geoC,filter){
 
 				// we remove data on map if there are some
