@@ -71,6 +71,12 @@ angular.module('appApp')
 	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
 		$scope.$broadcast('submitUA');
 	};
+	$scope.submitGroup = function(){//@LIUYan
+		$scope.$broadcast('submitGroup');
+	}
+	$scope.getGroup = function(){//@LIUYan
+		$scope.$broadcast('getGroup');
+	}
 
 	$scope.selectFilter = function(index){ // filter for the map display
 		if(index === 0){
@@ -114,7 +120,6 @@ angular.module('appApp')
 	$scope.$on('filterForce', function(e, idx){ // In a specific case we force filter
 		$scope.selectFilter(idx);
 	});
-
 
 
 	// The function which permits to display items on map
@@ -397,6 +402,11 @@ angular.module('appApp')
 							{
 								element: '#link-favorite',
 								intro: 'Envie de lister vos favoris , il suffit de cliquer ici.',
+								position: 'right'
+							},
+							{
+								element: '#link-group',
+								intro: 'Par là, vous pouvez voir les groupes vous participés et rechercher des groupes.',
 								position: 'right'
 							},
 							{

@@ -77,6 +77,19 @@ angular.module('appApp')
 						return $http.delete(baseUrl + '/ua/vote/' + id);
 					}
 				},
+
+				Group: {//@LIUYan
+					createGroup: function(data){
+						return $http.post(baseUrl + '/group/create', data);
+					},
+					getGroup: function(){
+						return $http.get(baseUrl + '/group/get');
+					},
+					quitGroup: function(id){
+						return $http.delete(baseUrl +  '/group/' + id);
+					}
+				},
+
 				Vote: {
 					getVote: function(uaId){
 						return $http.get(baseUrl + '/vote/'+ uaId);
