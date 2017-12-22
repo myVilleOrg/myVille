@@ -58,9 +58,9 @@ angular.module('appApp')
 					search: function(data) {
 						return $http.post(baseUrl + '/ua/search', data);
 					},
-					tabSearch: function(data) {
-						return $http.post(baseUrl + '/ua/tabSearch', data);
-					},
+					// tabSearch: function(data) {
+					// 	return $http.post(baseUrl + '/ua/tabSearch', data);
+					// },
 					getOne: function(id){
 						return $http.get(baseUrl + '/ua/' + id);
 					},
@@ -90,7 +90,10 @@ angular.module('appApp')
 					},
 					quitGroup: function(id){
 						return $http.delete(baseUrl +  '/group/' + id);
-					}
+					},
+					searchGroup: function(data) {
+						return $http.post(baseUrl + '/group/search', data);
+					},
 				},
 
 				Vote: {

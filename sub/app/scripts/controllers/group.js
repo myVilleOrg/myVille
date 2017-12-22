@@ -12,7 +12,7 @@ angular.module('appApp')
 		var getGroups = function(){
 				myVilleAPI.Group.getGroup().then(function(group){
 					$scope.myGroups=group.data.groupes;
-					console.log($scope.myGroups);
+					//console.log($scope.myGroups);
 				}, function(error){
 					$scope.message = error.data.message;
 					return;
@@ -49,5 +49,20 @@ angular.module('appApp')
 			myVilleAPI.Group.quitGroup(group._id).then(function(){
 				getGroups();
 			});
-		}
+		};
+
+		$scope.searchGroup = function(searchKey){
+			myVilleAPI.Group.searchGroup({search : searchKey}).then(function(group){
+				$scope.groupSearch = group.data;
+			});
+		};
+		$scope.userGroupe = function(users){
+			for (var i=0;i<users.length;i++){
+				console.log("user ", $rootScope.user._id);
+				if($rootScope.user._id === users[i]){
+					return true;
+				}
+			}
+			return false;
+		};
 });
