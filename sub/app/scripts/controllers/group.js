@@ -7,7 +7,7 @@
  * Controller which permits to create a group
  */
 angular.module('appApp')
-	.controller('CGroupCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
+	.controller('CGroupCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog, $sessionStorage) {
 
 		var getGroups = function(){
 				myVilleAPI.Group.getGroup().then(function(group){
@@ -51,9 +51,16 @@ angular.module('appApp')
 			});
 		};
 
-		$scope.searchGroup = function(searchKey){
-			myVilleAPI.Group.searchGroup({search : searchKey}).then(function(group){
+		// Persistance des données
+		$scope.searchKeyG = $sessionStorage.searchKeyG;
+		$scope.groupSearch = $sessionStorage.groupSearch;
+
+		$scope.searchGroup = function(searchKeyG){
+			$scope.searchKeyG = searchKeyG;
+			$sessionStorage.searchKeyG=$scope.searchKeyG;
+			myVilleAPI.Group.searchGroup({search : searchKeyG}).then(function(group){
 				$scope.groupSearch = group.data;
+				$sessionStorage.groupSearch =$scope.groupSearch;
 			});
 		};
 		$scope.userGroupe = function(users){

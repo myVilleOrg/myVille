@@ -7,7 +7,7 @@
  * Controller of map and home
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', '$sessionStorage', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile, $sessionStorage) {
 	$scope.resetPwd = {};
 	$scope.showChosens =[];
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
@@ -138,17 +138,24 @@ angular.module('appApp')
 				$scope.search($scope.res);
 			};
 
-			$scope.res;
+			$scope.searchKey = $sessionStorage.searchKey;
 
-			$scope.search = function (res) {
-				$scope.res = res;
-				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
+			$scope.search = function (searchK) {
+				if(typeof searchK !== 'undefined'){
+					var searchKey = searchK;
+					$sessionStorage.searchKey = searchK;
+				}else {
+					var searchKey = $scope.searchKey;
+				}
+				myVilleAPI.UAS.search({search : searchKey, map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						$rootScope.searchUAS = geocodes.data;
 						$scope.geoJL(geocodes.data,"search");
 						$scope.selectFilter(4);
 						$rootScope.$broadcast('updateSearch');
 				});
 			};
+
+
 			$scope.geoJL = function (geoC,filter){
 
 				// we remove data on map if there are some

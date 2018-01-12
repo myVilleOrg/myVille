@@ -32,8 +32,8 @@
     <div class="tab-pane fade" id="recherche">
       <label>
         <form class="searchForm">
-            <input type="text" ng-model="searchKey"  placeholder="Recherche Groupe" style="width: 70%"/>
-            <button type="button" class="glyphicon glyphicon-search" ng-click="searchGroup(searchKey)" ng-checked="filters.search" style="margin-left: 1%;"></button>
+            <input type="text" ng-model="searchKeyG"  placeholder="Recherche Groupe" style="width: 70%"/>
+            <button type="button" class="glyphicon glyphicon-search" ng-click="searchGroup(searchKeyG)" ng-checked="filters.search" style="margin-left: 1%;"></button>
         </form>
       </label>
       <div class="ua-row" ng-repeat="group in groupSearch">

@@ -6,10 +6,13 @@
  * Controller of search page
  */
 angular.module('appApp')
-  .controller('SearchCtrl', function ($rootScope, $scope, myVilleAPI) {
+  .controller('SearchCtrl', function ($rootScope, $scope, myVilleAPI, $sessionStorage) {
   $scope.$emit('filterForce', 4);
+  $scope.tabSearch = $sessionStorage.tabSearch;
   var getSearchUA = function(){
+    // console.log($rootScope.searchUAS.features);
 		$scope.tabSearch = $rootScope.searchUAS.features;
+    $sessionStorage.tabSearch = $scope.tabSearch;
 	};
 
 	$scope.$on('updateSearch', function(){

@@ -19,7 +19,8 @@ angular
 		'ngDialog',
 		'ngHello',
 		'ui.tinymce',
-		'angular-intro'
+		'angular-intro',
+		'ngStorage'
 	])
 	.config(function(helloProvider) {
 		// Setting for Hello to manage login with social network
