@@ -1,12 +1,12 @@
 <collapse-sidebar id="myGroup" heading-title="Liste des groupes">
   <ul id="Group" class="nav nav-pills nav-justified">
-	   <li class="active">
-       <a href="/#/profile/group/#mygroups" data-toggle="tab">Mes Groupes</a>
+	   <li ng-class="activeTab('mygroups','head')">
+       <a href="/#/profile/group/#mygroups" ng-click="changeTab('mygroups')" data-toggle="tab">Mes Groupes</a>
 	   </li>
-	   <li><a href="/profile/group/#recherche" data-toggle="tab">Recherche</a></li>
+	   <li  ng-class="activeTab('recherche','head')"><a href="/profile/group/#recherche" ng-click="changeTab('recherche')" data-toggle="tab">Recherche</a></li>
   </ul>
   <div id="groupContent" class="tab-content">
-    <div class="tab-pane fade in active" id="mygroups">
+    <div ng-class="activeTab('mygroups','body')" id="mygroups">
       <div class="list-ua">
         <div class="ua-row">
           <a href="/#/profile/create_group" ng-class="{ active: isActive('/profile/create_group') }"  style="display:inline-block">
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="recherche">
+    <div ng-class="activeTab('recherche','body')" id="recherche">
       <label>
         <form class="searchForm">
             <input type="text" ng-model="searchKeyG"  placeholder="Recherche Groupe" style="width: 70%"/>

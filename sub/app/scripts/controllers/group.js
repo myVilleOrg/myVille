@@ -54,6 +54,7 @@ angular.module('appApp')
 		// Persistance des données
 		$scope.searchKeyG = $sessionStorage.searchKeyG;
 		$scope.groupSearch = $sessionStorage.groupSearch;
+		$scope.activeT = $sessionStorage.activeT;
 
 		$scope.searchGroup = function(searchKeyG){
 			$scope.searchKeyG = searchKeyG;
@@ -63,6 +64,25 @@ angular.module('appApp')
 				$sessionStorage.groupSearch =$scope.groupSearch;
 			});
 		};
+
+		$scope.changeTab = function(id){
+			$scope.activeT = id;
+			$sessionStorage.activeT = $scope.activeT;
+		}
+		$scope.activeTab = function(id,c){
+			if (typeof $scope.activeT !== 'undefined'){
+				var currentRoute =  $scope.activeT;
+			}else{
+				var currentRoute = 'mygroups';
+			}
+			if (c === 'head'){
+				return id === currentRoute ? 'active' : '';
+			}else{
+				return id === currentRoute ? 'tab-pane fade in active' : 'tab-pane fade';
+			}
+
+		};
+
 		$scope.userGroupe = function(users){
 			for (var i=0;i<users.length;i++){
 				console.log("user ", $rootScope.user._id);

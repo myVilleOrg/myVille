@@ -7,16 +7,24 @@
  * Controller which permits to create a ua
  */
 angular.module('appApp')
-	.controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog) {
+	.controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog, $sessionStorage) {
 
 
 	// Boolean to set the display mode
 	$scope.full_page=false;
 
 	$scope.$emit('editMode'); // Prevents to switch another page
-
-
-	$scope.ua = {};
+	if (typeof $scope.ua === 'undefined'){
+		$scope.ua = {};
+	}
+	$scope.ua.title = $sessionStorage.ua.title;
+	$scope.ua.desc = $sessionStorage.ua.desc;
+	console.log($scope.ua);
+	console.log($sessionStorage.ua);
+	$scope.$watch('[ua.title,ua.desc]', function(){
+		$sessionStorage.ua.title = $scope.ua.title;
+		$sessionStorage.ua.desc = $scope.ua.desc;
+	});
 	$scope.tinymceOptions = {
 		inline: false,
 		plugins : 'advlist autolink link image lists charmap preview textcolor',
@@ -73,6 +81,7 @@ angular.module('appApp')
 			$scope.ua.title = null;
 			$scope.ua.desc = null;
 			$scope.ua.drawing = null;
+			$sessionStorage.ua = $scope.ua;
 		}, function(error){
 			$scope.message = error.data.message;
 			return;
