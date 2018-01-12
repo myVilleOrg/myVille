@@ -80,7 +80,7 @@ angular.module('appApp')
 				Vote: {
 					getVote: function(uaId){
 						return $http.get(baseUrl + '/vote/'+ uaId);
-					}
+					},
 				}
 			};
 			return dataFactory;

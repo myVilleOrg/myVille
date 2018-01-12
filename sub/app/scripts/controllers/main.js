@@ -389,7 +389,7 @@ angular.module('appApp')
 								intro: 'Ici, vous pouvez créer votre aménagement.',
 								position: 'right'
 							},
-							{
+							{app.delete('/ua/vote/:id
 								element: '#link-mine',
 								intro: 'Par là, vous pouvez voir vos créations.',
 								position: 'right'
@@ -399,7 +399,7 @@ angular.module('appApp')
 								intro: 'Envie de lister vos favoris , il suffit de cliquer ici.',
 								position: 'right'
 							},
-							{
+							{app.delete('/ua/vote/:id
 								intro: 'Il suffit de cliquer sur un marqueur ou une forme pour voir les détails de cet aménagement.',
 								position: 'right'
 							}
