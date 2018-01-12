@@ -29,7 +29,8 @@ angular.module('appApp')
   	var data = {
   		username: $scope.editUser.username,
   		password: $scope.editUser.Npassword,
-  		oldPassword: $scope.editUser.Opassword
+  		oldPassword: $scope.editUser.Opassword,
+			passwordVarify:  $scope.editUser.VNpassword
   	};
   	myVilleAPI.User.update(data).then(function(user){
   		$rootScope.user.username = $scope.editUser.username;

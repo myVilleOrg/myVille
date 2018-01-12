@@ -71,6 +71,12 @@ angular.module('appApp')
 	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
 		$scope.$broadcast('submitUA');
 	};
+	$scope.submitGroup = function(){//@LIUYan
+		$scope.$broadcast('submitGroup');
+	}
+	$scope.getGroup = function(){//@LIUYan
+		$scope.$broadcast('getGroup');
+	}
 
 	$scope.selectFilter = function(index){ // filter for the map display
 		if(index === 0){
@@ -107,14 +113,13 @@ angular.module('appApp')
 			$window.location.href = '#/profile/favorite';
 		}
 		if(newv.search){
-			$window.location.href = '#/';
+			$window.location.href = '#/search';
 		}
 	}, true);
 
 	$scope.$on('filterForce', function(e, idx){ // In a specific case we force filter
 		$scope.selectFilter(idx);
 	});
-
 
 
 	// The function which permits to display items on map
@@ -137,13 +142,14 @@ angular.module('appApp')
 
 			$scope.search = function (res) {
 				$scope.res = res;
-				$scope.selectFilter(4);
 				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
-					$scope.geoJL(geocodes.data);
+						$rootScope.searchUAS = geocodes.data;
+						$scope.geoJL(geocodes.data,"search");
+						$scope.selectFilter(4);
+						$rootScope.$broadcast('updateSearch');
 				});
 			};
-
-			$scope.geoJL = function (geoC){
+			$scope.geoJL = function (geoC,filter){
 
 				// we remove data on map if there are some
 				$rootScope.cachedMarkers = geoC;
@@ -153,23 +159,31 @@ angular.module('appApp')
 				catch (e){
 				}
 
+				var filter = filter;
+
 				geoJsonLayer = L.geoJson(geoC, {
 					onEachFeature: function (feature, layer) {
+						var geoLFeature;
+						if (filter === "search"){
+								geoLFeature = feature.properties;
+						}else {
+								geoLFeature = feature.properties._doc;
+						}
 						//for each items we attach a popup
 						var starClass = 'fa fa-star-o';
-						if($rootScope.user && $rootScope.user.favoris.indexOf(feature.properties._doc._id) !== -1){
+						if($rootScope.user && $rootScope.user.favoris.indexOf(geoLFeature._id) !== -1){
 							starClass = 'fa fa-star';
 						}
-						var testFavoriHtml = $rootScope.user ? '<i id="'+ feature.properties._doc._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ feature.properties._doc._id +'\')" aria-hidden="true"></i>' : ''
+						var testFavoriHtml = $rootScope.user ? '<i id="'+ geoLFeature._id +'" class="'+ starClass +'" ng-click="editFavori(\''+ geoLFeature._id +'\')" aria-hidden="true"></i>' : ''
 						var htmlPopup = '<div class="popup-map">' +
 															'<div class="heading-popup">' +
-																'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ feature.properties._doc._id +'\')">' +
-																feature.properties._doc.title +
+																'<a href="javascript:void(0)" ng-click="getPopupDescriptionUA(\''+ geoLFeature._id +'\')">' +
+																geoLFeature.title +
 																'</a>' +
 															testFavoriHtml +
 															'</div>' +
 															'<div class="owner-popup">' +
-															'Crée par <a href="#/user/' + feature.properties._doc.owner._id + '">' + feature.properties._doc.owner.username + '</a> ' + moment(new Date(feature.properties._doc.createdAt)).locale('fr').fromNow() +
+															'Crée par <a href="#/user/' + geoLFeature.owner._id + '">' + geoLFeature.owner.username + '</a> ' + moment(new Date(geoLFeature.createdAt)).locale('fr').fromNow() +
 															'</div>' +
 														'</div>';
 						var link = $compile(htmlPopup); // display html stored in descriptiond
@@ -179,7 +193,6 @@ angular.module('appApp')
 				});
 				geoJsonLayer.addTo(map); // we need our layer in the map
 			};
-
 		});
 	};
 
@@ -389,7 +402,7 @@ angular.module('appApp')
 								intro: 'Ici, vous pouvez créer votre aménagement.',
 								position: 'right'
 							},
-							{app.delete('/ua/vote/:id
+							{app.delete('/ua/vote/:id'
 								element: '#link-mine',
 								intro: 'Par là, vous pouvez voir vos créations.',
 								position: 'right'
@@ -399,7 +412,12 @@ angular.module('appApp')
 								intro: 'Envie de lister vos favoris , il suffit de cliquer ici.',
 								position: 'right'
 							},
-							{app.delete('/ua/vote/:id
+							{
+								element: '#link-group',
+								intro: 'Par là, vous pouvez voir les groupes vous participés et rechercher des groupes.',
+								position: 'right'
+							},
+							{
 								intro: 'Il suffit de cliquer sur un marqueur ou une forme pour voir les détails de cet aménagement.',
 								position: 'right'
 							}

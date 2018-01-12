@@ -12,6 +12,7 @@
 		<div class="vote-counter display-desktop" ng-if="token">
 		{{voteCount}} {{voteCount > 1 ? 'réactions' : 'réaction'}}, et vous ?
 		</div>
+
 		<div ng-if="token" class='voteList display-desktop'>
 			<div class="vote-column" ng-repeat ="x in vote">
 				<div class="vote-column-heading" ng-class = "x.isVote ? 'voted' : 'no-voted'" ng-model="button" ng-click="doVote($index)" ng-bind-html="twemoji.parse(x.smiley)">

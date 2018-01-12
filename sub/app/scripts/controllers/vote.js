@@ -41,13 +41,19 @@ angular.module('appApp')
 		myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function(vote){
 			if(vote){
 				$scope.vote[vote.data.vote[0]].isVote = true;
+				//***TEMPORARY CHANGE QU'IL FAUT ÊTRE SUPPRIMÉ APRES~~~~~~~~~~~~~~~~~~~~~~~
+				console.log("---------------------------------");
+				console.log($scope.ngDialogData.vote);
+				console.log("---------------------------------");
+				//***
 			}
-		})
+		});
 	}
+
 	$scope.voteCount = $scope.ngDialogData.vote.length;
 	console.log("button",$scope.button); //console log TEMP (affiche résultat envoyer par boutton)
 
-	// call for a vote
+	// call for a vote-----
 	$scope.doVote = function(id){
 		if(!$scope.vote[id].isVote){ // Not voted we add a vote
 			myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
@@ -76,4 +82,17 @@ angular.module('appApp')
 		}
 		var myJSON = JSON.stringify(vote);
 	};
+
+	//count the vote number of each
+	/*$scope.countVoteNb = function(){
+		myVilleAPI.Vote.countVote($scope.ngDialogData._id).then(function(message){
+			if(message){
+				//***TEMPORARY CHANGE QU'IL FAUT ÊTRE SUPPRIMÉ APRES~~~~~~~~~~~~~~~~~~~~~~~
+				console.log("---------------------------------");
+				console.log(message);
+				console.log("---------------------------------");
+				//***
+			}
+		});
+	};*/
 });
