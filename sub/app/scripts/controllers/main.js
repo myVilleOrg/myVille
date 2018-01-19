@@ -67,6 +67,7 @@ angular.module('appApp')
 			{name: 'Mes favoris', functionChosen: 3}
 		];
 	};
+	$scope.optionChosen = $scope.showChosens[0];
 
 	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
 		$scope.$broadcast('submitUA');
@@ -81,18 +82,23 @@ angular.module('appApp')
 	$scope.selectFilter = function(index){ // filter for the map display
 		if(index === 0){
 			$scope.filters = {all: true, popular: false, mine: false, favorite: false, search: false};
+			$scope.optionChosen = $scope.showChosens[0];
 		}
 		if(index === 1){
 			$scope.filters = {all: false, popular: true, mine: false, favorite: false, search: false};
+			$scope.optionChosen = $scope.showChosens[1];
 		}
 		if(index === 2 && localStorageService.get('token') ){
 			$scope.filters = {all: false, popular: false, mine: true, favorite: false, search: false};
+			$scope.optionChosen = $scope.showChosens[2];
 		}
 		if(index === 3 && localStorageService.get('token') ) {
 			$scope.filters = {all: false, popular: false, mine: false, favorite: true, search: false};
+			$scope.optionChosen = $scope.showChosens[3];
 		}
 		if(index === 4) {
 			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: true};
+			$scope.optionChosen = $scope.showChosens[4];
 		}
 	};
 

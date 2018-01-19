@@ -17,13 +17,11 @@ angular.module('appApp')
 	if (typeof $scope.ua === 'undefined'){
 		$scope.ua = {};
 	}
-	$scope.ua.title = $sessionStorage.ua.title;
-	$scope.ua.desc = $sessionStorage.ua.desc;
+	$scope.ua = $sessionStorage.ua;
 	console.log($scope.ua);
 	console.log($sessionStorage.ua);
 	$scope.$watch('[ua.title,ua.desc]', function(){
-		$sessionStorage.ua.title = $scope.ua.title;
-		$sessionStorage.ua.desc = $scope.ua.desc;
+		$sessionStorage.ua = $scope.ua;
 	});
 	$scope.tinymceOptions = {
 		inline: false,
