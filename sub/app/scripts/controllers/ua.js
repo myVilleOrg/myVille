@@ -9,20 +9,19 @@
 angular.module('appApp')
 	.controller('UACtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog, $sessionStorage) {
 
-
 	// Boolean to set the display mode
 	$scope.full_page=false;
-
 	$scope.$emit('editMode'); // Prevents to switch another page
-	if (typeof $scope.ua === 'undefined'){
-		$scope.ua = {};
+
+	if (typeof $scope.ngDialogData === 'undefined'){
+		if (typeof $sessionStorage.ngDialogData === 'undefined'){
+			$scope.ngDialogData = {private:true};
+		} else {
+			$scope.ngDialogData = $sessionStorage.ngDialogData;
+			$scope.ngDialogData.drawing = null;
+		}
 	}
-	$scope.ua = $sessionStorage.ua;
-	console.log($scope.ua);
-	console.log($sessionStorage.ua);
-	$scope.$watch('[ua.title,ua.desc]', function(){
-		$sessionStorage.ua = $scope.ua;
-	});
+
 	$scope.tinymceOptions = {
 		inline: false,
 		plugins : 'advlist autolink link image lists charmap preview textcolor',
@@ -41,7 +40,7 @@ angular.module('appApp')
 	});
 
 	$scope.$on('drawingData', function(event, drawing){ // when we finish to draw on the map, we retrieve geojson from drawing
-		$scope.ua.drawing = drawing;
+		$scope.ngDialogData.drawing = drawing;
 	});
 
 	$scope.$on('submitUA', function(e, d){
@@ -58,28 +57,27 @@ angular.module('appApp')
 			angular.element(document.getElementsByClassName('side-sidebar')[0])[0].style.display = 'flex';
 		}
 
-		if(!$scope.ua.desc || !$scope.ua.title){
+		if(!$scope.ngDialogData.desc || !$scope.ngDialogData.title){
 			$scope.message = 'Un ou des champs sont manquants.';
 			return;
 		}
 
-		if(!$scope.ua.drawing || $scope.ua.drawing.features.length === 0){
+		if(!$scope.ngDialogData.drawing || $scope.ngDialogData.drawing.features.length === 0){
 			$scope.message = 'Vous devez dessiner sur la carte !'
 			return;
 		}
 
 		var data = {
-			title: $scope.ua.title,
-			description: $scope.ua.desc,
-			geojson: JSON.stringify($scope.ua.drawing)
+			title: $scope.ngDialogData.title,
+			description: $scope.ngDialogData.desc,
+			geojson: JSON.stringify($scope.ngDialogData.drawing),
+			private: $scope.ngDialogData.private
 		};
-
+		console.log("data" + data);
 		myVilleAPI.UAS.create(data).then(function(user){
 			ngDialog.open({controller: 'UACtrl', template: 'views/modalUaCreated.html', appendClassName: 'popup-auto-height'});
-			$scope.ua.title = null;
-			$scope.ua.desc = null;
-			$scope.ua.drawing = null;
-			$sessionStorage.ua = $scope.ua;
+			$scope.ngDialogData = {private: true};
+			$sessionStorage.ngDialogData = $scope.ngDialogData;
 		}, function(error){
 			$scope.message = error.data.message;
 			return;
