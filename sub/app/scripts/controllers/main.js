@@ -402,7 +402,7 @@ angular.module('appApp')
 								intro: 'Ici, vous pouvez créer votre aménagement.',
 								position: 'right'
 							},
-							{app.delete('/ua/vote/:id'
+							{
 								element: '#link-mine',
 								intro: 'Par là, vous pouvez voir vos créations.',
 								position: 'right'

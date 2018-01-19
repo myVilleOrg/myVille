@@ -58,7 +58,7 @@ angular.module('appApp')
 		if(!$scope.vote[id].isVote){ // Not voted we add a vote
 			myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
 				var alreadyVoted = false;
-				for(var i = 0; i < $sc ope.vote.length; i++){
+				for(var i = 0; i < $scope.vote.length; i++){
 					if($scope.vote[i].isVote) {
 						alreadyVoted = true;
 					}
