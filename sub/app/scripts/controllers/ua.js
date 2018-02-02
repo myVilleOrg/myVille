@@ -21,7 +21,10 @@ angular.module('appApp')
 			$scope.ngDialogData.drawing = null;
 		}
 	}
-
+	$scope.$watch('[ngDialogData]', function(){
+			$sessionStorage.ngDialogData = $scope.ngDialogData;
+	});
+	console.log($scope.ngDialogData);
 	$scope.tinymceOptions = {
 		inline: false,
 		plugins : 'advlist autolink link image lists charmap preview textcolor',
