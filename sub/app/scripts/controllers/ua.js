@@ -24,7 +24,6 @@ angular.module('appApp')
 	$scope.$watch('[ngDialogData]', function(){
 			$sessionStorage.ngDialogData = $scope.ngDialogData;
 	});
-	console.log($scope.ngDialogData);
 	$scope.tinymceOptions = {
 		inline: false,
 		plugins : 'advlist autolink link image lists charmap preview textcolor',
@@ -76,7 +75,6 @@ angular.module('appApp')
 			geojson: JSON.stringify($scope.ngDialogData.drawing),
 			private: $scope.ngDialogData.private
 		};
-		console.log("data" + data);
 		myVilleAPI.UAS.create(data).then(function(user){
 			ngDialog.open({controller: 'UACtrl', template: 'views/modalUaCreated.html', appendClassName: 'popup-auto-height'});
 			$scope.ngDialogData = {private: true};
