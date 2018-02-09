@@ -92,8 +92,9 @@
 				  <ul class="filter-list">
 						<label>
 							<form class="searchForm">
-									<input type="text" ng-model="searchKey"  placeholder="Recherche Projet" style="width: 70%"/>
-									<button type="button" class="glyphicon glyphicon-search" ng-click="search(searchKey)" ng-checked="filters.search" style="margin-left: 1%;"></button>
+								<select ng-model="searchOption" ng-options="x for x in searchOptions" ng-init="searchOption" ng-change="filterSearchChosen(searchOption)"></select>
+								<input type="text" ng-model="searchKey" ng-change="search(searchKey)"  placeholder="Recherche Projet" style="width:120px"/>
+								<!-- <button type="button" class="glyphicon glyphicon-search" ng-click="search(searchKey)" ng-checked="filters.search" style="margin-left: 1%;"></button> -->
 							</form>
 						</label>
 				      <label>

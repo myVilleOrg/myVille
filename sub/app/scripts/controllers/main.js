@@ -153,7 +153,9 @@ angular.module('appApp')
 				}else {
 					var searchKey = $scope.searchKey;
 				}
-				myVilleAPI.UAS.search({search : searchKey, map: JSON.stringify(mapBounds)}).then(function(geocodes){
+				var searchOption = $scope.searchOption;
+				
+				myVilleAPI.UAS.search({search : searchKey, searchOption : searchOption, map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						$rootScope.searchUAS = geocodes.data;
 						$scope.geoJL(geocodes.data,"search");
 						$scope.selectFilter(4);
@@ -161,7 +163,16 @@ angular.module('appApp')
 				});
 			};
 
+			$scope.searchOptions = ["Nom Projet","Créateur(s)"];
+			if (typeof $sessionStorage.searchOption !== 'undefined'){
+				$scope.searchOption = $sessionStorage.searchOption;
+			}else{
+				$scope.searchOption = $scope.searchOptions[0];
+			}
+			$scope.filterSearchChosen =function(searchOption){
 
+				$sessionStorage.searchOption = searchOption;
+			};
 			$scope.geoJL = function (geoC,filter){
 
 				// we remove data on map if there are some

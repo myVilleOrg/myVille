@@ -10,7 +10,7 @@ angular.module('appApp')
   $scope.$emit('filterForce', 4);
   $scope.tabSearch = $sessionStorage.tabSearch;
   var getSearchUA = function(){
-    // console.log($rootScope.searchUAS.features);
+    //console.log($rootScope.searchUAS);
 		$scope.tabSearch = $rootScope.searchUAS.features;
     $sessionStorage.tabSearch = $scope.tabSearch;
 	};
