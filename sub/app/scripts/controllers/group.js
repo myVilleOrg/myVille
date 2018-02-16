@@ -55,8 +55,9 @@ angular.module('appApp')
 		$scope.searchKeyG = $sessionStorage.searchKeyG;
 		$scope.groupSearch = $sessionStorage.groupSearch;
 		$scope.activeT = $sessionStorage.activeT;
-
-		$scope.activeT=$location.url().substring(15);
+		if($location.url().substring(15) !==''){
+			$scope.activeT=$location.url().substring(15);
+		}
 
 		$scope.searchGroup = function(searchKeyG){
 			$scope.searchKeyG = searchKeyG;
@@ -72,7 +73,7 @@ angular.module('appApp')
 			$sessionStorage.activeT = $scope.activeT;
 		}
 		$scope.activeTab = function(id,c){
-			if (typeof $scope.activeT == 'undefined' || $scope.activeT == ''){
+			if (typeof $scope.activeT === 'undefined' || $scope.activeT === ''){
 				var currentRoute = 'mygroups';
 			}else{
 				var currentRoute =  $scope.activeT;

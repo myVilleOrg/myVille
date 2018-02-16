@@ -44,7 +44,8 @@ angular.module('appApp')
   			$scope.message = err.data.message;
   	});
 		$scope.editUser.Opassword='';
-		$scope.editUser.Npassword='';
+		$scope.editUser.Npassword1='';
+		$scope.editUser.Npassword2='';
   };
 
   $scope.editAvatarClick = function(element){ // click on avatar
