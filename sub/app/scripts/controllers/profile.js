@@ -21,16 +21,20 @@ angular.module('appApp')
   		$scope.message = 'Le champ pseudonyme ne peut pas être vide.';
   		return;
   	}
-  	if(!$scope.editUser.Opassword && $scope.editUser.Npassword) {
+  	if(!$scope.editUser.Opassword && $scope.editUser.Npassword1 && $scope.editUser.Npassword2) {
   		$scope.message = 'Nous avons besoin de votre ancien mot de passe.';
   		return;
   	}
+		if($scope.editUser.Npassword1 !== $scope.editUser.Npassword2){
+			$scope.message = 'Vérifiaction mot de passe non valide.';
+  		return;
+		}
 
   	var data = {
   		username: $scope.editUser.username,
-  		password: $scope.editUser.Npassword,
+  		password: $scope.editUser.Npassword1,
   		oldPassword: $scope.editUser.Opassword,
-			passwordVarify:  $scope.editUser.VNpassword
+			passwordVarify:  $scope.editUser.Npassword2
   	};
   	myVilleAPI.User.update(data).then(function(user){
   		$rootScope.user.username = $scope.editUser.username;

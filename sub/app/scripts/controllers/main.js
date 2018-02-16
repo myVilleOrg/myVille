@@ -154,7 +154,7 @@ angular.module('appApp')
 					var searchKey = $scope.searchKey;
 				}
 				var searchOption = $scope.searchOption;
-				
+
 				myVilleAPI.UAS.search({search : searchKey, searchOption : searchOption, map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						$rootScope.searchUAS = geocodes.data;
 						$scope.geoJL(geocodes.data,"search");
@@ -254,24 +254,16 @@ angular.module('appApp')
 
 	$scope.$on('$locationChangeStart', function (event, next, current) { // force filter on url
 		if(next === 'http://localhost:9000/#/profile/mine' && current !== next){
-			$scope.filters.mine = true;
-			$scope.filters.popular = false;
-			$scope.filters.favorite = false;
-			$scope.filters.all = false;
-			$scope.filters.search = false
+			$scope.selectFilter(2);
 		}
 		if(next === 'http://localhost:9000/#/profile/favorite' && current !== next){
-			$scope.filters.mine = false;
-			$scope.filters.popular = false;
-			$scope.filters.favorite = true;
-			$scope.filters.all = false;
-			$scope.filters.search = false
+			$scope.selectFilter(3);
 		}
 		$scope.$emit('normalMode')
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
-			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: false};
+			$scope.filters = {all: true, popular: false, mine: false, favorite: false, search: false};
 		}
 	});
 
