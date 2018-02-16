@@ -19,8 +19,10 @@ angular.module('appApp')
 				login: function(token, user){
 					$rootScope.token = token;
 					$rootScope.user = user;
+					$rootScope.ajoutDeGroup = false;
 					localStorageService.set('expiryToken', Date.now() + 24*60*60*1000);
 					localStorageService.set('token', token);
+					localStorageService.set('ajoutDeGroup', false);
 					localStorageService.set('user', user);
 					$rootScope.$broadcast('firstLoginTutorial');
 					$rootScope.$broadcast('leafletDirectiveMap.map.dragend'); // update map

@@ -6,16 +6,19 @@
 			</div>
 		</div>
 		<div class="ua-row" ng-if="cachedMarkers && feature.properties._doc.owner.username == user.username" ng-repeat="feature in cachedMarkers.features">
+			<div ng-if="ajoutDeGroup" class="row-edit" ng-click="ajoutCetteProjet(feature.properties._doc)">
+				<i class="fa fa-plus" aria-hidden="true"></i>
+			</div>
 			<div class="row-title">
 				<a ng-click="centerOnMap(feature.geometry.geometries)">{{feature.properties._doc.title}}</a>
 			</div>
 			<div class="row-date">
 				{{feature.properties._doc.createdAt | formatDate}}
 			</div>
-			<div class="row-edit" ng-click="editUA(feature.properties._doc)">
+			<div ng-if="!ajoutDeGroup" class="row-edit" ng-click="editUA(feature.properties._doc)">
 				<i title="Editer" class="fa fa-edit"></i>
 			</div>
-			<div class="row-edit" ng-click="deleteUA(feature.properties._doc)">
+			<div ng-if="!ajoutDeGroup" class="row-edit" ng-click="deleteUA(feature.properties._doc)">
 				<i title="Supprimer" class="fa fa-close"></i>
 			</div>
 		</div>

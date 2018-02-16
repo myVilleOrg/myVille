@@ -145,6 +145,16 @@ angular
 					}
 				}
 			})
+			.when('/profile/edit_group', {
+				controller: 'CGroupCtrl',
+				controllerAs: 'group',
+				templateUrl: 'views/edit_group.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
 			.when('/ua/:uaId',{
 				controller: 'MainCtrl',
 				controllerAs: 'main',
