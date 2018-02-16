@@ -10,6 +10,8 @@ angular.module('appApp')
 .controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile) {
 	$scope.resetPwd = {};
 	$scope.showChosens =[];
+	$rootScope.ajoutDeGroup = false;
+	localStorageService.set('ajoutDeGroup',false);
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
@@ -73,10 +75,10 @@ angular.module('appApp')
 	};
 	$scope.submitGroup = function(){//@LIUYan
 		$scope.$broadcast('submitGroup');
-	}
+	};
 	$scope.getGroup = function(){//@LIUYan
 		$scope.$broadcast('getGroup');
-	}
+	};
 
 	$scope.selectFilter = function(index){ // filter for the map display
 		if(index === 0){
