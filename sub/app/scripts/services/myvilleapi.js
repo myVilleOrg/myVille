@@ -96,6 +96,12 @@ angular.module('appApp')
 					},
 				},
 
+				Criteria:{//@NGUYEN Phong Vu
+					get_criteria: function(){
+						return $http.get(baseUrl + '/criteria/get');
+					},
+				},
+
 				Vote: {
 					getVote: function(uaId){
 						return $http.get(baseUrl + '/vote/'+ uaId);
