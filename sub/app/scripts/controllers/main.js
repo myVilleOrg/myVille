@@ -7,9 +7,11 @@
  * Controller of map and home
  */
 angular.module('appApp')
-.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile) {
+.controller('MainCtrl', ['$scope', '$location', 'localStorageService', '$timeout', '$window', '$rootScope', 'ngDialog', 'myVilleAPI', 'leafletData', 'AuthentificationService', '$routeParams', '$compile', '$sessionStorage', function ($scope, $location, localStorageService, $timeout, $window, $rootScope, ngDialog, myVilleAPI, leafletData, AuthentificationService, $routeParams, $compile, $sessionStorage) {
 	$scope.resetPwd = {};
 	$scope.showChosens =[];
+	$rootScope.ajoutDeGroup = false;
+	localStorageService.set('ajoutDeGroup',false);
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
@@ -67,32 +69,38 @@ angular.module('appApp')
 			{name: 'Mes favoris', functionChosen: 3}
 		];
 	};
+	$scope.optionChosen = $scope.showChosens[0];
 
 	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
 		$scope.$broadcast('submitUA');
 	};
 	$scope.submitGroup = function(){//@LIUYan
 		$scope.$broadcast('submitGroup');
-	}
+	};
 	$scope.getGroup = function(){//@LIUYan
 		$scope.$broadcast('getGroup');
-	}
+	};
 
 	$scope.selectFilter = function(index){ // filter for the map display
 		if(index === 0){
 			$scope.filters = {all: true, popular: false, mine: false, favorite: false, search: false};
+			$scope.optionChosen = $scope.showChosens[0];
 		}
 		if(index === 1){
 			$scope.filters = {all: false, popular: true, mine: false, favorite: false, search: false};
+			$scope.optionChosen = $scope.showChosens[1];
 		}
 		if(index === 2 && localStorageService.get('token') ){
 			$scope.filters = {all: false, popular: false, mine: true, favorite: false, search: false};
+			$scope.optionChosen = $scope.showChosens[2];
 		}
 		if(index === 3 && localStorageService.get('token') ) {
 			$scope.filters = {all: false, popular: false, mine: false, favorite: true, search: false};
+			$scope.optionChosen = $scope.showChosens[3];
 		}
 		if(index === 4) {
 			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: true};
+			$scope.optionChosen = $scope.showChosens[4];
 		}
 	};
 
@@ -138,16 +146,34 @@ angular.module('appApp')
 				$scope.search($scope.res);
 			};
 
-			$scope.res;
+			$scope.searchKey = $sessionStorage.searchKey;
 
-			$scope.search = function (res) {
-				$scope.res = res;
-				myVilleAPI.UAS.search({search : res, map: JSON.stringify(mapBounds)}).then(function(geocodes){
+			$scope.search = function (searchK) {
+				if(typeof searchK !== 'undefined'){
+					var searchKey = searchK;
+					$sessionStorage.searchKey = searchK;
+				}else {
+					var searchKey = $scope.searchKey;
+				}
+				var searchOption = $scope.searchOption;
+
+				myVilleAPI.UAS.search({search : searchKey, searchOption : searchOption, map: JSON.stringify(mapBounds)}).then(function(geocodes){
 						$rootScope.searchUAS = geocodes.data;
 						$scope.geoJL(geocodes.data,"search");
 						$scope.selectFilter(4);
 						$rootScope.$broadcast('updateSearch');
 				});
+			};
+
+			$scope.searchOptions = ["Nom Projet","Créateur(s)"];
+			if (typeof $sessionStorage.searchOption !== 'undefined'){
+				$scope.searchOption = $sessionStorage.searchOption;
+			}else{
+				$scope.searchOption = $scope.searchOptions[0];
+			}
+			$scope.filterSearchChosen =function(searchOption){
+
+				$sessionStorage.searchOption = searchOption;
 			};
 			$scope.geoJL = function (geoC,filter){
 
@@ -230,24 +256,16 @@ angular.module('appApp')
 
 	$scope.$on('$locationChangeStart', function (event, next, current) { // force filter on url
 		if(next === 'http://localhost:9000/#/profile/mine' && current !== next){
-			$scope.filters.mine = true;
-			$scope.filters.popular = false;
-			$scope.filters.favorite = false;
-			$scope.filters.all = false;
-			$scope.filters.search = false
+			$scope.selectFilter(2);
 		}
 		if(next === 'http://localhost:9000/#/profile/favorite' && current !== next){
-			$scope.filters.mine = false;
-			$scope.filters.popular = false;
-			$scope.filters.favorite = true;
-			$scope.filters.all = false;
-			$scope.filters.search = false
+			$scope.selectFilter(3);
 		}
 		$scope.$emit('normalMode')
 	});
 	$scope.$on('filtersReset', function(evt, data){
 		if(data){
-			$scope.filters = {all: false, popular: false, mine: false, favorite: false, search: false};
+			$scope.filters = {all: true, popular: false, mine: false, favorite: false, search: false};
 		}
 	});
 

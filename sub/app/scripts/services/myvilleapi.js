@@ -81,7 +81,7 @@ angular.module('appApp')
 					}
 				},
 
-				Group: {//@LIUYan
+				Group: {
 					createGroup: function(data){
 						return $http.post(baseUrl + '/group/create', data);
 					},
@@ -94,6 +94,15 @@ angular.module('appApp')
 					searchGroup: function(data) {
 						return $http.post(baseUrl + '/group/search', data);
 					},
+					groupInfo: function(data) {
+						return $http.post(baseUrl + '/group/info', data);
+					},
+					addProjet: function(id,data) {
+						return $http.post(baseUrl + '/group/addProjet' + id, data);
+					},
+					getInGroup: function(id){
+						return $http.post(baseUrl +  '/group/getIn' + id);
+					}
 				},
 
 				Criteria:{//@NGUYEN Phong Vu
