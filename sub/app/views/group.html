@@ -1,53 +1,51 @@
 <collapse-sidebar id="myGroup" heading-title="Liste des groupes">
-  <ul id="Group" class="nav nav-pills nav-justified">
+  <div id="Group" class="nav nav-pills nav-justified">
 	   <li ng-class="activeTab('mygroups','head')">
        <a href="/#/profile/group/#mygroups" ng-click="changeTab('mygroups')" data-toggle="tab">Mes Groupes</a>
 	   </li>
 	   <li  ng-class="activeTab('recherche','head')"><a href="/#/profile/group/#recherche" ng-click="changeTab('recherche')" data-toggle="tab">Recherche</a></li>
-  </ul>
-  <div id="groupContent" class="tab-content">
+  </div>
+  <div class="tab-content">
     <div ng-class="activeTab('mygroups','body')" id="mygroups">
       <div class="list-ua">
         <div class="ua-row">
-          <a href="/#/profile/create_group" ng-class="{ active: isActive('/profile/create_group') }"  style="display:inline-block">
-          <i class="fa fa-plus-square" aria-hidden="true"></i>
-          <p  style="display:inline-block">
+          <a href="/#/profile/create_group" ng-class="{ active: isActive('/profile/create_group') }" class="fa fa-plus-square">
               Créer un groupe
-          </p>
           </a>
         </div>
         <div class="ua-row" ng-repeat="group in myGroups">
-          <div class="row-title"  style="display:inline-block; margin:25px">
+          <div class="row-title">
             <a href="/#/profile/edit_group" ng-class="{ active: isActive('/profile/edit_group') }" ng-mouseover="editGroup(group)">{{group.name}}</a>
           </div>
-          <div class="row-date"  style="display:inline-block; margin:25px">
+          <div class="row-date">
             {{group.createdAt | formatDate}}
           </div>
-          <div class="row-edit"  style="display:inline-block; margin:25px" ng-click="quitGroup(group)">
-  				      <i title="Quitter le groupe" class="fa fa-minus-circle"></i>
+          <div class="row-edit" ng-click="quitGroup(group)">
+  				      <a title="Quitter le groupe" class="fa fa-minus-circle"></a>
   			  </div>
         </div>
       </div>
     </div>
     <div ng-class="activeTab('recherche','body')" id="recherche">
-      <label>
-        <form class="searchForm">
-            <input type="text" ng-model="searchKeyG" ng-change="searchGroup(searchKeyG)"  placeholder="Recherche Groupe"/>
-            <!-- <button type="button" class="glyphicon glyphicon-search"  ng-checked="filters.search" style="margin-left: 1%;"></button> -->
-        </form>
-      </label>
-      <div class="ua-row" ng-repeat="group in groupSearch">
-        <div class="row-title"  style="display:inline-block; margin:25px">
-          {{group.name}}
+      <div class="list-ua">
+        <div  class="ua-row" >
+          <form class="searchForm">
+              <input type="text" ng-model="searchKeyG" ng-change="searchGroup(searchKeyG)"  placeholder="Recherche Groupe"/>
+          </form>
         </div>
-        <div class="row-date"  style="display:inline-block; margin:25px">
-          {{group.createdAt | formatDate}}
-        </div>
-        <div ng-if="!userGroupe(group)" ng-click="GetInGroup(group)">
-          <i title="Rejoindre le groupe" class="fa fa-user-plus"></i>
-        </div>
-        <div ng-if="userGroupe(group)"  class="row-edit"  style="display:inline-block; margin:25px" ng-click="quitGroup(group)">
-              <i title="Quitter le groupe" class="fa fa-minus-circle"></i>
+        <div class="ua-row" ng-repeat="group in groupSearch">
+          <div class="row-title">
+            <i>{{group.name}}</i>
+          </div>
+          <div class="row-date">
+            {{group.createdAt | formatDate}}
+          </div>
+          <div class="row-edit" ng-if="!userGroupe(group)" ng-click="GetInGroup(group)">
+            <a title="Rejoindre le groupe" class="fa fa-user-plus"></a>
+          </div>
+          <div ng-if="userGroupe(group)"  class="row-edit" ng-click="quitGroup(group)">
+                <a title="Quitter le groupe" class="fa fa-minus-circle"></a>
+          </div>
         </div>
       </div>
     </div>

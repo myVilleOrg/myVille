@@ -41,7 +41,7 @@ button {
 }
 a {
 	text-decoration: none !important;
-	color: @gray;
+	color: black;
 	transition: color 0.75s ease;
 	&:hover {
 		color: @blue-btn;
@@ -180,6 +180,13 @@ a {
 					align-items: center;
 					justify-content: center;
 					text-transform: uppercase;
+					color: @gray;
+					&:hover {
+						color: @blue-btn;
+					}
+					&.active {
+						color: @blue-btn;
+					}
 					&>i {
 						font-size: 1.5em;
 					}
@@ -538,10 +545,12 @@ a {
 				display: flex;
 				flex-direction: row;
 				width: 100%;
-				height: 10%;
-				padding: 1em;
+				padding: 0.5em;
 				border-bottom: 1px @light-gray solid;
 				&>.row-title{
+					flex: 0.5;
+				}
+				&>.row-owner{
 					flex: 0.5;
 				}
 				&>.row-date{
@@ -550,6 +559,39 @@ a {
 				&>.row-edit{
 					flex: 0.1;
 
+				}
+			}
+		}
+	}
+}
+#myGroup {
+	&>.content-side{
+		&>.tab-content{
+			&>.tab-pane{
+				&>.list-ua {
+					display: flex;
+					flex-direction: column;
+					overflow-y: auto;
+					&>.ua-row {
+						display: flex;
+						flex-direction: row;
+						width: 100%;
+						padding: 0.5em;
+						border-bottom: 1px @light-gray solid;
+						&>.row-title{
+							flex: 0.5;
+						}
+						&>.row-owner{
+							flex: 0.5;
+						}
+						&>.row-date{
+							flex: 0.4;
+						}
+						&>.row-edit{
+							flex: 0.1;
+
+						}
+					}
 				}
 			}
 		}

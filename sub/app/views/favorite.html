@@ -7,10 +7,13 @@
 		</div>
 		<div class="ua-row" ng-repeat="favorite in tabFavorite">
 			<div class="row-title">
-				<a ng-click="centerOnMap(favorite.ua.data.location.geometries)">{{favorite.ua.data.title}}</a>
+				<a ng-click="getPopupDescriptionUA(favorite.ua.data._id)">{{favorite.ua.data.title}}</a>
 			</div>
 			<div class="row-owner">
 				{{favorite.owner}}
+			</div>
+			<div class="row-edit">
+				<a title="Centrer Sur La Carte" ng-click="centerOnMap(feature.geometry.geometries)" class="fa fa-map-marker"></a>
 			</div>
 		</div>
 	</div>

@@ -7,10 +7,13 @@
 		</div>
 		<div class="ua-row" ng-repeat="search in tabSearch">
 			<div class="row-title">
-				<a ng-click="centerOnMap(search.geometry.geometries)">{{search.properties.title}}</a>
+				<a ng-click="getPopupDescriptionUA(search.properties._id)">{{search.properties.title}}</a>
 			</div>
 			<div class="row-owner">
 				{{search.properties.owner.username[0]}}
+			</div>
+			<div class="row-edit">
+				<a title="Centrer Sur La Carte" ng-click="centerOnMap(search.geometry.geometries)" class="fa fa-map-marker"></a>
 			</div>
 		</div>
 	</div>
