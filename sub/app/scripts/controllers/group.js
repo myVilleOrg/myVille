@@ -71,6 +71,7 @@ angular.module('appApp')
 		var getProjets = function(group){
 			myVilleAPI.Group.groupInfo(group).then(function(group){
 				$rootScope.groupProjets = group.data.uas;
+				// console.log($rootScope.groupProjets);
 				$rootScope.groupMembres = group.data.admins.concat(group.data.ecrivains.concat(group.data.lecteurs));
 				$rootScope.membreType = new Array(group.data.admins,group.data.ecrivains,group.data.lecteurs);
 				for (var i=0;i<$rootScope.groupMembres.length;i++)
@@ -130,6 +131,26 @@ angular.module('appApp')
 
 		};
 
+		if($location.url().substring(20) !==''){
+			$scope.editTab=$location.url().substring(20);
+		}
+		$scope.activeTabEdit = function(id,c){
+			if (typeof $scope.editTab === 'undefined' || $scope.editTab === ''){
+				var currentRoute = 'projets';
+			}else{
+				var currentRoute =  $scope.editTab;
+			}
+			console.log(currentRoute);
+			if (c === 'head'){
+				return id === currentRoute ? 'active' : '';
+			}else{
+				return id === currentRoute ? 'tab-pane fade in active' : 'tab-pane fade';
+			}
+		}
+		$scope.changeTabEdit = function(id){
+			$scope.editTab = id;
+		}
+
 
 		$scope.GetInGroup = function(group){
 			myVilleAPI.Group.getInGroup(group._id).then(function(){
@@ -140,7 +161,7 @@ angular.module('appApp')
 		$scope.userGroupe = function(group){
 			var users=group.admins.concat(group.ecrivains.concat(group.lecteurs));
 			for (var i=0;i<users.length;i++){
-				console.log("user ", $rootScope.user._id);
+				// console.log("user ", $rootScope.user._id);
 				if($rootScope.user._id === users[i]){
 					return true;
 				}
@@ -160,4 +181,8 @@ angular.module('appApp')
 			console.log("pass2");
 			window.location.href='/#/profile/edit_group';
 		});
+
+		$scope.centerOnMap = function(coordinates){
+			$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
+		};
 });

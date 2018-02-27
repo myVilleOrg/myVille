@@ -1,59 +1,73 @@
-<collapse-sidebar id="Edition de group" heading-title="myVille Groupe">
+<collapse-sidebar id="groupEdit" heading-title="myVille Groupe">
 	<!--div class="profile-picture"-->
-		<div class="profile-nickname">{{groupCurrent.name}}</div>
-		<div ng-if="!editMode" class="profile-description" ng-if="groupCurrent.description">{{groupCurrent.description.substring(3,groupCurrent.description.length-4)}}</div>
-		<div ng-if="editMode && groupCurrent.description" class="profile-description"><textarea>{{groupCurrent.description.substring(3,groupCurrent.description.length-4)}}</textarea></div>
+		<div class="list-ua">
+			<p class="ua-row" title="Nom">{{groupCurrent.name}}</p>
+		</div>
+		<!-- <div ng-if="!editMode" class="profile-description" ng-if="groupCurrent.description">{{groupCurrent.description.substring(3,groupCurrent.description.length-4)}}</div>
+		<div ng-if="editMode && groupCurrent.description" class="profile-description"><textarea>{{groupCurrent.description.substring(3,groupCurrent.description.length-4)}}</textarea></div> -->
 	<!--/div-->
 			<!--div ng-if="message&&editMode">{{message}}</div>
 			<div class="edit-icon" ng-click="editBox()"><i ng-class="editMode ? 'fa fa-user' : 'fa fa-pencil'"></i></div-->
-  <ul id="GroupInfo" class="nav nav-pills nav-justified">
-     <li ng-class="active">
-       <a href="/#/profile/edit_group/#projets" data-toggle="tab">Projets</a>
+  <div id="GroupInfo" class="nav nav-pills nav-justified">
+     <li ng-class="activeTabEdit('projets','head')">
+       <a href="/#/profile/edit_group/#projets" ng-click="changeTabEdit('projets')" data-toggle="tab">Projets</a>
      </li>
-     <li><a href="/#/profile/edit_group/#membres" data-toggle="tab">Membres</a></li>
-  </ul>
-  <div id="groupContent" class="tab-content">
-    <div class="tab-pane fade in active" id="projets">
-			<div class="ua-row">
-				<a href="/#/createUA" ng-class="{ active: isActive('/createUA') }">
-				<i class="fa fa-plus-square" aria-hidden="true"></i>
-				<p  style="display:inline-block">
-						Créer un projet
-				</p>
-				</a>
-			</div>
-			<div class="ua-row">
-				<a href="/#/profile/mine" ng-class="{ active: isActive('/profile/mine') }">
-				<i class="fa fa-plus-square" aria-hidden="true"></i>
-				<p  style="display:inline-block" ng-click="ajoutProjet(groupCurrent)">
-						ajout d'un projet
-				</p>
-				</a>
-			</div>
+     <li ng-class="activeTabEdit('membres','head')">
+			 <a href="/#/profile/edit_group/#membres" ng-click="changeTabEdit('membres')" data-toggle="tab">Membres</a>
+		 </li>
+  </div>
+  <div class="tab-content">
+    <div ng-class="activeTabEdit('projets','body')" id="projets">
 			<div class="list-ua">
+				<div class="ua-row">
+					<a href="/#/createUA" ng-class="{ active: isActive('/createUA') }" class="fa fa-plus-square">
+							Créer un projet
+					</a>
+				</div>
+				<div class="ua-row">
+					<a href="/#/profile/mine"  ng-click="ajoutProjet(groupCurrent)" class="fa fa-plus-square">
+							Ajout d'un projet
+					</a>
+				</div>
+				 <div class="ua-row">Projets du groupe</div>
+				 <div class="ua-row" ng-if="groupProjets < 1">
+		 			<div>
+		 				Il n'y a rien pour l'instant 😞
+		 			</div>
+		 		</div>
 	      <div class="ua-row" ng-repeat="projet in groupProjets">
-	        <div class="row-title"  style="display:inline-block; margin:25px">
+	        <div class="row-title">
 	          {{projet.title}}
 	        </div>
+
+					<div class="row-date">
+						{{projet.createdAt | formatDate}}
+					</div>
+					<div class="row-edit">
+						<a title="Centrer Sur La Carte" ng-click="centerOnMap(projet.location.geometries)" class="fa fa-map-marker"></a>
+					</div>
 	        <!--div class="row-date"  style="display:inline-block; margin:25px">
 	          {{projet.createdAt | formatDate}}
 	        </div-->
 	      </div>
 			</div>
     </div>
-    <div class="tab-pane fade" id="membres">
-      <div class="ua-row" ng-repeat="member in groupMembres">
-				<div class="row-type"  ng-attr-title="{{title(member)}}" style="display:inline-block; margin:25px">
-					<i class="fa fa-user" ng-style="{{role(member)}}" aria-hidden="true"></i><p></p>
-				</div>
-        <div class="row-title"  style="display:inline-block; margin:25px">
-          <a>{{member.username}}</a>
-        </div>
-      </div>
-    </div>
+    <div ng-class="activeTabEdit('membres','body')" id="membres">
+			<div class="list-ua">
+	      <div class="ua-row" ng-repeat="member in groupMembres">
+					<div  class="row-edit">
+							<i class="fa fa-user" ng-style="{{role(member)}}" aria-hidden="true"></i>
+					</div>
+					<div class="row-type"  ng-attr-title="{{title(member)}}"></div>
+	        <div class="row-title">
+	          <a>{{member.username}}</a>
+	        </div>
+	      </div>
+			</div>
+		</div>
   </div>
-<div  class="turn back">
-	<button ng-click="">déconnection</button>
-</div>
+<!-- <div  class="turn back">
+	<button ng-click="">Déconnection</button>
+</div> -->
 
 </collapse-sidebar>

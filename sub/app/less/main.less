@@ -129,6 +129,13 @@ a {
 					text-align: center;
 					align-items: center;
 					justify-content: center;
+					color: @gray;
+					&:hover {
+						color: @blue-btn;
+					}
+					&.active {
+						color: @blue-btn;
+					}
 					&>.text-icon {
 						font-size: 0.8em;
 					}
@@ -535,7 +542,7 @@ a {
 		}
 	}
 }
-#myUA, #favoriteUA, #searchUA {
+#myUA, #favoriteUA, #searchUA, #groupEdit {
 	&>.content-side{
 		&>.list-ua {
 			display: flex;
@@ -564,7 +571,7 @@ a {
 		}
 	}
 }
-#myGroup {
+#myGroup, #groupEdit {
 	&>.content-side{
 		&>.tab-content{
 			&>.tab-pane{
