@@ -13,7 +13,7 @@ angular.module('appApp')
 				myVilleAPI.Group.getGroup().then(function(group){
 					$scope.myGroups=group.data.groupes;
 				}, function(error){
-					$scope.message = error.data.message;
+					$window.alert(error.data.message);
 					return;
 				});
 		};
@@ -25,7 +25,7 @@ angular.module('appApp')
 
 		$scope.$on('submitGroup',function(e,d){
 			if(!$scope.group.name || !$scope.group.desc){
-				$scope.message = 'Un ou des champs sont manquants.';
+				$window.alert('Un ou des champs sont manquants.');
 				return;
 			}
 
@@ -40,7 +40,7 @@ angular.module('appApp')
 				$scope.group.name = null;
 				$scope.group.desc = null;
 			}, function(error){
-				$scope.message = error.data.message;
+				$window.alert(error.data.message);
 				return;
 			});
 		});
@@ -80,7 +80,7 @@ angular.module('appApp')
 					$scope.role=role($rootScope.groupMembres[0]);
 				}
 				},function(error){
-				$scope.message = error.data.message;
+					$window.alert(error.data.message);
 				return;
 			});
 		}

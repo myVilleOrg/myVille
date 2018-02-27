@@ -20,7 +20,7 @@ angular.module('appApp')
 
 	$scope.forgotClick = function(){ // reset password function
 		if($scope.resetPwd.pwd1 !== $scope.resetPwd.pwd2) {
-			$scope.message = 'Mot de passe différent.';
+			$window.alert('Mot de passe différent.');
 			return;
 		}
 
@@ -33,7 +33,7 @@ angular.module('appApp')
 			$scope.closeThisDialog();
 			return;
 		}).catch(function(err){
-			$scope.message = err.data.message;
+			$window.alert(err.data.message);
 			return;
 		});
 	};

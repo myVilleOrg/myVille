@@ -76,7 +76,7 @@ angular.module('appApp')
 			$scope.ngDialogData = {private: true};
 			$sessionStorage.ngDialogData = $scope.ngDialogData;
 		}, function(error){
-			$scope.message = error.data.message;
+			//$window.alert(error.data.message);
 			return;
 		});
 	});
