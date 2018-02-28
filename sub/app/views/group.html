@@ -5,22 +5,25 @@
 	   </li>
 	   <li  ng-class="activeTab('recherche','head')"><a href="/#/profile/group/#recherche" ng-click="changeTab('recherche')" data-toggle="tab">Recherche</a></li>
   </div>
-  <div class="tab-content">
+  <div id="groupContent" class="tab-content">
     <div ng-class="activeTab('mygroups','body')" id="mygroups">
       <div class="list-ua">
-        <div class="ua-row">
+        <div ng-if="!chooseMode" class="ua-row">
           <a href="/#/profile/create_group" ng-class="{ active: isActive('/profile/create_group') }" class="fa fa-plus-square">
               Créer un groupe
           </a>
         </div>
         <div class="ua-row" ng-repeat="group in myGroups">
+          <div  ng-title="{{roleTitle()}}">
+            <i class="fa fa-bell-o" aria-hidden="true" ng-style="{{roleInGroup()}}"></i>
+          </div>
           <div class="row-title">
             <a href="/#/profile/edit_group" ng-class="{ active: isActive('/profile/edit_group') }" ng-mouseover="editGroup(group)">{{group.name}}</a>
           </div>
           <div class="row-date">
             {{group.createdAt | formatDate}}
           </div>
-          <div class="row-edit" ng-click="quitGroup(group)">
+          <div ng-if="!chooseMode" class="row-edit" ng-click="quitGroup(group)">
   				      <a title="Quitter le groupe" class="fa fa-minus-circle"></a>
   			  </div>
         </div>
@@ -40,10 +43,10 @@
           <div class="row-date">
             {{group.createdAt | formatDate}}
           </div>
-          <div class="row-edit" ng-if="!userGroupe(group)" ng-click="GetInGroup(group)">
+          <div class="row-edit" ng-if="!userGroupe(group)&&!chooseMode" ng-click="GetInGroup(group)">
             <a title="Rejoindre le groupe" class="fa fa-user-plus"></a>
           </div>
-          <div ng-if="userGroupe(group)"  class="row-edit" ng-click="quitGroup(group)">
+          <div ng-if="userGroupe(group)&&!chooseMode"  class="row-edit" ng-click="quitGroup(group)">
                 <a title="Quitter le groupe" class="fa fa-minus-circle"></a>
           </div>
         </div>

@@ -12,6 +12,8 @@ angular.module('appApp')
 	$scope.showChosens =[];
 	$rootScope.ajoutDeGroup = false;
 	localStorageService.set('ajoutDeGroup',false);
+	$rootScope.chooseMode = false;
+	localStorageService.set('chooseMode',false);
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});

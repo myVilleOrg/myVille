@@ -535,6 +535,30 @@ a {
 		}
 	}
 }
+.modal-group-list {
+	&>.ngdialog-content{
+		width: 50% !important;
+		&>#singleUA {
+			display: flex;
+			flex-direction: column;
+			&>.socialUA {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				&>iframe {
+					padding: 1px;
+				}
+			}
+			&>.ua-title {
+				text-align: center;
+				border-bottom: 1px @light-gray solid;
+			}
+			&>.ua-description {
+				padding: 0.1em;
+			}
+		}
+	}
+}
 #myUA, #favoriteUA, #searchUA {
 	&>.content-side{
 		&>.list-ua {
