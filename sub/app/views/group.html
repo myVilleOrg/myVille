@@ -14,8 +14,8 @@
           </a>
         </div>
         <div class="ua-row" ng-repeat="group in myGroups">
-          <div  ng-title="{{roleTitle()}}">
-            <i class="fa fa-bell-o" aria-hidden="true" ng-style="{{roleInGroup()}}"></i>
+          <div  ng-attr-title="{{roleTitle(group)}}">
+            <i class="fa fa-bell-o" aria-hidden="true" ng-style="{{roleInGroup(group)}}"></i>
           </div>
           <div class="row-title">
             <a href="/#/profile/edit_group" ng-class="{ active: isActive('/profile/edit_group') }" ng-mouseover="editGroup(group)">{{group.name}}</a>

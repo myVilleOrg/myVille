@@ -13,23 +13,18 @@ angular.module('appApp')
 		var getGroups = function(){
 				myVilleAPI.Group.getGroup().then(function(group){
 					$scope.myGroups = group.data.groupes;
-					$scope.membreProp = new Array();
-					$scope.membreTitle = new Array();
+					$scope.membreAdmin = new Array();
+					$scope.membreEcrivain = new Array();
+					$scope.membreLecteur = new Array();
 					for(var i=0;i<$scope.myGroups.length;i++){
 							if($scope.myGroups[i].admins.indexOf($rootScope.user._id)!=-1){
-								var groupNom=$scope.myGroups[i].name;
-								$scope.membreProp.push("admin");
-								$scope.membreTitle.push("admin");
+								$scope.membreAdmin.push($scope.myGroups[i].name);
 							}
 							else if($scope.myGroups[i].ecrivains.indexOf($rootScope.user._id)!=-1){
-								var groupNom=$scope.myGroups[i].name;
-								$scope.membreProp.push("ecrivain");
-								$scope.membreTitle.push("ecrivain");
+								$scope.membreEcrivain.push($scope.myGroups[i].name);
 							}
 							else if($scope.myGroups[i].lecteurs.indexOf($rootScope.user._id)!=-1){
-								var groupNom=$scope.myGroups[i].name;
-								$scope.membreProp.push("lecteur");
-								$scope.membreTitle.push("lecteur");
+								$scope.membreLecteur.push($scope.myGroups[i].name);
 							}
 					}
 				}, function(error){
@@ -93,32 +88,31 @@ angular.module('appApp')
 		};
 
 		//justifier le type de membre d'un groupe et retourner une couleur particulière
-		$scope.roleInGroup = function(){
-			if($scope.membreProp.length!==0){
-				var thisRole=$scope.membreProp.shift();
-				if(thisRole==="admin"){
-					return {"color":"#EE2C2C"};
-				}
-				else if(thisRole==="ecrivain"){
-					return {"color":"#FF8C00"};
-				}
-				else if(thisRole==="lecteur"){
-					return {"color":"#8B8989"};
-				}
+		$scope.roleInGroup = function(group){
+			if($scope.membreAdmin.indexOf(group.name)!=-1){
+				return {"color":"#EE2C2C"};
 			}
-			else {
-				return {"color":"#98F5FF"};
+			else if($scope.membreEcrivain.indexOf(group.name)!=-1){
+				return {"color":"#FF8C00"};
+			}
+			else if($scope.membreLecteur.indexOf(group.name)!=-1){
+				return {"color":"#8B8989"};
 			}
 		};
 
 		//justifier le type de membre d'un groupe et retourner un nom particulière
-		// $scope.roleTitle = function(){
-		// 	if($scope.membreTitle.length!==0){
-		// 		var thisRole=$scope.membreTitle.shift();
-		// 		console.log(thisRole);
-		// 		return thisRole;
-		// 	}
-		// };
+		$scope.roleTitle = function(group){
+			console.log("1");
+			if($scope.membreAdmin.indexOf(group.name)!=-1){
+				return "admin";
+			}
+			else if($scope.membreEcrivain.indexOf(group.name)!=-1){
+				return "écrivain";
+			}
+			else if($scope.membreLecteur.indexOf(group.name)!=-1){
+				return "lecteur";
+			}
+		};
 
 
 		//prendre les projets d'un groupe
