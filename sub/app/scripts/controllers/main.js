@@ -13,6 +13,7 @@ angular.module('appApp')
 	$rootScope.ajoutDeGroup = false;
 	localStorageService.set('ajoutDeGroup',false);
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
+		console.log("coucou");
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});

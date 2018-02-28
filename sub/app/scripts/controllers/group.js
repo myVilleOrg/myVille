@@ -140,7 +140,6 @@ angular.module('appApp')
 			}else{
 				var currentRoute =  $scope.editTab;
 			}
-			console.log(currentRoute);
 			if (c === 'head'){
 				return id === currentRoute ? 'active' : '';
 			}else{

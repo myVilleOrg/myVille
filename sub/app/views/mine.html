@@ -1,15 +1,16 @@
 <collapse-sidebar id="myUA" heading-title="{{'Mes propositions'}}">
-	<!-- <form class="searchForm"> -->
-		<!-- <input type="text" ng-model="searchKey" ng-change="search(searchKey)"  placeholder="Recherche Projet" style="width:120px; height: 26px"/> -->
-		<!-- <button type="button" class="glyphicon glyphicon-search" ng-click="search(searchKey)" ng-checked="filters.search" style="margin-left: 1%;"></button> -->
-	<!-- </form> -->
+
 	<div class="list-ua">
+		<form class="ua-row">
+			<input type="text" ng-model="searchKey" ng-change="searchMine(searchKey)"  placeholder="Recherche Projet" />
+			<!-- <button type="button" class="glyphicon glyphicon-search" ng-click="search(searchKey)" ng-checked="filters.search" style="margin-left: 1%;"></button> -->
+		</form>
 		<div class="ua-row" ng-if="cachedMarkers.features.length < 1">
 			<div>
 				Il n'y a rien pour l'instant 😞
 			</div>
 		</div>
-		<div class="ua-row" ng-if="cachedMarkers && feature.properties._doc.owner.username == user.username" ng-repeat="feature in cachedMarkers.features">
+		<div class="ua-row" ng-if="cachedMarkers && feature.properties._doc.owner.username == user.username" ng-repeat="feature in features1">
 			<div ng-if="ajoutDeGroup" class="row-edit" ng-click="ajoutCetteProjet(feature.properties._doc)">
 				<i class="fa fa-plus" aria-hidden="true"></i>
 			</div>

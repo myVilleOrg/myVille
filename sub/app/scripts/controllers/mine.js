@@ -9,12 +9,13 @@
 angular.module('appApp')
 .controller('MineCtrl', function ($rootScope,$scope, ngDialog, myVilleAPI, localStorageService, $sessionStorage, $window) {
 	$scope.$emit('filterForce', 2);
+
 	$scope.centerOnMap = function(coordinates){
 		$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
-	}
+	};
 	$scope.editUA = function(ua){
 		ngDialog.open({data: ua, template: 'views/edit_ua.html', appendClassName: 'modal-edit-ua', controller: 'EdituaCtrl'});
-	}
+	};
 	$scope.deleteUA = function(ua){
 		var isConfirmed = $window.confirm('\u00cates-vous s\u00fbr de vouloir supprimer ?');
 		if (isConfirmed) {
@@ -22,23 +23,29 @@ angular.module('appApp')
 				$scope.$emit('leafletDirectiveMap.map.dragend')
 			});
 		}
-	}
-	// $scope.search = function (searchK) {
-	// 	if(typeof searchK !== 'undefined'){
-	// 		var searchKey = searchK;
-	// 		$sessionStorage.searchKey = searchK;
-	// 	}else {
-	// 		var searchKey = $scope.searchKey;
-	// 	}
-	// 	var searchOption = "Nom Projet";
-	//
-	// 	myVilleAPI.UAS.search({search : searchKey, searchOption : searchOption, map: JSON.stringify(mapBounds)}).then(function(geocodes){
-	// 			$rootScope.searchUAS = geocodes.data;
-	// 			$scope.geoJL(geocodes.data,"search");
-	// 			$scope.selectFilter(4);
-	// 			$rootScope.$broadcast('updateSearch');
-	// 	});
-	// };
+	};
+	// console.log($rootScope.cachedMarkers.features);
+	$scope.features1 = $rootScope.cachedMarkers.features;
+
+	$scope.searchMine = function (searchK) {
+		var table= [];
+		var i = 0;
+		if(typeof searchK !== 'undefined'){
+			var searchKey = searchK;
+			$sessionStorage.searchKey = searchK;
+		}else {
+			var searchKey = $scope.searchKey;
+		}
+		for (var feature in $rootScope.cachedMarkers.features){
+			// console.log($rootScope.cachedMarkers.features[feature]);
+			if(($rootScope.cachedMarkers.features[feature].properties._doc.title).indexOf(searchKey)!==-1 || ($rootScope.cachedMarkers.features[feature].properties._doc.description).indexOf(searchKey)!==-1){
+				table[i]=($rootScope.cachedMarkers.features[feature]);
+				i+=1;
+			}
+		}
+		$scope.features1 = table;
+
+	};
 	$scope.ajoutCetteProjet = function(projet){//@LIUYan
 		$rootScope.ajoutDeGroup = false;
 		localStorageService.set('ajoutDeGroup',false);
