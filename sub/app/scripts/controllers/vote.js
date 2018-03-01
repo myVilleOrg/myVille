@@ -6,7 +6,7 @@
  * Controller which permits user to vote for a ua
  */
 angular.module('appApp')
-.controller('VoteCtrl', function ($rootScope, $scope, myVilleAPI, AuthentificationService) {
+.controller('VoteCtrl', function ($rootScope, $scope,$http, myVilleAPI, AuthentificationService) {  //temp json
 	twemoji.size = 72;
 	$scope.twemoji = twemoji;
 	$scope.vote = [
@@ -50,7 +50,15 @@ angular.module('appApp')
 		});
 	}
 
+	myVilleAPI.Criteria.get_criteria().then(function(criteriaMap){
+		$scope.criteriaMap = criteriaMap
+		console.log("---------------------------------");
+		console.log($scope.criteriaMap )
+		console.log("---------------------------------");
+	});
+
 	$scope.voteCount = $scope.ngDialogData.vote.length;
+	console.log("button",$scope.button); //console log TEMP (affiche résultat envoyer par boutton)
 
 	// call for a vote-----
 	$scope.doVote = function(id){
@@ -79,6 +87,7 @@ angular.module('appApp')
 				}
 			});
 		}
+		//var myJSON = JSON.stringify(vote);
 	};
 	//
 	// $scope.doVoteCriteria = function(id){

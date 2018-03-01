@@ -11,7 +11,7 @@ angular.module('appApp')
 	$scope.$emit('filterForce', 2);
 
 	$scope.features1 = $rootScope.cachedMarkers.features;
-	
+		console.log($rootScope.cachedMarkers);
 
 	$scope.centerOnMap = function(coordinates){
 		$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
