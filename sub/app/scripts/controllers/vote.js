@@ -44,6 +44,7 @@ angular.module('appApp')
 				//***TEMPORARY CHANGE QU'IL FAUT ÊTRE SUPPRIMÉ APRES~~~~~~~~~~~~~~~~~~~~~~~
 				console.log("---------------------------------");
 				console.log($scope.ngDialogData.vote);
+				console.log(vote);
 				console.log("---------------------------------");
 				//***
 			}
@@ -90,34 +91,34 @@ angular.module('appApp')
 		//var myJSON = JSON.stringify(vote);
 	};
 	//
-	// $scope.doVoteCriteria = function(id){
-	// 	if(!$scope.vote[id].isVote){ // Not voted we add a vote
-	// 		myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
-	// 			var alreadyVoted = false;
-	// 			for(var i = 0; i < $scope.vote.length; i++){
-	// 				if($scope.vote[i].isVote) {
-	// 					alreadyVoted = true;
-	// 				}
-	// 				if(i == id){
-	// 					$scope.vote[i].isVote = true;
-	// 				}else{
-	// 					$scope.vote[i].isVote = false;
-	// 				}
-	// 			}
-	// 			if(!alreadyVoted) $scope.voteCount++;
-	// 		});
-	// 	} else { // Already voted we remove the vote
-	// 		myVilleAPI.UAS.deleteVote($scope.ngDialogData._id).then(function(){
-	// 			for(var i = 0; i < $scope.vote.length; i++){
-	// 				if($scope.vote[i].isVote) {
-	// 					$scope.vote[i].isVote = false;
-	// 					$scope.voteCount--;
-	// 				}
-	// 			}
-	// 		});
-	// 	}
-	// 	//var myJSON = JSON.stringify(vote);
-	// };
+	$scope.doVoteCriteria = function(id){
+		if(!$scope.vote[id].isVote){ // Not voted we add a vote
+			myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
+				var alreadyVoted = false;
+				for(var i = 0; i < $scope.vote.length; i++){
+					if($scope.vote[i].isVote) {
+						alreadyVoted = true;
+					}
+					if(i == id){
+						$scope.vote[i].isVote = true;
+					}else{
+						$scope.vote[i].isVote = false;
+					}
+				}
+				if(!alreadyVoted) $scope.voteCount++;
+			});
+		} else { // Already voted we remove the vote
+			myVilleAPI.UAS.deleteVote($scope.ngDialogData._id).then(function(){
+				for(var i = 0; i < $scope.vote.length; i++){
+					if($scope.vote[i].isVote) {
+						$scope.vote[i].isVote = false;
+						$scope.voteCount--;
+					}
+				}
+			});
+		}
+		//var myJSON = JSON.stringify(vote);
+	};
 
 
 
