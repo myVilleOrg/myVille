@@ -12,6 +12,12 @@
 		<div class="vote-counter display-desktop" ng-if="token">
 		{{voteCount}} {{voteCount > 1 ? 'réactions' : 'réaction'}}, et vous ?
 		</div>
+		<div class="input-group">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-primary">Oui</button>
+				<button type="button" class="btn btn-danger">Non</button>
+			</div>
+		</div>
 
 		<div ng-if="token" class='voteList display-desktop'>
 			<div class="vote-column" ng-repeat ="x in vote">

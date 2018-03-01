@@ -10,6 +10,9 @@ angular.module('appApp')
 .controller('MineCtrl', function ($rootScope,$scope, ngDialog, myVilleAPI, localStorageService, $sessionStorage, $window) {
 	$scope.$emit('filterForce', 2);
 
+	$scope.features1 = $rootScope.cachedMarkers.features;
+	
+
 	$scope.centerOnMap = function(coordinates){
 		$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
 	};
@@ -25,7 +28,6 @@ angular.module('appApp')
 		}
 	};
 	// console.log($rootScope.cachedMarkers.features);
-	$scope.features1 = $rootScope.cachedMarkers.features;
 
 	$scope.searchMine = function (searchK) {
 		var table= [];

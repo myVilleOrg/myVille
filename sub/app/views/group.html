@@ -15,6 +15,11 @@
               Créer un groupe
           </a>
         </div>
+        <div class="ua-row" ng-if="myGroups.length < 1">
+    			<div>
+    				Il n'y a rien pour l'instant 😞
+    			</div>
+    		</div>
         <div class="ua-row" ng-repeat="group in myGroups">
           <div class="row-title">
             <a href="/#/profile/edit_group" ng-class="{ active: isActive('/profile/edit_group') }" ng-mouseover="editGroup(group)">{{group.name}}</a>
