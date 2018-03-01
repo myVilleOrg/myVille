@@ -50,6 +50,13 @@ angular.module('appApp')
 		});
 	}
 
+	myVilleAPI.Criteria.get_criteria().then(function(criteriaMap){
+		$scope.criteriaMap = criteriaMap
+		console.log("---------------------------------");
+		console.log($scope.criteriaMap.data )
+		console.log("---------------------------------");
+	});
+
 	$scope.voteCount = $scope.ngDialogData.vote.length;
 	console.log("button",$scope.button); //console log TEMP (affiche résultat envoyer par boutton)
 
@@ -80,7 +87,7 @@ angular.module('appApp')
 				}
 			});
 		}
-		var myJSON = JSON.stringify(vote);
+		//var myJSON = JSON.stringify(vote);
 	};
 
 	//count the vote number of each
