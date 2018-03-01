@@ -72,7 +72,8 @@ angular.module('appApp')
 			private: $scope.ngDialogData.private
 		};
 		myVilleAPI.UAS.create(data).then(function(user){
-			ngDialog.open({controller: 'UACtrl', template: 'views/modalUaCreated.html', appendClassName: 'popup-auto-height'});
+			$window.alert('L\'aménagement a été crée avec succès !');
+			$window.location = '#/';
 			$scope.ngDialogData = {private: true};
 			$sessionStorage.ngDialogData = $scope.ngDialogData;
 		}, function(error){

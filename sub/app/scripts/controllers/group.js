@@ -36,7 +36,8 @@ angular.module('appApp')
 
 
 			myVilleAPI.Group.createGroup(data).then(function(user){
-				ngDialog.open({controller: 'UACtrl', template: 'views/modalGroupCreated.html', appendClassName: 'popup-auto-height'});
+				$window.alert('Le group a été crée avec succès !');
+				$window.location = '#/profile/group';
 				$scope.group.name = null;
 				$scope.group.desc = null;
 			}, function(error){
