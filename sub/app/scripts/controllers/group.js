@@ -28,7 +28,7 @@ angular.module('appApp')
 							}
 					}
 				}, function(error){
-					$scope.message = error.data.message;
+					$window.alert(error.data.message);
 					return;
 				});
 		};
@@ -41,7 +41,7 @@ angular.module('appApp')
 		//create un groupe
 		$scope.$on('submitGroup',function(e,d){
 			if(!$scope.group.name || !$scope.group.desc){
-				$scope.message = 'Un ou des champs sont manquants.';
+				$window.alert('Un ou des champs sont manquants.');
 				return;
 			}
 
@@ -56,7 +56,7 @@ angular.module('appApp')
 				$scope.group.name = null;
 				$scope.group.desc = null;
 			}, function(error){
-				$scope.message = error.data.message;
+				$window.alert(error.data.message);
 				return;
 			});
 		});
@@ -102,7 +102,6 @@ angular.module('appApp')
 
 		//justifier le type de membre d'un groupe et retourner un nom particulière
 		$scope.roleTitle = function(group){
-			console.log("1");
 			if($scope.membreAdmin.indexOf(group.name)!=-1){
 				return "admin";
 			}
@@ -122,7 +121,7 @@ angular.module('appApp')
 				$rootScope.groupMembres = group.data.admins.concat(group.data.ecrivains.concat(group.data.lecteurs));
 				$rootScope.membreType = new Array(group.data.admins,group.data.ecrivains,group.data.lecteurs);
 				},function(error){
-				$scope.message = error.data.message;
+					$window.alert(error.data.message);
 				return;
 			});
 		};
@@ -178,6 +177,26 @@ angular.module('appApp')
 		};
 
 		//participer dans un groupe par recherche
+		if($location.url().substring(20) !==''){
+			$scope.editTab=$location.url().substring(20);
+		}
+		$scope.activeTabEdit = function(id,c){
+			if (typeof $scope.editTab === 'undefined' || $scope.editTab === ''){
+				var currentRoute = 'projets';
+			}else{
+				var currentRoute =  $scope.editTab;
+			}
+			console.log(currentRoute);
+			if (c === 'head'){
+				return id === currentRoute ? 'active' : '';
+			}else{
+				return id === currentRoute ? 'tab-pane fade in active' : 'tab-pane fade';
+			}
+		}
+		$scope.changeTabEdit = function(id){
+			$scope.editTab = id;
+		}
+
 		$scope.GetInGroup = function(group){
 			myVilleAPI.Group.getInGroup(group._id).then(function(){
 				console.log("il faut seulement changer le icone");
@@ -199,10 +218,46 @@ angular.module('appApp')
 			localStorageService.set('ajoutDeGroup',true);
 		};
 
+		$scope.demandeDroit = function(Role){
+			myVilleAPI.Group.demandeDroit(Role).then(function(response){
+				if(response.data.message==="success"){
+					alert("Vous avez envoyé le demande avec succès");
+				}
+				else {
+					alert("Désolée, il y a une erreur");
+				}
+			});
+		};
+		$scope.demandeRole = function(message){
+			if(message.demande==='DemandeAdmin'){
+				return "admin";
+			}
+			else if(message.demande==='DemandeEcrivain'){
+				return "ecrivain";
+			}
+			else{
+				return "inconnu";
+			}
+		};
+
+		$scope.decision = function(decisionMessage){
+			myVilleAPI.Group.donnerDroit(decisionMessage).then(function(message){
+				if(message.data.message==="success"){
+					decisionMessage.message.vu=true;
+					console.log("demande success");
+				}
+				else {
+					console.log(message);
+				}
+			});
+		}
 
 		$rootScope.$on('ajouterLeProjet',function(e,projet){
 			getProjets($rootScope.groupCurrent);
-			console.log("pass2");
 			window.location.href='/#/profile/edit_group';
 		});
+
+		$scope.centerOnMap = function(coordinates){
+			$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
+		};
 });

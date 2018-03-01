@@ -3,7 +3,12 @@
 	   <li ng-class="activeTab('mygroups','head')">
        <a href="/#/profile/group/#mygroups" ng-click="changeTab('mygroups')" data-toggle="tab">Mes Groupes</a>
 	   </li>
-	   <li  ng-class="activeTab('recherche','head')"><a href="/#/profile/group/#recherche" ng-click="changeTab('recherche')" data-toggle="tab">Recherche</a></li>
+	   <li  ng-class="activeTab('recherche','head')">
+       <a href="/#/profile/group/#recherche" ng-click="changeTab('recherche')" data-toggle="tab">Recherche</a>
+     </li>
+     <li  ng-class="activeTab('messages','head')">
+       <a href="/#/profile/group/#messages" ng-click="changeTab('messages')" data-toggle="tab">Messages</a>
+     </li>
   </div>
   <div id="groupContent" class="tab-content">
     <div ng-class="activeTab('mygroups','body')" id="mygroups">
@@ -14,8 +19,13 @@
           </a>
         </div>
         <div class="ua-row" ng-repeat="group in myGroups">
-          <div  ng-attr-title="{{roleTitle(group)}}">
-            <i class="fa fa-bell-o" aria-hidden="true" ng-style="{{roleInGroup(group)}}"></i>
+          <div class="btn-group">
+            <i class="fa fa-bell-o" data-placement="bottom" data-toggle="dropdown" aria-hidden="true" ng-style="{{roleInGroup(group)}}" ng-attr-title="{{roleTitle(group)}}"></i>
+            <ul class="dropdown-menu" role="menu">
+              <li class="dropdown-header">Demande de droit</li>
+              <li ng-click="demandeDroit({roleNow:roleTitle(group),roleAsk:'admin',group:group})">admin</li>
+              <li ng-click="demandeDroit({roleNow:roleTitle(group),roleAsk:'ecrivain',group:group})">écrivain</li>
+            </ul>
           </div>
           <div class="row-title">
             <a href="/#/profile/edit_group" ng-class="{ active: isActive('/profile/edit_group') }" ng-mouseover="editGroup(group)">{{group.name}}</a>
@@ -52,5 +62,18 @@
         </div>
       </div>
     </div>
+    <div ng-class="activeTab('messages','body')" id="messages">
+      <div ng-if="!message.vu" class="ua-row" ng-repeat="message in messages">
+        {{message.de}} vous avez demandé de prendre le droit de {{demandeRole(message)}} pour le group {{message.groupNom}}
+        <button type="button" class="btn btn-success" ng-click="decision({decision:'accepter',message:message})">Accepter</button>
+        <button type="button" class="btn btn-danger" ng-click="decision({decision:'rejecter',message:message})">Rejecter</button>
+      </div>
+    </div>
   </div>
+  <!-- <div class="alert alert-success" role="alert">
+    <strong>Vous avez envoyé le demande avec succès</strong>
+  </div>
+  <div class="alert  alert-warning" role="alert">
+    <strong>Désolée, il y a une erreur</strong>
+  </div> -->
 </collapse-sidebar>

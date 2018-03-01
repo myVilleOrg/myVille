@@ -22,7 +22,7 @@ angular.module('appApp')
 
 	$scope.forgotClick = function(){ // reset password function
 		if($scope.resetPwd.pwd1 !== $scope.resetPwd.pwd2) {
-			$scope.message = 'Mot de passe différent.';
+			$window.alert('Mot de passe différent.');
 			return;
 		}
 
@@ -35,7 +35,7 @@ angular.module('appApp')
 			$scope.closeThisDialog();
 			return;
 		}).catch(function(err){
-			$scope.message = err.data.message;
+			$window.alert(err.data.message);
 			return;
 		});
 	};
@@ -131,10 +131,19 @@ angular.module('appApp')
 		$scope.selectFilter(idx);
 	});
 
+	var showMessages = function(){
+		myVilleAPI.User.get($rootScope.user._id).then(function(user){
+			$rootScope.messages=user.data.messages;
+		}, function(error){
+			$window.alert(error.data.message);
+			return;
+		})
+	};
 
 	// The function which permits to display items on map
 	var geoJsonLayer;
 	var showUas = function(){
+		showMessages();
 		leafletData.getMap().then(function(map){
 			//get gps of map bounds
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
