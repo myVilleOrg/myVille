@@ -13,6 +13,7 @@ angular.module('appApp')
 	$rootScope.ajoutDeGroup = false;
 	localStorageService.set('ajoutDeGroup',false);
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
+		console.log("coucou");
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});
@@ -20,7 +21,7 @@ angular.module('appApp')
 
 	$scope.forgotClick = function(){ // reset password function
 		if($scope.resetPwd.pwd1 !== $scope.resetPwd.pwd2) {
-			$scope.message = 'Mot de passe différent.';
+			$window.alert('Mot de passe différent.');
 			return;
 		}
 
@@ -33,7 +34,7 @@ angular.module('appApp')
 			$scope.closeThisDialog();
 			return;
 		}).catch(function(err){
-			$scope.message = err.data.message;
+			$window.alert(err.data.message);
 			return;
 		});
 	};

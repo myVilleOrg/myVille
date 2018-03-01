@@ -60,13 +60,9 @@ angular.module('appApp')
 		}
 
 		if(!$scope.ngDialogData.desc || !$scope.ngDialogData.title){
-			$scope.message = 'Un ou des champs sont manquants.';
-			return;
-		}
-
-		if(!$scope.ngDialogData.drawing || $scope.ngDialogData.drawing.features.length === 0){
-			$scope.message = 'Vous devez dessiner sur la carte !'
-			return;
+			$window.alert('Un ou des champs sont manquants.');
+		}else	if(!$scope.ngDialogData.drawing || $scope.ngDialogData.drawing.features.length === 0){
+			$window.alert('Vous devez dessiner sur la carte !');
 		}
 
 		var data = {
@@ -80,7 +76,7 @@ angular.module('appApp')
 			$scope.ngDialogData = {private: true};
 			$sessionStorage.ngDialogData = $scope.ngDialogData;
 		}, function(error){
-			$scope.message = error.data.message;
+			//$window.alert(error.data.message);
 			return;
 		});
 	});
