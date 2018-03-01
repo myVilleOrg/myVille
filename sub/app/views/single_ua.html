@@ -21,12 +21,24 @@
 
 		<div ng-if="token" class='voteList display-desktop'>
 			<div class="vote-column" ng-repeat ="x in vote">
-				<div class="vote-column-heading" ng-class = "x.isVote ? 'voted' : 'no-voted'" ng-click="doVote($index)" ng-bind-html="twemoji.parse(x.smiley)">
+				<div class="vote-column-heading" ng-class = "x.isVote ? 'voted' : 'no-voted'" ng-model="button" ng-click="doVote($index)" ng-bind-html="twemoji.parse(x.smiley)">
 				</div>
+				<!--ng-model TEMP-->
 				<div class="vote-column-overlay">
 					{{x.text}}
 				</div>
 			</div>
+
+
+			<!--TEST DES CRITERE  -->
+			<div class="crietria-column" ng-repeat ="x in criteriaMap">
+				<div class="criteria-column-heading" ng-model="button">
+				</div>
+
+				
+		</div>
+
+
 		</div>
 	</div>
 	<div class="vote-counter display-tablet" ng-if="token">
@@ -34,7 +46,7 @@
 	</div>
 	<div ng-if="token" class='voteList display-tablet'>
 		<div class="vote-column" ng-repeat ="x in vote">
-			<div class="vote-column-heading" ng-class = "x.isVote ? 'voted' : 'no-voted'" ng-click="doVote($index)" ng-bind-html="twemoji.parse(x.smiley)">
+			<div class="vote-column-heading" ng-class = "x.isVote ? 'voted' : 'no-voted'" ng-model="button" ng-click="doVote($index)" ng-bind-html="twemoji.parse(x.smiley)">
 			</div>
 			<div class="vote-column-overlay">
 				{{x.text}}
