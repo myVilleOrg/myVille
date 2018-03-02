@@ -39,7 +39,7 @@ angular.module('appApp')
 	// 			$rootScope.$broadcast('updateSearch');
 	// 	});
 	// };
-	$scope.ajoutCetteProjet = function(projet){//@LIUYan
+	$scope.ajoutCetteProjet = function(projet){
 		$rootScope.ajoutDeGroup = false;
 		localStorageService.set('ajoutDeGroup',false);
 		myVilleAPI.Group.addProjet($rootScope.groupCurrent._id,projet).then(function(message){

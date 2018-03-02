@@ -75,12 +75,5 @@ angular.module('appApp')
 			});
 		}
 	};
-	//partager le projet dans un groupe
-	$scope.partage = function(){
-		//window.location.href='/#/profile/group';
-		$rootScope.chooseMode = true;
-		localStorageService.set('chooseMode',true);
-		ngDialog.open({controller: 'CGroupCtrl', template: 'views/group.html', appendClassName: 'modal-group-list'});
-	}
 
 });

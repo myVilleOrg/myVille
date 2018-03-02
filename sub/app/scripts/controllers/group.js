@@ -199,6 +199,7 @@ angular.module('appApp')
 
 		$scope.GetInGroup = function(group){
 			myVilleAPI.Group.getInGroup(group._id).then(function(){
+
 				console.log("il faut seulement changer le icone");
 			});
 		};
@@ -240,17 +241,15 @@ angular.module('appApp')
 			}
 		};
 
+		//renvoyer la réponse pour le demande0
 		$scope.decision = function(decisionMessage){
 			myVilleAPI.Group.donnerDroit(decisionMessage).then(function(message){
-				if(message.data.message==="success"){
+				if(message.data.message==="success"||message.data.message==="rejecter"){
 					decisionMessage.message.vu=true;
-					console.log("demande success");
-				}
-				else {
-					console.log(message);
 				}
 			});
 		}
+
 
 		$rootScope.$on('ajouterLeProjet',function(e,projet){
 			getProjets($rootScope.groupCurrent);
