@@ -2,6 +2,8 @@
 Before launch project :
 ```
 npm install && bower install
+npm install -g grunt-cli
+bower install ngstorage
 ```
 To launch :
 ```
