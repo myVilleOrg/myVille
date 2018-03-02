@@ -202,6 +202,7 @@ angular.module('appApp')
 
 		$scope.GetInGroup = function(group){
 			myVilleAPI.Group.getInGroup(group._id).then(function(){
+
 				console.log("il faut seulement changer le icone");
 			});
 		};
@@ -222,14 +223,19 @@ angular.module('appApp')
 		};
 
 		$scope.demandeDroit = function(Role){
-			myVilleAPI.Group.demandeDroit(Role).then(function(response){
-				if(response.data.message==="success"){
-					alert("Vous avez envoyé le demande avec succès");
-				}
-				else {
-					alert("Désolée, il y a une erreur");
-				}
-			});
+			if(Role.roleNow!=="admin"&&(!(Role.roleNow==="écrivain"&&Role.roleAsk==="ecrivain"))){
+				myVilleAPI.Group.demandeDroit(Role).then(function(response){
+					if(response.data.message==="success"){
+						alert("Vous avez envoyé le demande avec succès");
+					}
+					else {
+						alert("Désolée, il y a une erreur");
+					}
+				});
+			}
+			else{
+				alert("Vous êtes déja l'"+Role.roleNow+", vous avez assez de droit.")
+			}
 		};
 		$scope.demandeRole = function(message){
 			if(message.demande==='DemandeAdmin'){
@@ -243,17 +249,15 @@ angular.module('appApp')
 			}
 		};
 
+		//renvoyer la réponse pour le demande0
 		$scope.decision = function(decisionMessage){
 			myVilleAPI.Group.donnerDroit(decisionMessage).then(function(message){
-				if(message.data.message==="success"){
+				if(message.data.message==="success"||message.data.message==="rejecter"){
 					decisionMessage.message.vu=true;
-					console.log("demande success");
-				}
-				else {
-					console.log(message);
 				}
 			});
 		}
+
 
 		$rootScope.$on('ajouterLeProjet',function(e,projet){
 			getProjets($rootScope.groupCurrent);

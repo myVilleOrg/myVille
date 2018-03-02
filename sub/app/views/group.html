@@ -7,13 +7,13 @@
        <a href="/#/profile/group/#recherche" ng-click="changeTab('recherche')" data-toggle="tab">Recherche</a>
      </li>
      <li  ng-class="activeTab('messages','head')">
-       <a href="/#/profile/group/#messages" ng-click="changeTab('messages')" data-toggle="tab">Messages</a>
+       <a href="/#/profile/group/#messages" ng-click="changeTab('messages')" data-toggle="tab">Messages<span class="badge badge-info">{{nonVu()}}</span></a>
      </li>
   </div>
   <div id="groupContent" class="tab-content">
     <div ng-class="activeTab('mygroups','body')" id="mygroups">
       <div class="list-ua">
-        <div ng-if="!chooseMode" class="ua-row">
+        <div class="ua-row">
           <a href="/#/profile/create_group" ng-class="{ active: isActive('/profile/create_group') }" class="fa fa-plus-square">
               Créer un groupe
           </a>
@@ -38,7 +38,7 @@
           <div class="row-date">
             {{group.createdAt | formatDate}}
           </div>
-          <div ng-if="!chooseMode" class="row-edit" ng-click="quitGroup(group)">
+          <div class="row-edit" ng-click="quitGroup(group)">
   				      <a title="Quitter le groupe" class="fa fa-minus-circle"></a>
   			  </div>
         </div>
@@ -58,20 +58,25 @@
           <div class="row-date">
             {{group.createdAt | formatDate}}
           </div>
-          <div class="row-edit" ng-if="!userGroupe(group)&&!chooseMode" ng-click="GetInGroup(group)">
+          <div class="row-edit" ng-if="!userGroupe(group)" ng-click="GetInGroup(group)">
             <a title="Rejoindre le groupe" class="fa fa-user-plus"></a>
           </div>
-          <div ng-if="userGroupe(group)&&!chooseMode"  class="row-edit" ng-click="quitGroup(group)">
+          <div ng-if="userGroupe(group)"  class="row-edit" ng-click="quitGroup(group)">
                 <a title="Quitter le groupe" class="fa fa-minus-circle"></a>
           </div>
         </div>
       </div>
     </div>
     <div ng-class="activeTab('messages','body')" id="messages">
-      <div ng-if="!message.vu" class="ua-row" ng-repeat="message in messages">
-        {{message.de}} vous avez demandé de prendre le droit de {{demandeRole(message)}} pour le group {{message.groupNom}}
-        <button type="button" class="btn btn-success" ng-click="decision({decision:'accepter',message:message})">Accepter</button>
-        <button type="button" class="btn btn-danger" ng-click="decision({decision:'rejecter',message:message})">Rejecter</button>
+      <div class="list-ua">
+        <div  class="ua-row" ng-repeat="message in messages">
+          {{message.de}} vous avez demandé de prendre le droit de {{demandeRole(message)}} pour le group {{message.groupNom}}
+          <div  ng-if="!message.vu">
+          <button type="button" class="btn btn-success" ng-click="decision({decision:'accepter',message:message})">Accepter</button>
+          <button type="button" class="btn btn-danger" ng-click="decision({decision:'rejecter',message:message})">Rejecter</button>
+        </div>
+        <div ng-if="message.vu" style="color:grey">déja traité</div>
+        </div>
       </div>
     </div>
   </div>

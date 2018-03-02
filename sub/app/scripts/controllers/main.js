@@ -12,8 +12,6 @@ angular.module('appApp')
 	$scope.showChosens =[];
 	$rootScope.ajoutDeGroup = false;
 	localStorageService.set('ajoutDeGroup',false);
-	$rootScope.chooseMode = false;
-	localStorageService.set('chooseMode',false);
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
@@ -76,10 +74,10 @@ angular.module('appApp')
 	$scope.submitUA = function(){ // when we finish to draw we send an event to all controllers
 		$scope.$broadcast('submitUA');
 	};
-	$scope.submitGroup = function(){//@LIUYan
+	$scope.submitGroup = function(){
 		$scope.$broadcast('submitGroup');
 	};
-	$scope.getGroup = function(){//@LIUYan
+	$scope.getGroup = function(){
 		$scope.$broadcast('getGroup');
 	};
 
@@ -131,6 +129,17 @@ angular.module('appApp')
 		$scope.selectFilter(idx);
 	});
 
+	$rootScope.nonVu = function(){
+		var nombre=0;
+		var message;
+		for(var i=0;i<$rootScope.messages.length;i++){
+			if($rootScope.messages[i].vu===false){
+				nombre++;
+			}
+		}
+		return nombre;
+	}
+
 	var showMessages = function(){
 		myVilleAPI.User.get($rootScope.user._id).then(function(user){
 			$rootScope.messages=user.data.messages;
@@ -143,7 +152,7 @@ angular.module('appApp')
 	// The function which permits to display items on map
 	var geoJsonLayer;
 	var showUas = function(){
-		showMessages();
+		if($rootScope.user){showMessages();}
 		leafletData.getMap().then(function(map){
 			//get gps of map bounds
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
