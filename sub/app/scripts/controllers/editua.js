@@ -19,6 +19,4 @@ angular.module('appApp')
 				$scope.closeThisDialog();
 			});
 		};
-		console.log($scope.ngDialogData);
-
 	}]);

@@ -9,9 +9,24 @@
 angular.module('appApp')
 	.controller('CGroupCtrl', function ($rootScope, $scope, $window, myVilleAPI, localStorageService, $location, ngDialog, $sessionStorage) {
 
+		//Prendre la liste des groupes
 		var getGroups = function(){
 				myVilleAPI.Group.getGroup().then(function(group){
-					$scope.myGroups=group.data.groupes;
+					$scope.myGroups = group.data.groupes;
+					$scope.membreAdmin = new Array();
+					$scope.membreEcrivain = new Array();
+					$scope.membreLecteur = new Array();
+					for(var i=0;i<$scope.myGroups.length;i++){
+							if($scope.myGroups[i].admins.indexOf($rootScope.user._id)!=-1){
+								$scope.membreAdmin.push($scope.myGroups[i].name);
+							}
+							else if($scope.myGroups[i].ecrivains.indexOf($rootScope.user._id)!=-1){
+								$scope.membreEcrivain.push($scope.myGroups[i].name);
+							}
+							else if($scope.myGroups[i].lecteurs.indexOf($rootScope.user._id)!=-1){
+								$scope.membreLecteur.push($scope.myGroups[i].name);
+							}
+					}
 				}, function(error){
 					$window.alert(error.data.message);
 					return;
@@ -23,6 +38,7 @@ angular.module('appApp')
 					getGroups();
 		});
 
+		//create un groupe
 		$scope.$on('submitGroup',function(e,d){
 			if(!$scope.group.name || !$scope.group.desc){
 				$window.alert('Un ou des champs sont manquants.');
@@ -46,6 +62,7 @@ angular.module('appApp')
 			});
 		});
 
+		//justifier le type de membre d'un groupe et retourner une couleur particulière
 		$scope.role = function(member){
 			if($rootScope.membreType[0].indexOf(member)!=-1){
 				return {"color":"#EE2C2C"};
@@ -57,6 +74,8 @@ angular.module('appApp')
 				return {"color":"#8B8989"};
 			}
 		};
+
+		//justifier le type de membre d'un groupe et retourner un nom particulière
 		$scope.title = function(member){
 			if($rootScope.membreType[0].indexOf(member)!=-1){
 				return "admin";
@@ -69,32 +88,60 @@ angular.module('appApp')
 			}
 		};
 
+		//justifier le type de membre d'un groupe et retourner une couleur particulière
+		$scope.roleInGroup = function(group){
+			if($scope.membreAdmin.indexOf(group.name)!=-1){
+				return {"color":"#EE2C2C"};
+			}
+			else if($scope.membreEcrivain.indexOf(group.name)!=-1){
+				return {"color":"#FF8C00"};
+			}
+			else if($scope.membreLecteur.indexOf(group.name)!=-1){
+				return {"color":"#8B8989"};
+			}
+		};
+
+		//justifier le type de membre d'un groupe et retourner un nom particulière
+		$scope.roleTitle = function(group){
+			if($scope.membreAdmin.indexOf(group.name)!=-1){
+				return "admin";
+			}
+			else if($scope.membreEcrivain.indexOf(group.name)!=-1){
+				return "écrivain";
+			}
+			else if($scope.membreLecteur.indexOf(group.name)!=-1){
+				return "lecteur";
+			}
+		};
+
+
+		//prendre les projets d'un groupe
 		var getProjets = function(group){
 			myVilleAPI.Group.groupInfo(group).then(function(group){
 				$rootScope.groupProjets = group.data.uas;
-				// console.log($rootScope.groupProjets);
 				$rootScope.groupMembres = group.data.admins.concat(group.data.ecrivains.concat(group.data.lecteurs));
 				$rootScope.membreType = new Array(group.data.admins,group.data.ecrivains,group.data.lecteurs);
-				for (var i=0;i<$rootScope.groupMembres.length;i++)
-				{
-					console.log($rootScope.groupMembres[0]);
-					$scope.role=role($rootScope.groupMembres[0]);
-				}
 				},function(error){
 					$window.alert(error.data.message);
 				return;
 			});
-		}
-    $scope.editGroup = function(group){
-			$rootScope.groupCurrent = group;
-			localStorageService.set('groupCurrent',group);
-			getProjets(group);
 		};
 
+		//récupérer les informations d'un groupe pour afficher dans le page de edit_group
+    $scope.editGroup = function(group){
+				$rootScope.groupCurrent = group;
+				localStorageService.set('groupCurrent',group);
+				getProjets(group);
+		};
+
+		//quitter d'un groupe
 		$scope.quitGroup = function(group){
-			myVilleAPI.Group.quitGroup(group._id).then(function(){
-				getGroups();
-			});
+			var isConfirmed = $window.confirm('\u00cates-vous s\u00fbr de vouloir quiter ce groupe ?');
+			if (isConfirmed) {
+				myVilleAPI.Group.quitGroup(group._id).then(function(){
+					getGroups();
+				});
+			}
 		};
 
 		// Persistance des données
@@ -105,6 +152,7 @@ angular.module('appApp')
 			$scope.activeT=$location.url().substring(15);
 		}
 
+		//module de la recherche
 		$scope.searchGroup = function(searchKeyG){
 			$scope.searchKeyG = searchKeyG;
 			$sessionStorage.searchKeyG=$scope.searchKeyG;
@@ -132,6 +180,7 @@ angular.module('appApp')
 
 		};
 
+		//participer dans un groupe par recherche
 		if($location.url().substring(20) !==''){
 			$scope.editTab=$location.url().substring(20);
 		}
@@ -151,7 +200,6 @@ angular.module('appApp')
 			$scope.editTab = id;
 		}
 
-
 		$scope.GetInGroup = function(group){
 			myVilleAPI.Group.getInGroup(group._id).then(function(){
 				console.log("il faut seulement changer le icone");
@@ -161,7 +209,6 @@ angular.module('appApp')
 		$scope.userGroupe = function(group){
 			var users=group.admins.concat(group.ecrivains.concat(group.lecteurs));
 			for (var i=0;i<users.length;i++){
-				// console.log("user ", $rootScope.user._id);
 				if($rootScope.user._id === users[i]){
 					return true;
 				}
@@ -174,11 +221,42 @@ angular.module('appApp')
 			localStorageService.set('ajoutDeGroup',true);
 		};
 
+		$scope.demandeDroit = function(Role){
+			myVilleAPI.Group.demandeDroit(Role).then(function(response){
+				if(response.data.message==="success"){
+					alert("Vous avez envoyé le demande avec succès");
+				}
+				else {
+					alert("Désolée, il y a une erreur");
+				}
+			});
+		};
+		$scope.demandeRole = function(message){
+			if(message.demande==='DemandeAdmin'){
+				return "admin";
+			}
+			else if(message.demande==='DemandeEcrivain'){
+				return "ecrivain";
+			}
+			else{
+				return "inconnu";
+			}
+		};
 
-		//inscrir deux fois !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		$scope.decision = function(decisionMessage){
+			myVilleAPI.Group.donnerDroit(decisionMessage).then(function(message){
+				if(message.data.message==="success"){
+					decisionMessage.message.vu=true;
+					console.log("demande success");
+				}
+				else {
+					console.log(message);
+				}
+			});
+		}
+
 		$rootScope.$on('ajouterLeProjet',function(e,projet){
 			getProjets($rootScope.groupCurrent);
-			console.log("pass2");
 			window.location.href='/#/profile/edit_group';
 		});
 

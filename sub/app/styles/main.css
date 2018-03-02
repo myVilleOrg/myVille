@@ -552,6 +552,28 @@ a.active {
 .modal-edit-ua > .ngdialog-content > #singleUA > .ua-description {
   padding: 0.1em;
 }
+.modal-group-list > .ngdialog-content {
+  width: 50% !important;
+}
+.modal-group-list > .ngdialog-content > #singleUA {
+  display: flex;
+  flex-direction: column;
+}
+.modal-group-list > .ngdialog-content > #singleUA > .socialUA {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.modal-group-list > .ngdialog-content > #singleUA > .socialUA > iframe {
+  padding: 1px;
+}
+.modal-group-list > .ngdialog-content > #singleUA > .ua-title {
+  text-align: center;
+  border-bottom: 1px #9a9a9a solid;
+}
+.modal-group-list > .ngdialog-content > #singleUA > .ua-description {
+  padding: 0.1em;
+}
 #myUA > .content-side > .list-ua,
 #favoriteUA > .content-side > .list-ua,
 #searchUA > .content-side > .list-ua,

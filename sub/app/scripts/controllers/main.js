@@ -12,8 +12,9 @@ angular.module('appApp')
 	$scope.showChosens =[];
 	$rootScope.ajoutDeGroup = false;
 	localStorageService.set('ajoutDeGroup',false);
+	$rootScope.chooseMode = false;
+	localStorageService.set('chooseMode',false);
 	$scope.getPopupDescriptionUA = function(uaId) { // when we click on title on ua display a modal box
-		console.log("coucou");
 		myVilleAPI.UAS.getOne(uaId).then(function(data){
 			ngDialog.open({data: data.data, controller: 'VoteCtrl', template: 'views/single_ua.html', appendClassName: 'modal-single-ua'});
 		});
@@ -130,10 +131,19 @@ angular.module('appApp')
 		$scope.selectFilter(idx);
 	});
 
+	var showMessages = function(){
+		myVilleAPI.User.get($rootScope.user._id).then(function(user){
+			$rootScope.messages=user.data.messages;
+		}, function(error){
+			$window.alert(error.data.message);
+			return;
+		})
+	};
 
 	// The function which permits to display items on map
 	var geoJsonLayer;
 	var showUas = function(){
+		showMessages();
 		leafletData.getMap().then(function(map){
 			//get gps of map bounds
 			var mapBounds = [[map.getBounds().getNorthWest().lng, map.getBounds().getNorthWest().lat], [map.getBounds().getSouthEast().lng, map.getBounds().getSouthEast().lat]];
@@ -232,6 +242,8 @@ angular.module('appApp')
 			$rootScope.$broadcast('updateFavorite');
 		});
 	};
+
+	//$scope.$on('leafletDirectiveMap.map.whenReady', showUas); // on drag we update map
 
 	$scope.$on('leafletDirectiveMap.map.dragend', showUas); // on drag we update map
 

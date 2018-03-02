@@ -6,7 +6,9 @@
  * Controller which permits user to vote for a ua
  */
 angular.module('appApp')
-.controller('VoteCtrl', function ($rootScope, $scope,$http, myVilleAPI, AuthentificationService) {  //temp json
+
+.controller('VoteCtrl', function ($rootScope, $scope, ngDialog, localStorageService, myVilleAPI, AuthentificationService) {
+
 	twemoji.size = 72;
 	$scope.twemoji = twemoji;
 	$scope.vote = [
@@ -41,13 +43,6 @@ angular.module('appApp')
 		myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function(vote){
 			if(vote){
 				$scope.vote[vote.data.vote[0]].isVote = true;
-
-				//***TEMPORARY CHANGE QU'IL FAUT ÊTRE SUPPRIMÉ APRES~~~~~~~~~~~~~~~~~~~~~~~
-				console.log("---------------------------------");
-				console.log($scope.ngDialogData);
-				console.log(vote);
-				console.log("---------------------------------");
-				//***
 			}
 		});
 	}
@@ -117,20 +112,12 @@ console.log("ngD",$scope.ngDialogData);
 				console.log('ok');
 		});
 	};
+	//partager le projet dans un groupe
+	$scope.partage = function(){
+		//window.location.href='/#/profile/group';
+		$rootScope.chooseMode = true;
+		localStorageService.set('chooseMode',true);
+		ngDialog.open({controller: 'CGroupCtrl', template: 'views/group.html', appendClassName: 'modal-group-list'});
+	}
 
-
-
-
-	//count the vote number of each
-	/*$scope.countVoteNb = function(){
-		myVilleAPI.Vote.countVote($scope.ngDialogData._id).then(function(message){
-			if(message){
-				//***TEMPORARY CHANGE QU'IL FAUT ÊTRE SUPPRIMÉ APRES~~~~~~~~~~~~~~~~~~~~~~~
-				console.log("---------------------------------");
-				console.log(message);
-				console.log("---------------------------------");
-				//***
-			}
-		});
-	};*/
 });

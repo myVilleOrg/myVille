@@ -11,7 +11,6 @@ angular.module('appApp')
 	$scope.$emit('filterForce', 2);
 
 	$scope.features1 = $rootScope.cachedMarkers.features;
-		console.log($rootScope.cachedMarkers);
 
 	$scope.centerOnMap = function(coordinates){
 		$scope.$emit('centerOnMap', coordinates); // we do an event to tell to map controller to do the center on these coordinates
@@ -27,7 +26,6 @@ angular.module('appApp')
 			});
 		}
 	};
-	// console.log($rootScope.cachedMarkers.features);
 
 	$scope.searchMine = function (searchK) {
 		var table= [];
@@ -39,7 +37,6 @@ angular.module('appApp')
 			var searchKey = $scope.searchKey;
 		}
 		for (var feature in $rootScope.cachedMarkers.features){
-			// console.log($rootScope.cachedMarkers.features[feature]);
 			if(($rootScope.cachedMarkers.features[feature].properties._doc.title).indexOf(searchKey)!==-1 || ($rootScope.cachedMarkers.features[feature].properties._doc.description).indexOf(searchKey)!==-1){
 				table[i]=($rootScope.cachedMarkers.features[feature]);
 				i+=1;
@@ -52,7 +49,6 @@ angular.module('appApp')
 		$rootScope.ajoutDeGroup = false;
 		localStorageService.set('ajoutDeGroup',false);
 		myVilleAPI.Group.addProjet($rootScope.groupCurrent._id,projet).then(function(message){
-			console.log("pass1");
 			$rootScope.$broadcast('ajouterLeProjet');
 		})
 	}

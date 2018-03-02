@@ -102,6 +102,12 @@ angular.module('appApp')
 					},
 					getInGroup: function(id){
 						return $http.post(baseUrl +  '/group/getIn' + id);
+					},
+					demandeDroit: function(data){
+						return $http.post(baseUrl +  '/group/demandeDroit', data);
+					},
+					donnerDroit: function(data) {
+						return $http.post(baseUrl + '/group/donnerDroit', data);
 					}
 				},
 
