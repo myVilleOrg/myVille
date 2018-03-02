@@ -1,42 +1,25 @@
 <div id="singleUA">
-	<div class='socialUA'>
-		<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&width=94&layout=button_count&action=like&size=small&show_faces=true&share=false&height=30&appId=1731346920416495" width="100" height="30" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-		<iframe
-	  src="https://platform.twitter.com/widgets/tweet_button.html?size=l&url=https%3A%2F%2Fdev.twitter.com%2Fweb%2Ftweet-button&via=twitterdev&related=twitterapi%2Ctwitter&text=custom%20share%20text&hashtags=example%2Cdemo"
-	  width="140"
-	  height="30"
-	  scrolling="no" frameborder="0"
-	  title="Twitter Tweet Button"
-	  style="border: 0; overflow: hidden;">
-		</iframe>
-		<div class="vote-counter display-desktop" ng-if="token">
-		{{voteCount}} {{voteCount > 1 ? 'réactions' : 'réaction'}}, et vous ?
-		</div>
-		<div ng-if="token" class='voteList display-desktop'>
-			<div class="vote-column" ng-repeat ="x in vote">
-				<div class="vote-column-heading" ng-class = "x.isVote ? 'voted' : 'no-voted'" ng-click="doVote($index)" ng-bind-html="twemoji.parse(x.smiley)">
-				</div>
-				<div class="vote-column-overlay">
-					{{x.text}}
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="vote-counter display-tablet" ng-if="token">
-		{{voteCount}} {{voteCount > 1 ? 'réactions' : 'réaction'}}, et vous ?
-	</div>
-	<div ng-if="token" class='voteList display-tablet'>
-		<div class="vote-column" ng-repeat ="x in vote">
-			<div class="vote-column-heading" ng-class = "x.isVote ? 'voted' : 'no-voted'" ng-click="doVote($index)" ng-bind-html="twemoji.parse(x.smiley)">
-			</div>
-			<div class="vote-column-overlay">
-				{{x.text}}
-			</div>
-		</div>
-	</div>
+
+
 	<div class="ua-title">
 		{{ngDialogData.title}}
 	</div>
 	<div ng-bind-html="ngDialogData.description" class="ua-description">
 	</div>
+
+	<div class="ua-title">
+		Vote
+	</div>
+	<div class='socialUA'>
+		<div class="vote-column1" ng-repeat ="criteria in criteriaMap.data">
+			<div class="input-group">
+				<p>{{criteria.name}}</p>
+				<div class="input-group-btn">
+				<button type="button" class="btn btn-primary"  ng-click="doVoteCriteria(criteria._id,1)" >Oui</button>
+					<button type="button" class="btn btn-danger" ng-click="doVoteCriteria(criteria._id,-1)">Non</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div><i class="fa fa-share-square-o" aria-hidden="true" title="partager dans un groupe" ng-click="partage()"></i> -->
 </div>

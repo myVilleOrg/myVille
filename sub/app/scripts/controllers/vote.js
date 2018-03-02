@@ -6,72 +6,64 @@
  * Controller which permits user to vote for a ua
  */
 angular.module('appApp')
-.controller('VoteCtrl', function ($rootScope, $scope, myVilleAPI, AuthentificationService) {
-	twemoji.size = 72;
-	$scope.twemoji = twemoji;
-	$scope.vote = [
-		{
-			smiley: '😍',
-			isVote: false,
-			text: "J'aime"
-		},
-		{
-			smiley: '😃',
-			isVote: false,
-			text: "Wouah"
-		},
-		{
-			smiley: '🤔',
-			isVote: false,
-			text: "Bien pensé"
-		},
-		{
-			smiley: '😴',
-			isVote: false,
-			text: "Sans intérêt"
-		},
-		{
-			smiley: '😣',
-			isVote: false,
-			text: "J'aime pas"
-		},
-	];
+
+.controller('VoteCtrl', function ($rootScope, $scope,$http, myVilleAPI, AuthentificationService) {  //temp json
+
 	// If logged which search if user has voted
 	if(AuthentificationService.routeGuardian()){
 		myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function(vote){
 			if(vote){
 				$scope.vote[vote.data.vote[0]].isVote = true;
 			}
-		})
+		});
 	}
+
+	myVilleAPI.Criteria.get_criteria().then(function(criteriaMap){
+		$scope.criteriaMap = criteriaMap
+	});
+
 	$scope.voteCount = $scope.ngDialogData.vote.length;
 
-	// call for a vote
-	$scope.doVote = function(id){
-		if(!$scope.vote[id].isVote){ // Not voted we add a vote
-			myVilleAPI.UAS.vote($scope.ngDialogData._id, {vote: id}).then(function(){
-				var alreadyVoted = false;
-				for(var i = 0; i < $scope.vote.length; i++){
-					if($scope.vote[i].isVote) {
-						alreadyVoted = true;
-					}
-					if(i == id){
-						$scope.vote[i].isVote = true;
-					}else{
-						$scope.vote[i].isVote = false;
-					}
+
+
+	/// call for a vote.
+	$scope.doVoteCriteria = function(id_criteria,value){
+		var voteF = {};
+		if($scope.ngDialogData.vote.length<1){
+
+			console.log("creation vote",$scope.ngDialogData.vote.length);
+			for(var cri in $scope.criteriaMap.data){
+				if($scope.criteriaMap.data[cri]._id == id_criteria){
+					voteF[cri] = {'_id':$scope.criteriaMap.data[cri]._id,'value' : value};
+				} else {
+					voteF[cri] = {'_id':$scope.criteriaMap.data[cri]._id,'value' : 0};
 				}
-				if(!alreadyVoted) $scope.voteCount++;
+			}
+			myVilleAPI.UAS.vote($scope.ngDialogData._id, voteF).then(function(){
+					$scope.closeThisDialog();
 			});
-		} else { // Already voted we remove the vote
-			myVilleAPI.UAS.deleteVote($scope.ngDialogData._id).then(function(){
-				for(var i = 0; i < $scope.vote.length; i++){
-					if($scope.vote[i].isVote) {
-						$scope.vote[i].isVote = false;
-						$scope.voteCount--;
+		} else {
+			console.log("update vote");
+			myVilleAPI.Vote.getVote($scope.ngDialogData._id).then(function (vote) {
+				console.log('rep', vote.data.vote[0]);
+				voteF = vote.data.vote[0];
+
+			}).then(function (){
+				console.log('for',voteF);
+				for(var cri in $scope.criteriaMap.data){
+					if($scope.criteriaMap.data[cri]._id == id_criteria){
+						if($scope.criteriaMap.data[cri].value == value){
+							voteF[cri] = {'_id':$scope.criteriaMap.data[cri]._id,'value' : 0};
+						} else{
+							voteF[cri] = {'_id':$scope.criteriaMap.data[cri]._id,'value' : value};
+						}
 					}
 				}
+				myVilleAPI.UAS.vote($scope.ngDialogData._id, voteF).then(function(){
+						$scope.closeThisDialog();
+				});
 			});
 		}
 	};
+
 });

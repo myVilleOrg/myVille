@@ -1,7 +1,5 @@
 <div class="login-side" ng-if="log == 1">
-	<div ng-if="message">
-		{{message}}
-	</div>
+
 
 	<div class="form-group">
 		<div class="input-group">
@@ -12,11 +10,11 @@
 	<div class="form-group">
 		<div class="input-group">
 			<div class="input-group-addon"><i class="fa fa-lock"></i></div>
-			<input type="password" ng-keyup="$event.keyCode == 13 && loginClick()" ng-model="user.password" placeholder="Password" />
+			<input type="password" ng-keyup="$event.keyCode == 13 && loginClick()" ng-model="user.password" placeholder="Mot de passe" />
 			<div class="top-right"><a ng-click="switchMode('forgot')">Mot de passe oublié ?</a></div>
 		</div>
 	</div>
-	<button class='btn-blue' ng-click="loginClick()">Login</button>
+	<button class='btn-blue' ng-click="loginClick()">Connexion</button>
 	<div class="action-group">
 		<div class="remember-action">
 			<input type="checkbox" checked="true" class="checkbox-input" /> Se souvenir de moi
@@ -43,9 +41,6 @@
 <div class="login-side" ng-if="log == 2">
 	<div class="top-left-dialog"><a ng-click="switchMode('login')"><</a></div>
 	<h1>Inscription</h1>
-	<div ng-if="message">
-		{{message}}
-	</div>
 	<div class="form-group">
 		<div class="input-group">
 			<div class="input-group-addon"><i class="fa fa-user"></i></div>
@@ -76,9 +71,6 @@
 <div class="login-side" ng-if="log == 3">
 	<div class="top-left-dialog"><a ng-click="switchMode('login')"><</a></div>
 	<h1>Mot de passe oublié</h1>
-	<div ng-if="message">
-		{{message}}
-	</div>
 	<div class="form-group">
 		<div class="input-group">
 			<div class="input-group-addon"><i class="fa fa-mail"></i></div>

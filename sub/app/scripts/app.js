@@ -19,7 +19,8 @@ angular
 		'ngDialog',
 		'ngHello',
 		'ui.tinymce',
-		'angular-intro'
+		'angular-intro',
+		'ngStorage'
 	])
 	.config(function(helloProvider) {
 		// Setting for Hello to manage login with social network
@@ -79,6 +80,11 @@ angular
 				controllerAs: 'profile',
 				templateUrl: 'views/profile.html'
 			})
+			.when('/search', {
+				controller: 'SearchCtrl',
+				controllerAs: 'search',
+				templateUrl: 'views/search.html'
+			})
 			.when('/profile/update', {
 				controller: 'ProfileCtrl',
 				controllerAs: 'profile',
@@ -113,6 +119,36 @@ angular
 				controller: 'FavoriteCtrl',
 				controllerAs: 'favorite',
 				templateUrl: 'views/favorite.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
+			.when('/profile/group', {
+				controller: 'CGroupCtrl',
+				controllerAs: 'group',
+				templateUrl: 'views/group.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
+			.when('/profile/create_group', {
+				controller: 'CGroupCtrl',
+				controllerAs: 'group',
+				templateUrl: 'views/create_group.html',
+				resolve: {
+					auth: function(AuthentificationService){
+						return AuthentificationService.routeGuardian();
+					}
+				}
+			})
+			.when('/profile/edit_group', {
+				controller: 'CGroupCtrl',
+				controllerAs: 'group',
+				templateUrl: 'views/edit_group.html',
 				resolve: {
 					auth: function(AuthentificationService){
 						return AuthentificationService.routeGuardian();

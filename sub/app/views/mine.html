@@ -1,22 +1,33 @@
 <collapse-sidebar id="myUA" heading-title="{{'Mes propositions'}}">
+
 	<div class="list-ua">
+		<form class="ua-row">
+			<input type="text" ng-model="searchKey" ng-change="searchMine(searchKey)"  placeholder="Recherche Projet" />
+			<!-- <button type="button" class="glyphicon glyphicon-search" ng-click="search(searchKey)" ng-checked="filters.search" style="margin-left: 1%;"></button> -->
+		</form>
 		<div class="ua-row" ng-if="cachedMarkers.features.length < 1">
 			<div>
 				Il n'y a rien pour l'instant 😞
 			</div>
 		</div>
-		<div class="ua-row" ng-if="cachedMarkers && feature.properties._doc.owner.username == user.username" ng-repeat="feature in cachedMarkers.features">
+		<div class="ua-row" ng-if="cachedMarkers && feature.properties._doc.owner.username == user.username" ng-repeat="feature in features1">
+			<div ng-if="ajoutDeGroup" class="row-edit" ng-click="ajoutCetteProjet(feature.properties._doc)">
+				<i class="fa fa-plus" aria-hidden="true"></i>
+			</div>
 			<div class="row-title">
-				<a ng-click="centerOnMap(feature.geometry.geometries)">{{feature.properties._doc.title}}</a>
+				<a ng-click="getPopupDescriptionUA(feature.properties._doc._id)">{{feature.properties._doc.title}}</a>
 			</div>
 			<div class="row-date">
 				{{feature.properties._doc.createdAt | formatDate}}
 			</div>
-			<div class="row-edit" ng-click="editUA(feature.properties._doc)">
-				<i title="Editer" class="fa fa-edit"></i>
+			<div class="row-edit">
+				<a title="Centrer Sur La Carte" ng-click="centerOnMap(feature.geometry.geometries)" class="fa fa-map-marker"></a>
 			</div>
-			<div class="row-edit" ng-click="deleteUA(feature.properties._doc)">
-				<i title="Supprimer" class="fa fa-close"></i>
+			<div ng-if="!ajoutDeGroup" class="row-edit" ng-click="editUA(feature.properties._doc)">
+				<a title="Editer" class="fa fa-edit"></a>
+			</div>
+			<div ng-if="!ajoutDeGroup" class="row-edit" ng-click="deleteUA(feature.properties._doc)">
+				<a title="Supprimer" class="fa fa-close"></a>
 			</div>
 		</div>
 	</div>

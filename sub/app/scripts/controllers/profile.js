@@ -18,26 +18,33 @@ angular.module('appApp')
 
   $scope.editClick = function(){
   	if(!$scope.editUser.username){
-  		$scope.message = 'Le champ pseudonyme ne peut pas être vide.';
+  		$window.alert('Le champ pseudonyme ne peut pas être vide.');
   		return;
   	}
-  	if(!$scope.editUser.Opassword && $scope.editUser.Npassword) {
-  		$scope.message = 'Nous avons besoin de votre ancien mot de passe.';
+  	if(!$scope.editUser.Opassword && $scope.editUser.Npassword1 && $scope.editUser.Npassword2) {
+  		$window.alert('Nous avons besoin de votre ancien mot de passe.');
   		return;
   	}
+		if($scope.editUser.Npassword1 !== $scope.editUser.Npassword2){
+			$window.alert('Vérifiaction mot de passe non valide.');
+  		return;
+		}
 
   	var data = {
   		username: $scope.editUser.username,
-  		password: $scope.editUser.Npassword,
-  		oldPassword: $scope.editUser.Opassword
+  		password: $scope.editUser.Npassword1,
+  		oldPassword: $scope.editUser.Opassword,
+			passwordVarify:  $scope.editUser.Npassword2
   	};
   	myVilleAPI.User.update(data).then(function(user){
   		$rootScope.user.username = $scope.editUser.username;
   		$scope.editMode = false;
-  		$scope.message = '';
   	}, function(err){
-  		$scope.message = err.data.message;
+  			$window.alert(err.data.message);
   	});
+		$scope.editUser.Opassword='';
+		$scope.editUser.Npassword1='';
+		$scope.editUser.Npassword2='';
   };
 
   $scope.editAvatarClick = function(element){ // click on avatar
@@ -53,8 +60,8 @@ angular.module('appApp')
       myVilleAPI.User.updateAvatar(formData).then(function(user){
         AuthentificationService.updateAvatar(user);
       }, function(err){
-      	$scope.message = err.data.message;
-      });
+    	 		$window.alert(err.data.message);
+    	  });
     }
   };
 

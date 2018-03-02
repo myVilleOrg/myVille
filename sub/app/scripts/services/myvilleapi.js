@@ -3,7 +3,7 @@
  * @name myVille API
  * @description
  * # myVille
- * Services deliver by myVille API.
+ * Services deliver by myVille API.--
  */
 angular.module('appApp')
 	.factory('myVilleAPI', ['$http', '$rootScope', function ($http, $rootScope) {
@@ -55,6 +55,12 @@ angular.module('appApp')
 					getMine: function(){
 						return $http.get(baseUrl + '/ua/get/mine');
 					},
+					search: function(data) {
+						return $http.post(baseUrl + '/ua/search', data);
+					},
+					// tabSearch: function(data) {
+					// 	return $http.post(baseUrl + '/ua/tabSearch', data);
+					// },
 					getOne: function(id){
 						return $http.get(baseUrl + '/ua/' + id);
 					},
@@ -74,10 +80,52 @@ angular.module('appApp')
 						return $http.delete(baseUrl + '/ua/vote/' + id);
 					}
 				},
+
+				Group: {
+					createGroup: function(data){
+						return $http.post(baseUrl + '/group/create', data);
+					},
+					getGroup: function(){
+						return $http.get(baseUrl + '/group/get');
+					},
+					quitGroup: function(id){
+						return $http.delete(baseUrl +  '/group/' + id);
+					},
+					searchGroup: function(data) {
+						return $http.post(baseUrl + '/group/search', data);
+					},
+					groupInfo: function(data) {
+						return $http.post(baseUrl + '/group/info', data);
+					},
+					addProjet: function(id,data) {
+						return $http.post(baseUrl + '/group/addProjet' + id, data);
+					},
+					getInGroup: function(id){
+						return $http.post(baseUrl +  '/group/getIn' + id);
+					},
+					demandeDroit: function(data){
+						return $http.post(baseUrl +  '/group/demandeDroit', data);
+					},
+					donnerDroit: function(data) {
+						return $http.post(baseUrl + '/group/donnerDroit', data);
+					}
+				},
+
+				Criteria:{//@NGUYEN Phong Vu
+					get_criteria: function(){
+						return $http.get(baseUrl + '/criteria/get');
+					},
+				},
+
 				Vote: {
 					getVote: function(uaId){
 						return $http.get(baseUrl + '/vote/'+ uaId);
+
 					}
+					/*countVote: function(cUaId){
+						return $http.get(baseUrl + '/vote/'+ cUaId);
+					}*/
+
 				}
 			};
 			return dataFactory;

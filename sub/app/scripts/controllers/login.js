@@ -39,23 +39,21 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 		if($scope.user.username || $scope.user.password){
 				myVilleAPI.User.login($scope.user).then(function(user){
 					if(!user.data.user) {
-						$scope.message = 'Mauvaise combinaison';
+						$window.alert('Mauvaise combinaison');
 						return;
 					}
 
 					AuthentificationService.login(user.data.token, user.data.user);
-					$scope.message = '';
 					$scope.closeThisDialog();
 				}, function(error){
-					$scope.message = error.data.message;
 				});
+				$window.alert(error.data.message);
 		} else {
-			$scope.message = 'Error, fiels needed.';
+			$window.alert('Erreur dans un des champs');
 		}
 	};
 
 	$scope.switchMode = function (mode){
-		$scope.message = '';
 
 		if(mode === 'login') $scope.log = 1;
 		if(mode === 'signup') $scope.log = 2;
@@ -65,7 +63,7 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 	$scope.createClick = function(){
 
 		if(!$scope.signupUser.nickname || !$scope.signupUser.password || !$scope.signupUser.email || !$scope.signupUser.phonenumber){
-			$scope.message = 'Un ou des champs sont manquant.';
+			$window.alert('Un ou des champs sont manquant.');
 			return;
 		}
 		var data = {
@@ -85,14 +83,14 @@ angular.module('appApp').controller('LoginCtrl', function ($rootScope, $scope, $
 
 	$scope.forgotClick = function(){
 		if(!$scope.forgotPwd.email) {
-			$scope.message = 'Un ou des champs sont manquants.';
+			$window.alert('Un ou des champs sont manquant.');
 			return;
 		}
 		myVilleAPI.User.forgot({email: $scope.forgotPwd.email}).then(function(data){
 			$scope.switchMode('login');
-			$scope.message = 'Mail de récupération de mot de passe envoyé !';
+			$window.alert('Mail de récupération de mot de passe envoyé !');
 		}).catch(function(err){
-			$scope.message = err.data.message;
+			$window.alert(err.data.message);
 		});
 	};
 

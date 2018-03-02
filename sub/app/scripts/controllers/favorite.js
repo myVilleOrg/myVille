@@ -10,6 +10,7 @@ angular.module('appApp')
 	$scope.$emit('filterForce', 3);
 	var getFavorites = function(){
 		$scope.favorites = $rootScope.user.favoris;
+
 		$scope.tabFavorite = [];
 		//TODO Recode this function with favorite route
 	  	if($scope.favorites !== null){

@@ -1,16 +1,22 @@
 <collapse-sidebar id="createUA" heading-title="Créer un aménagement">
-	<div class="form-dable">
-		<div ng-if="message">
-		{{message}}
-		</div>
+	<div class="ua-title">
 		<div class="form-label">
 			<h1>Titre</h1>
-			<span class="edit-field"><input type="text" ng-model="ua.title" /></span>
+			<input type="text" ng-required ng-model="ngDialogData.title" placeholder="Nom de votre aménagement"/>
 		</div>
 		<div class="form-label">
 			<h1>Description</h1>
-			<textarea ui-tinymce="tinymceOptions" ng-model="ua.desc" placeholder="Entrez votre texte ici" />
+			<textarea  ng-required ui-tinymce="tinymceOptions" ng-model="ngDialogData.desc" placeholder="Entrez votre texte ici" /></textarea>
 		</div>
-		<button class='btn-blue create-btn' ng-click="showEditMap()">Choisir l'emplacement de l'aménagement</button>
+		<div class="form-label">
+			<h1>Visibilité :</h1>
+			<ul style="list-style: none">
+			<input ng-model="ngDialogData.private" type="checkbox" /> Privé
+			</ul>
+		</div>
+		<button class='btn-blue create-btn' ng-if="full_page===true" ng-click="display_mode()">Taille réduite</button>
+		<button class='btn-blue create-btn' ng-if="full_page===true" ng-click="showEditMap()">Définir l'emplacement</button>
+		<button class='btn-blue create-btn' ng-if="full_page===false" ng-click="display_mode()">Plein écran</button>
+		<button class='btn-blue create-btn' ng-if="full_page===false" ng-click="submitUA()">J'ai fini !</button>
 	</div>
 </collapse-sidebar>

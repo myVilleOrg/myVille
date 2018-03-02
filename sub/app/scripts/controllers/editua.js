@@ -19,5 +19,4 @@ angular.module('appApp')
 				$scope.closeThisDialog();
 			});
 		};
-
 	}]);
