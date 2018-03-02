@@ -220,14 +220,19 @@ angular.module('appApp')
 		};
 
 		$scope.demandeDroit = function(Role){
-			myVilleAPI.Group.demandeDroit(Role).then(function(response){
-				if(response.data.message==="success"){
-					alert("Vous avez envoyé le demande avec succès");
-				}
-				else {
-					alert("Désolée, il y a une erreur");
-				}
-			});
+			if(Role.roleNow!=="admin"&&(!(Role.roleNow==="écrivain"&&Role.roleAsk==="ecrivain"))){
+				myVilleAPI.Group.demandeDroit(Role).then(function(response){
+					if(response.data.message==="success"){
+						alert("Vous avez envoyé le demande avec succès");
+					}
+					else {
+						alert("Désolée, il y a une erreur");
+					}
+				});
+			}
+			else{
+				alert("Vous êtes déja l'"+Role.roleNow+", vous avez assez de droit.")
+			}
 		};
 		$scope.demandeRole = function(message){
 			if(message.demande==='DemandeAdmin'){
