@@ -1,0 +1,20 @@
+<collapse-sidebar id="searchUA" heading-title="Search">
+	<div class="list-ua">
+		<div class="ua-row" ng-if="tabSearch.length < 1">
+			<div>
+				Il n'y a rien pour l'instant 😞
+			</div>
+		</div>
+		<div class="ua-row" ng-repeat="search in tabSearch">
+			<div class="row-title">
+				<a ng-click="getPopupDescriptionUA(search.properties._id)">{{search.properties.title}}</a>
+			</div>
+			<div class="row-owner">
+				{{search.properties.owner.username[0]}}
+			</div>
+			<div class="row-edit">
+				<a title="Centrer Sur La Carte" ng-click="centerOnMap(search.geometry.geometries)" class="fa fa-map-marker"></a>
+			</div>
+		</div>
+	</div>
+</collapse-sidebar>

@@ -1,0 +1,42 @@
+<collapse-sidebar id="profile" heading-title="Mon profil">
+	<div class="profile-picture">
+		<div class="profile-avatar">
+			<img ng-src="{{user.avatar ? 'http://localhost:3000/static/' + user.avatar : (user.facebook_id) ? 'http://graph.facebook.com/'+ user.facebook_id +'/picture' : 'images/profile-default.png'}}"/>
+			<input type="file" id="new_avatar_file" onchange="angular.element(this).scope().editAvatarClick(this)" name="avatar"/>
+		</div>
+		<div class="profile-nickname">{{user.username}}</div>
+
+		<div ng-if="!editMode" class="profile-description" ng-if="user.description">{{user.description}}</div>
+		<div ng-if="editMode && user.description" class="profile-description"><textarea>{{user.description}}</textarea></div>
+
+		<div class="profile-detailled">
+			<div class="edit-icon" ng-click="editBox()"><i ng-class="editMode ? 'fa fa-user' : 'fa fa-pencil'"></i></div>
+
+			<h1>Pseudonyme</h1>
+			<span ng-if="!editMode" class="edit-field">{{user.username}}</span>
+			<span ng-if="editMode" class="edit-field"><input type="text" ng-model="editUser.username" /></span>
+
+			<h1>Email</h1>
+			<span class="edit-field">{{user.email}}</span>
+
+			<h1 ng-if="user.phonenumber">Numéro</h1>
+			<span ng-if="user.phonenumber" class="edit-field">{{user.phonenumber}}</span>
+
+			<h1 ng-if="editMode">Ancien mot de passe</h1>
+			<span ng-if="editMode" class="edit-field"><input type="password" ng-model="editUser.Opassword" /></span>
+
+			<h1 ng-if="editMode">Nouveau mot de passe</h1>
+			<span ng-if="editMode" class="edit-field"><input type="password" ng-model="editUser.Npassword1" /></span>
+
+			<h1 ng-if="editMode">Vérifier nouveau mot de passe</h1>
+			<span ng-if="editMode" class="edit-field"><input type="password" ng-model="editUser.Npassword2" /></span>
+
+			<button ng-if="editMode" class='btn-blue' ng-click="editClick()">Editer</button>
+
+		</div>
+		<div  class="disconnect-user">
+			<button ng-click="disconnect()">Déconnexion</button>
+		</div>
+	</div>
+
+</collapse-sidebar>

@@ -1,0 +1,25 @@
+<div id="singleUA">
+
+
+	<div class="ua-title">
+		{{ngDialogData.title}}
+	</div>
+	<div ng-bind-html="ngDialogData.description" class="ua-description">
+	</div>
+
+	<div class="ua-title">
+		Vote
+	</div>
+	<div class='socialUA'>
+		<div class="vote-column1" ng-repeat ="criteria in criteriaMap.data">
+			<div class="input-group">
+				<p>{{criteria.name}}</p>
+				<div class="input-group-btn">
+				<button type="button" class="btn btn-primary"  ng-click="doVoteCriteria(criteria._id,1)" >Oui</button>
+					<button type="button" class="btn btn-danger" ng-click="doVoteCriteria(criteria._id,-1)">Non</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div><i class="fa fa-share-square-o" aria-hidden="true" title="partager dans un groupe" ng-click="partage()"></i> -->
+</div>

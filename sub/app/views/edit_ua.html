@@ -1,0 +1,23 @@
+<div id="singleUA">
+
+	<div class="ua-title">
+	Edition de {{ngDialogData.title}}
+	</div>
+	<div class="form-label">
+		<h1>Titre de l'aménagement :</h1>
+		<input type="text" ng-required ng-model="ngDialogData.title" placeholder="Nom de votre aménagement" />
+	</div>
+	<div class="form-label">
+		<h1>Description du projet :</h1>
+		<textarea ng-required ui-tinymce="tinymceOptions" ng-model="ngDialogData.description"></textarea>
+	</div>
+	<div class="form-label">
+		<h1>Visibilité :</h1>
+		<ul style="list-style: none">
+			<li>
+				<input ng-model="ngDialogData.private" type="checkbox" /> Privé
+			</li>
+		</ul>
+	</div>
+	<button class='btn-blue' ng-click="editUa()">Editer</button>
+</div>
